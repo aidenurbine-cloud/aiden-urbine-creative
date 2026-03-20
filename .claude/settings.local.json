@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/aidenurbine/Desktop/**)",
+      "Bash(npx create-next-app@14 aiden-urbine-creative --app --tailwind --typescript --eslint --no-src-dir --import-alias \"@/*\")",
+      "Bash(export PATH=\"/opt/homebrew/bin:$PATH\")",
+      "Bash(npx create-next-app@14 _next-temp --app --tailwind --typescript --eslint --no-src-dir --import-alias \"@/*\")",
+      "Bash(npx create-next-app@14 next-temp-scaffold --app --tailwind --typescript --eslint --no-src-dir --import-alias \"@/*\")",
+      "Bash(cp -r /Users/aidenurbine/Desktop/next-temp-scaffold/. /Users/aidenurbine/Desktop/aiden-urbine-creative/ --backup=none)",
+      "Bash(rsync -a --exclude='.git' /Users/aidenurbine/Desktop/next-temp-scaffold/ /Users/aidenurbine/Desktop/aiden-urbine-creative/)",
+      "Bash(rm -rf /Users/aidenurbine/Desktop/next-temp-scaffold)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node -e \":*)",
+      "Bash(PATH=/opt/homebrew/bin:$PATH npx tsc --noEmit 2>&1)",
+      "Bash(/opt/homebrew/bin/node node_modules/.bin/next build)"
+    ]
+  }
+}

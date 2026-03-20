@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --black:    #0A0A08;
+  --charcoal: #161614;
+  --ash:      #2A2A26;
+  --bone:     #D4CFC4;
+  --cream:    #EDE9E0;
+  --ember:    #C84B2A;
+  --gold:     #B8972A;
+}
+
+html,
+body {
+  background-color: var(--black);
+  color: var(--bone);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  border-radius: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Explicit font-family overrides — ensures CSS vars aren't quoted by Tailwind */
+.font-display {
+  font-family: var(--font-bebas), Impact, "Arial Narrow", sans-serif;
+}
+.font-body {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+.font-mono {
+  font-family: var(--font-dm-mono), "Courier New", monospace;
+}
+
+/* Thin ember scrollbar */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--ember); }
+
+@layer utilities {
+  .label-text {
+    font-family: var(--font-dm-mono), "Courier New", monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--ember);
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  .grain-overlay {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .grain-overlay::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+}
