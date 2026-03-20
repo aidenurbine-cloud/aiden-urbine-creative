@@ -19,7 +19,7 @@ export default function Nav() {
       </Link>
 
       <ul className="flex items-center gap-8">
-        {["Work", "About", "Contact", "CV"].map((item) => (
+        {["Work", "About", "Contact"].map((item) => (
           <li key={item}>
             <Link
               href={`/${item.toLowerCase()}`}
