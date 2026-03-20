@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
+import { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
 const lines = [
@@ -24,26 +23,50 @@ const lineVariants = {
 };
 
 export default function StatementSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-15%" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const inViewRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(inViewRef, { once: true, margin: "-15%" });
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      rafRef.current = requestAnimationFrame(() => {
+        const el = sectionRef.current;
+        const text = textRef.current;
+        if (!el || !text) return;
+
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        // progress: 0 when section bottom is at 65% viewport, 1 when at 15%
+        const raw = 1 - (rect.bottom - vh * 0.15) / (vh * 0.5);
+        const progress = Math.max(0, Math.min(1, raw));
+
+        text.style.transform = `scale(${1 + progress * 0.07})`;
+        text.style.opacity = String(1 - progress);
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   return (
-    <section className="relative py-32 md:py-44 overflow-hidden">
-      {/* Background image */}
-      <Image
-        src="/images/not images.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover object-center"
-        style={{ zIndex: 0 }}
-      />
-      {/* Dark overlay */}
+    <section
+      ref={sectionRef}
+      className="bg-black py-32 md:py-44 overflow-hidden"
+      style={{ position: "relative", zIndex: 2 }}
+    >
+      <div ref={inViewRef} />
       <div
-        className="absolute inset-0"
-        style={{ background: "rgba(10,10,8,0.72)", zIndex: 1 }}
-      />
-      <div ref={ref} className="relative flex flex-col gap-0 leading-none items-center text-center" style={{ zIndex: 2 }}>
+        ref={textRef}
+        className="flex flex-col gap-0 leading-none items-center text-center"
+        style={{ willChange: "transform, opacity" }}
+      >
         {lines.map((line, i) => (
           <div key={line.text} className="overflow-hidden">
             <motion.span

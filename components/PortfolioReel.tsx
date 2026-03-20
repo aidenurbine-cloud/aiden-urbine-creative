@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
@@ -14,8 +14,18 @@ const LABELS: Record<string, string> = {
 };
 
 function ReelCard({ project }: { project: Project }) {
+  const lightRef = useRef<HTMLDivElement>(null);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    if (lightRef.current) {
+      lightRef.current.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+      lightRef.current.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+    }
+  };
+
   return (
-    <div className="relative w-full h-full overflow-hidden bg-charcoal">
+    <div className="relative w-full h-full overflow-hidden bg-charcoal" onMouseMove={onMouseMove}>
       <Image
         src={project.hero}
         alt={project.title}
@@ -65,10 +75,21 @@ function ReelCard({ project }: { project: Project }) {
         }}
       />
 
+      {/* Ember cursor illumination */}
+      <div
+        ref={lightRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(400px circle at var(--mouse-x, -9999px) var(--mouse-y, -9999px), rgba(200,75,42,0.08), transparent 60%)",
+          mixBlendMode: "screen",
+          zIndex: 4,
+        } as React.CSSProperties}
+      />
+
       {/* Bottom-left content */}
       <div
         className="absolute bottom-0 left-0"
-        style={{ zIndex: 4, padding: 64 }}
+        style={{ zIndex: 5, padding: 64 }}
       >
         <p
           className="mb-2 uppercase"
@@ -120,11 +141,14 @@ function ProjectBubbleNav({ active }: { active: string }) {
         style={{
           display: "inline-flex",
           alignItems: "center",
-          gap: 4,
-          padding: 5,
+          gap: 6,
+          padding: 10,
           background: "#0D0D0B",
-          border: "0.5px solid #2A2A26",
-          borderRadius: 100,
+          border: "0.5px solid rgba(212,207,196,0.08)",
+          boxShadow: "inset 0 0 12px rgba(0,0,0,0.4), 0 2px 20px rgba(0,0,0,0.3)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderRadius: 20,
           pointerEvents: "auto",
           animation: "float 4s ease-in-out infinite",
         }}
@@ -143,14 +167,14 @@ function ProjectBubbleNav({ active }: { active: string }) {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
-                borderRadius: 100,
-                padding: "6px 14px",
+                borderRadius: 14,
+                padding: "10px 24px",
                 background: "transparent",
                 color: isActive ? "#EDE9E0" : "rgba(212,207,196,0.4)",
                 fontFamily: "var(--font-dm-mono)",
                 fontSize: "9px",
                 fontWeight: 300,
-                letterSpacing: "0.15em",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 border: "none",
                 transition: "color 0.3s ease",
@@ -160,13 +184,14 @@ function ProjectBubbleNav({ active }: { active: string }) {
             >
               <span
                 style={{
-                  width: 5,
-                  height: 5,
+                  width: isActive ? 6 : 5,
+                  height: isActive ? 6 : 5,
                   borderRadius: "50%",
                   background: isActive ? "#C84B2A" : "transparent",
                   border: isActive ? "none" : "1px solid rgba(200,75,42,0.3)",
+                  boxShadow: isActive ? "0 0 6px rgba(200,75,42,0.6)" : "none",
                   flexShrink: 0,
-                  transition: "background 0.3s ease, border 0.3s ease",
+                  transition: "all 0.3s ease",
                 }}
               />
               {LABELS[project.slug] ?? project.title}
@@ -203,33 +228,7 @@ export default function PortfolioReel() {
   }, []);
 
   return (
-    <section className="bg-black pt-4">
-      {/* Header */}
-      <div className="px-8 md:px-16 lg:px-24 mb-10 flex items-end justify-between">
-        <p
-          className="uppercase"
-          style={{
-            fontFamily: "var(--font-bebas)",
-            fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)",
-            letterSpacing: "0.08em",
-            color: "#2A2A26",
-          }}
-        >
-          Selected Work
-        </p>
-        <p
-          className="text-bone/20"
-          style={{
-            fontFamily: "var(--font-dm-mono)",
-            fontSize: "9px",
-            letterSpacing: "0.25em",
-            fontWeight: 300,
-          }}
-        >
-          {String(projects.length).padStart(2, "0")}
-        </p>
-      </div>
-
+    <section className="bg-black" style={{ position: "relative", zIndex: 2 }}>
       {/* Sticky bubble nav */}
       <ProjectBubbleNav active={active} />
 

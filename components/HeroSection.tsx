@@ -30,7 +30,7 @@ const titleLines = ["Aiden", "Urbine", "Creative"];
 
 export default function HeroSection() {
   return (
-    <section className="grain-overlay relative w-full h-[100dvh] bg-black flex flex-col justify-center px-8 md:px-16 lg:px-24 overflow-hidden">
+    <section className="grain-overlay w-full h-[100dvh] bg-black flex flex-col justify-center px-8 md:px-16 lg:px-24 overflow-hidden" style={{ position: "sticky", top: 0, zIndex: 1 }}>
 
       {/* Background image */}
       <Image
