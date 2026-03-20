@@ -23,6 +23,7 @@ body {
 * {
   border-radius: 0 !important;
   box-sizing: border-box;
+  cursor: none !important;
 }
 
 /* Explicit font-family overrides — ensures CSS vars aren't quoted by Tailwind */
