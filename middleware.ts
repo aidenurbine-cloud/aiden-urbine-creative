@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const { pathname, hostname } = request.nextUrl;
+  const host = request.headers.get('host') || '';
 
-  if (pathname.startsWith('/cv')) {
-    if (hostname !== 'aidenurbine.com') {
-      return NextResponse.redirect(new URL('/', request.url));
-    }
+  if (!host.includes('aidenurbine.com')) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();

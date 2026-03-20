@@ -1,12 +1,17 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { projects, type Project } from "@/lib/projects";
 
-const SLIDE_DURATION = 5000;
+const LABELS: Record<string, string> = {
+  "montana-knife-company": "MKC",
+  "turtlebox": "TURTLEBOX",
+  "rough-country": "ROUGH COUNTRY",
+  "winnebago": "WINNEBAGO",
+  "personal-collection": "PERSONAL",
+};
 
 function ReelCard({ project }: { project: Project }) {
   return (
@@ -78,82 +83,95 @@ function ReelCard({ project }: { project: Project }) {
   );
 }
 
-function ProgressPill({
-  index,
-  active,
-  isPlaying,
-  onReset,
-}: {
-  index: number;
-  active: boolean;
-  isPlaying: boolean;
-  onReset: () => void;
-}) {
+function ProjectBubbleNav({ active }: { active: string }) {
   return (
-    <button
-      onClick={onReset}
-      className="relative overflow-hidden"
+    <div
       style={{
-        height: 3,
-        width: active ? 48 : 16,
-        background: "#2A2A26",
-        transition: "width 0.4s cubic-bezier(0.16,1,0.3,1)",
-        flexShrink: 0,
-        border: "none",
-        padding: 0,
-        cursor: "pointer",
+        position: "sticky",
+        top: 80,
+        zIndex: 40,
+        display: "flex",
+        justifyContent: "center",
+        pointerEvents: "none",
+        marginBottom: 0,
       }}
-      aria-label={`Go to slide ${index + 1}`}
     >
-      {active && (
-        <motion.div
-          key={`${index}-${isPlaying}`}
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: isPlaying ? 1 : undefined }}
-          transition={{ duration: SLIDE_DURATION / 1000, ease: "linear" }}
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "#EDE9E0",
-            transformOrigin: "left",
-          }}
-        />
-      )}
-      {active && !isPlaying && (
-        <div style={{ position: "absolute", inset: 0, background: "#EDE9E0", opacity: 0.4 }} />
-      )}
-    </button>
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 4,
+          padding: 4,
+          background: "rgba(10,10,8,0.85)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          border: "1px solid rgba(42,42,38,0.6)",
+          borderRadius: 0,
+          pointerEvents: "auto",
+        }}
+      >
+        {projects.map((project) => {
+          const isActive = project.slug === active;
+          return (
+            <button
+              key={project.slug}
+              onClick={() => {
+                document
+                  .getElementById(`project-${project.slug}`)
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              style={{
+                borderRadius: 100,
+                padding: "6px 14px",
+                background: isActive ? "#C84B2A" : "transparent",
+                color: isActive ? "#EDE9E0" : "rgba(212,207,196,0.35)",
+                fontFamily: "var(--font-dm-mono)",
+                fontSize: "9px",
+                fontWeight: 300,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                border: "none",
+                cursor: "pointer",
+                transition: "background 0.3s ease, color 0.3s ease",
+                whiteSpace: "nowrap",
+              }}
+              aria-label={`Go to ${project.title}`}
+            >
+              {LABELS[project.slug] ?? project.title}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
 export default function PortfolioReel() {
-  const [current, setCurrent] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const goTo = useCallback((index: number) => {
-    setCurrent(index);
-    setIsPlaying(true);
-  }, []);
-
-  const advance = useCallback(() => {
-    setCurrent((c) => (c + 1) % projects.length);
-  }, []);
+  const [active, setActive] = useState(projects[0].slug);
 
   useEffect(() => {
-    if (!isPlaying) return;
-    timerRef.current = setTimeout(advance, SLIDE_DURATION);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [current, isPlaying, advance]);
+    const observers: IntersectionObserver[] = [];
 
-  const togglePlay = () => {
-    setIsPlaying((p) => !p);
-  };
+    projects.forEach((project) => {
+      const el = document.getElementById(`project-${project.slug}`);
+      if (!el) return;
+
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(project.slug);
+        },
+        { threshold: 0.5 }
+      );
+
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
 
   return (
-    <section className="bg-black pt-4 pb-24">
+    <section className="bg-black pt-4">
       {/* Header */}
       <div className="px-8 md:px-16 lg:px-24 mb-10 flex items-end justify-between">
         <p
@@ -176,88 +194,25 @@ export default function PortfolioReel() {
             fontWeight: 300,
           }}
         >
-          {String(current + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+          {String(projects.length).padStart(2, "0")}
         </p>
       </div>
 
-      {/* Slide */}
-      <div className="relative overflow-hidden" style={{ height: "70vh" }}>
-        <AnimatePresence mode="sync">
-          <motion.div
-            key={current}
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <Link href={`/work/${projects[current].slug}`} className="block w-full h-full">
-              <ReelCard project={projects[current]} />
-            </Link>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      {/* Sticky bubble nav */}
+      <ProjectBubbleNav active={active} />
 
-      {/* Controls — centered pill capsule */}
-      <div className="mt-6 flex justify-center">
+      {/* Scrollable project sections */}
+      {projects.map((project) => (
         <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 10,
-            background: "#161614",
-            border: "1px solid #2A2A26",
-            padding: "10px 20px",
-            borderRadius: 999,
-          }}
+          key={project.slug}
+          id={`project-${project.slug}`}
+          style={{ height: "100vh" }}
         >
-          {/* Play/pause */}
-          <button
-            onClick={togglePlay}
-            style={{
-              background: "none",
-              border: "none",
-              padding: 0,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 16,
-              height: 16,
-              flexShrink: 0,
-              opacity: 0.6,
-            }}
-            aria-label={isPlaying ? "Pause" : "Play"}
-          >
-            {isPlaying ? (
-              <svg width="8" height="10" viewBox="0 0 8 10" fill="none">
-                <rect x="0" y="0" width="2.5" height="10" fill="#D4CFC4" />
-                <rect x="5.5" y="0" width="2.5" height="10" fill="#D4CFC4" />
-              </svg>
-            ) : (
-              <svg width="8" height="10" viewBox="0 0 8 10" fill="none">
-                <path d="M0 0L8 5L0 10V0Z" fill="#D4CFC4" />
-              </svg>
-            )}
-          </button>
-
-          {/* Divider */}
-          <div style={{ width: 1, height: 12, background: "#2A2A26", flexShrink: 0 }} />
-
-          {/* Pills */}
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            {projects.map((_, i) => (
-              <ProgressPill
-                key={i}
-                index={i}
-                active={i === current}
-                isPlaying={isPlaying}
-                onReset={() => goTo(i)}
-              />
-            ))}
-          </div>
+          <Link href={`/work/${project.slug}`} className="block w-full h-full">
+            <ReelCard project={project} />
+          </Link>
         </div>
-      </div>
+      ))}
     </section>
   );
 }
