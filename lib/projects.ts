@@ -29,11 +29,11 @@ export const projects: Project[] = [
     hero: "/images/roughcountry-hero.jpg",
   },
   {
-    slug: "winnebago",
-    title: "Winnebago",
-    client: "Winnebago",
-    tag: "Photo + Video",
-    hero: "/images/winnebago/winnebago hero.JPG",
+    slug: "badfish",
+    title: "Badfish SUP",
+    client: "Badfish SUP",
+    tag: "Photo",
+    hero: "/images/badfish/badfish flyweight glacier.emh (3 of 12).jpg",
   },
   {
     slug: "personal-collection",

@@ -9,7 +9,7 @@ const LABELS: Record<string, string> = {
   "montana-knife-company": "MKC",
   "turtlebox": "TURTLEBOX",
   "rough-country": "ROUGH COUNTRY",
-  "winnebago": "WINNEBAGO",
+  "badfish": "BADFISH",
   "personal-collection": "PERSONAL",
 };
 
