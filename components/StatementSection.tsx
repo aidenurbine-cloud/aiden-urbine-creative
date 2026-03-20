@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 
 const lines = [
@@ -27,8 +28,22 @@ export default function StatementSection() {
   const isInView = useInView(ref, { once: true, margin: "-15%" });
 
   return (
-    <section className="bg-black py-32 md:py-44 overflow-hidden">
-      <div ref={ref} className="flex flex-col gap-0 leading-none items-center text-center">
+    <section className="relative py-32 md:py-44 overflow-hidden">
+      {/* Background image */}
+      <Image
+        src="/images/not images.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover object-center"
+        style={{ zIndex: 0 }}
+      />
+      {/* Dark overlay */}
+      <div
+        className="absolute inset-0"
+        style={{ background: "rgba(10,10,8,0.72)", zIndex: 1 }}
+      />
+      <div ref={ref} className="relative flex flex-col gap-0 leading-none items-center text-center" style={{ zIndex: 2 }}>
         {lines.map((line, i) => (
           <div key={line.text} className="overflow-hidden">
             <motion.span

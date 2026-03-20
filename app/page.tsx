@@ -2,7 +2,6 @@ import Nav from "@/components/Nav";
 import HeroSection from "@/components/HeroSection";
 import StatementSection from "@/components/StatementSection";
 import PortfolioReel from "@/components/PortfolioReel";
-import ScrollRevealSection from "@/components/ScrollRevealSection";
 
 export default function Home() {
   return (
@@ -11,7 +10,6 @@ export default function Home() {
       <HeroSection />
       <StatementSection />
       <PortfolioReel />
-      <ScrollRevealSection />
     </main>
   );
 }
