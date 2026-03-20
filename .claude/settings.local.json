@@ -13,7 +13,8 @@
       "Bash(npx tsc:*)",
       "Bash(node -e \":*)",
       "Bash(PATH=/opt/homebrew/bin:$PATH npx tsc --noEmit 2>&1)",
-      "Bash(/opt/homebrew/bin/node node_modules/.bin/next build)"
+      "Bash(/opt/homebrew/bin/node node_modules/.bin/next build)",
+      "Bash(npm run:*)"
     ]
   }
 }
