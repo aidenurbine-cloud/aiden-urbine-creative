@@ -7,6 +7,7 @@ import { projects, type Project } from "@/lib/projects";
 
 const LABELS: Record<string, string> = {
   "montana-knife-company": "MKC",
+  "marin-moto-ranch": "MMR",
   "turtlebox": "TURTLEBOX",
   "rough-country": "ROUGH COUNTRY",
   "badfish": "BADFISH",

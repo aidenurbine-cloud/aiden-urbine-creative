@@ -15,6 +15,13 @@ export const projects: Project[] = [
     hero: "/images/mkc/mkc.JPEG",
   },
   {
+    slug: "marin-moto-ranch",
+    title: "Marin Moto Ranch",
+    client: "Marin Moto Ranch",
+    tag: "Photo + Video",
+    hero: "/images/MMR HOMEPAGE.jpg",
+  },
+  {
     slug: "turtlebox",
     title: "Turtlebox",
     client: "Turtlebox",
@@ -33,7 +40,7 @@ export const projects: Project[] = [
     title: "Badfish SUP",
     client: "Badfish SUP",
     tag: "Photo",
-    hero: "/images/badfish/badfish flyweight glacier.emh (3 of 12).jpg",
+    hero: "/images/BADFISH homepage opreview.jpg",
   },
   {
     slug: "personal-collection",
