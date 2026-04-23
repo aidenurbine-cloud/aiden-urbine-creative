@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import ScrollHint from "./ScrollHint";
 
 const containerVariants = {
@@ -29,9 +29,17 @@ const lineVariants = {
 const titleLines = ["Aiden", "Urbine", "Creative"];
 
 export default function HeroSection() {
-  return (
-    <section className="grain-overlay w-full h-[100dvh] bg-black flex flex-col justify-center px-8 md:px-16 lg:px-24 overflow-hidden" style={{ position: "sticky", top: 0, zIndex: 1 }}>
+  const { scrollY } = useScroll();
 
+  // Hero content fades and lifts as the user begins to scroll
+  const contentOpacity = useTransform(scrollY, [0, 320], [1, 0]);
+  const contentY = useTransform(scrollY, [0, 320], [0, -28]);
+
+  return (
+    <section
+      className="grain-overlay w-full h-[100dvh] bg-black flex flex-col justify-center items-center px-8 md:px-16 lg:px-24 overflow-hidden"
+      style={{ position: "sticky", top: 0, zIndex: 1 }}
+    >
       {/* Background image */}
       <Image
         src="/images/hero image.JPG"
@@ -42,13 +50,13 @@ export default function HeroSection() {
         style={{ zIndex: 0 }}
       />
 
-      {/* Dark overlay 65% */}
+      {/* Dark overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "rgba(10, 10, 8, 0.65)", zIndex: 1 }}
+        style={{ background: "rgba(14,12,9,0.6)", zIndex: 1 }}
       />
 
-      {/* Grain texture over image */}
+      {/* Grain texture */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -60,52 +68,59 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Bottom gradient fade */}
+      {/* Bottom gradient — bleeds into the warm-dark background below */}
       <div
-        className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
+        className="absolute inset-x-0 bottom-0 pointer-events-none"
         style={{
-          background: "linear-gradient(to top, #0A0A08 0%, transparent 100%)",
+          height: "70%",
+          background: "linear-gradient(to top, var(--black) 0%, rgba(14,12,9,0.55) 45%, transparent 100%)",
           zIndex: 2,
         }}
       />
 
-      {/* Content — sits above image, overlay, gradient, and grain (grain is z-10 via ::after) */}
+      {/* Scroll-driven wrapper — content fades and rises as user scrolls */}
       <motion.div
-        className="relative"
-        style={{ zIndex: 20 }}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+        style={{ opacity: contentOpacity, y: contentY, position: "relative", zIndex: 20, width: "100%" }}
       >
-        {/* Ember label */}
-        <motion.p className="label-text mb-6" variants={lineVariants}>
-          — Photo &amp; Video
-        </motion.p>
-
-        {/* Brand name — staggered lines */}
-        <h1 className="leading-none">
-          {titleLines.map((line) => (
-            <motion.span
-              key={line}
-              className="block font-display text-[17vw] md:text-[13vw] lg:text-[11vw] text-bone uppercase tracking-[-0.01em]"
-              variants={lineVariants}
-            >
-              {line}
-            </motion.span>
-          ))}
-        </h1>
-
-        {/* Tagline */}
-        <motion.p
-          className="text-lg md:text-xl text-bone/75 max-w-md mt-6"
-          style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontStyle: "italic" }}
-          variants={lineVariants}
+        {/* Content */}
+        <motion.div
+          className="text-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          Documentary-style photo &amp; video for outdoor, lifestyle, and gear brands.
-        </motion.p>
-      </motion.div>
+          <motion.p className="label-text mb-6" variants={lineVariants}>
+            — Photo &amp; Video
+          </motion.p>
 
-      <ScrollHint />
+          <h1 className="leading-none">
+            {titleLines.map((line) => (
+              <motion.span
+                key={line}
+                className="block font-display text-[17vw] md:text-[13vw] lg:text-[11vw] text-bone uppercase tracking-[-0.01em]"
+                variants={lineVariants}
+              >
+                {line}
+              </motion.span>
+            ))}
+          </h1>
+
+          <motion.p
+            className="text-lg md:text-xl text-bone/75 max-w-md mx-auto mt-6"
+            style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontStyle: "italic" }}
+            variants={lineVariants}
+          >
+            Documentary-style photo &amp; video for outdoor, lifestyle, and gear brands.
+          </motion.p>
+
+          <motion.div
+            variants={lineVariants}
+            style={{ width: 200, height: 1, background: "var(--ember)", margin: "16px auto 0" }}
+          />
+        </motion.div>
+
+        <ScrollHint />
+      </motion.div>
     </section>
   );
 }

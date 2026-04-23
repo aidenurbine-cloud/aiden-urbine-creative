@@ -4,6 +4,8 @@ export type Project = {
   client: string;
   tag: string;
   hero: string;
+  heroPosition?: string;
+  label?: string;
 };
 
 export const projects: Project[] = [
@@ -13,6 +15,7 @@ export const projects: Project[] = [
     client: "Montana Knife Company",
     tag: "Photo + Video",
     hero: "/images/mkc/mkc.JPEG",
+    label: "MKC",
   },
   {
     slug: "marin-moto-ranch",
@@ -20,20 +23,15 @@ export const projects: Project[] = [
     client: "Marin Moto Ranch",
     tag: "Photo + Video",
     hero: "/images/MMR HOMEPAGE.jpg",
-  },
-  {
-    slug: "turtlebox",
-    title: "Turtlebox",
-    client: "Turtlebox",
-    tag: "Video",
-    hero: "/images/turtlebox-hero.jpg",
+    label: "MMR",
   },
   {
     slug: "rough-country",
     title: "Rough Country",
     client: "Rough Country",
     tag: "Photo + Video",
-    hero: "/images/roughcountry-hero.jpg",
+    hero: "/images/ROUGH COUNTRY BACKGROUND.png",
+    label: "ROUGH COUNTRY",
   },
   {
     slug: "badfish",
@@ -41,13 +39,16 @@ export const projects: Project[] = [
     client: "Badfish SUP",
     tag: "Photo",
     hero: "/images/BADFISH homepage opreview.jpg",
+    label: "BADFISH",
   },
   {
     slug: "personal-collection",
     title: "Personal Collection",
     client: "Aiden Urbine",
     tag: "Photo",
-    hero: "/images/personal-hero.jpg",
+    hero: "/images/PERSONAL HOMEPAGE.jpg",
+    heroPosition: "bottom",
+    label: "PERSONAL",
   },
 ];
 

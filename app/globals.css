@@ -3,13 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --black:    #0A0A08;
-  --charcoal: #161614;
-  --ash:      #2A2A26;
-  --bone:     #D4CFC4;
-  --cream:    #EDE9E0;
-  --ember:    #C84B2A;
-  --gold:     #B8972A;
+  --black:      #0E0C09;
+  --charcoal:   #18150F;
+  --ash:        #2E2A22;
+  --bone:       #D4CFC4;
+  --cream:      #EDE9E0;
+  --ember:      #C84B2A;
+  --gold:       #B8972A;
+  --warm-glow:  #D4914A;
+  --black-warm: #120F0A;
 }
 
 html,
@@ -29,6 +31,7 @@ body {
 /* Explicit font-family overrides — ensures CSS vars aren't quoted by Tailwind */
 .font-display {
   font-family: var(--font-bebas), Impact, "Arial Narrow", sans-serif;
+  text-shadow: 0 1px 20px rgba(200, 75, 42, 0.15);
 }
 .font-body {
   font-family: var(--font-cormorant), Georgia, serif;
@@ -42,6 +45,11 @@ body {
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--ember); }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
 @layer utilities {
   .label-text {
     font-family: var(--font-dm-mono), "Courier New", monospace;
@@ -50,6 +58,21 @@ body {
     color: var(--ember);
     text-transform: uppercase;
     font-weight: 300;
+  }
+
+  .manifesto-body {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--bone);
+    line-height: 1.95;
+  }
+
+  /* Carousel card — overrides the global border-radius: 0 !important */
+  .carousel-card {
+    border-radius: 6px !important;
+    overflow: hidden;
   }
 
   .grain-overlay {
@@ -65,7 +88,7 @@ body {
     height: 200%;
     pointer-events: none;
     z-index: 10;
-    opacity: 0.04;
+    opacity: 0.06;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: 200px 200px;

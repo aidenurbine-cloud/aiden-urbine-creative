@@ -5,36 +5,30 @@ import Link from "next/link";
 import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
 
-const LABELS: Record<string, string> = {
-  "montana-knife-company": "MKC",
-  "marin-moto-ranch": "MMR",
-  "turtlebox": "TURTLEBOX",
-  "rough-country": "ROUGH COUNTRY",
-  "badfish": "BADFISH",
-  "personal-collection": "PERSONAL",
-};
-
-function ReelCard({ project }: { project: Project }) {
+function ReelCard({ project, index }: { project: Project; index: number }) {
   const lightRef = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
 
+  const onMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    rectRef.current = e.currentTarget.getBoundingClientRect();
+  };
+  const onMouseLeave = () => { rectRef.current = null; };
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    if (lightRef.current) {
-      lightRef.current.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-      lightRef.current.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-    }
+    if (!lightRef.current || !rectRef.current) return;
+    lightRef.current.style.setProperty("--mouse-x", `${e.clientX - rectRef.current.left}px`);
+    lightRef.current.style.setProperty("--mouse-y", `${e.clientY - rectRef.current.top}px`);
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-charcoal" onMouseMove={onMouseMove}>
+    <div className="relative w-full h-full overflow-hidden bg-charcoal" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onMouseMove={onMouseMove}>
       <Image
         src={project.hero}
         alt={project.title}
         fill
         sizes="100vw"
-        className="object-cover object-center"
-        style={{ zIndex: 0 }}
-        priority
+        className="object-cover"
+        style={{ zIndex: 0, objectPosition: project.heroPosition ?? "center" }}
+        priority={index === 0}
       />
 
       {/* Dark overlay */}
@@ -132,12 +126,6 @@ function ProjectBubbleNav({ active }: { active: string }) {
         marginBottom: 0,
       }}
     >
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-6px); }
-        }
-      `}</style>
       <div
         style={{
           display: "inline-flex",
@@ -195,7 +183,7 @@ function ProjectBubbleNav({ active }: { active: string }) {
                   transition: "all 0.3s ease",
                 }}
               />
-              {LABELS[project.slug] ?? project.title}
+              {project.label ?? project.title}
             </button>
           );
         })}
@@ -234,14 +222,14 @@ export default function PortfolioReel() {
       <ProjectBubbleNav active={active} />
 
       {/* Scrollable project sections */}
-      {projects.map((project) => (
+      {projects.map((project, index) => (
         <div
           key={project.slug}
           id={`project-${project.slug}`}
           style={{ height: "70vh" }}
         >
-          <Link href={`/work/${project.slug}`} className="block w-full h-full" style={{ height: "70vh" }}>
-            <ReelCard project={project} />
+          <Link href={`/work/${project.slug}`} className="block w-full h-full">
+            <ReelCard project={project} index={index} />
           </Link>
         </div>
       ))}

@@ -29,7 +29,7 @@ export default function SectionBridge() {
     <div
       ref={ref}
       style={{
-        background: "#0A0A08",
+        background: "var(--black)",
         padding: "80px 0 48px",
         position: "relative",
         zIndex: 2,
@@ -39,7 +39,7 @@ export default function SectionBridge() {
       <div
         style={{
           height: 1,
-          background: "#C84B2A",
+          background: "var(--ember)",
           transformOrigin: "left center",
           transform: fired ? "scaleX(1)" : "scaleX(0)",
           transition: fired ? "transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)" : "none",
@@ -62,7 +62,7 @@ export default function SectionBridge() {
             fontSize: "clamp(72px, 11vw, 140px)",
             letterSpacing: "-0.01em",
             lineHeight: 1,
-            color: "#C84B2A",
+            color: "var(--ember)",
             textTransform: "uppercase",
             opacity: fired ? 1 : 0,
             transform: fired ? "translateY(0)" : "translateY(12px)",

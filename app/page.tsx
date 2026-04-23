@@ -1,17 +1,13 @@
 import Nav from "@/components/Nav";
-import HeroSection from "@/components/HeroSection";
-import StatementSection from "@/components/StatementSection";
-import SectionBridge from "@/components/SectionBridge";
-import PortfolioReel from "@/components/PortfolioReel";
+import OriginSection from "@/components/OriginSection";
+import ProjectCarousel from "@/components/ProjectCarousel";
 
 export default function Home() {
   return (
     <main>
       <Nav />
-      <HeroSection />
-      <StatementSection />
-      <SectionBridge />
-      <PortfolioReel />
+      <OriginSection />
+      <ProjectCarousel />
     </main>
   );
 }

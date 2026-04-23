@@ -9,13 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        black:    "#0A0A08",
-        charcoal: "#161614",
-        ash:      "#2A2A26",
-        bone:     "#D4CFC4",
-        cream:    "#EDE9E0",
-        ember:    "#C84B2A",
-        gold:     "#B8972A",
+        black:      "#0E0C09",
+        charcoal:   "#18150F",
+        ash:        "#2E2A22",
+        bone:       "#D4CFC4",
+        cream:      "#EDE9E0",
+        ember:      "#C84B2A",
+        gold:       "#B8972A",
+        "warm-glow": "#D4914A",
       },
       fontFamily: {
         display: ["var(--font-bebas)", "Impact", "sans-serif"],
