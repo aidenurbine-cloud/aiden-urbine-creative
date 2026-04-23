@@ -6,52 +6,46 @@ import Image from "next/image";
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")";
 
-// Thresholds at which each story element fires
+// Story elements fire once the title has cleared (progress 0.38+)
 const THRESHOLDS = [
-  { key: "label",    at: 0.15 },
-  { key: "line1",    at: 0.25 },
-  { key: "line2",    at: 0.35 },
-  { key: "line3",    at: 0.45 },
-  { key: "line4",    at: 0.55 },
-  { key: "line5",    at: 0.65 },
-  { key: "line6",    at: 0.72 },
-  { key: "final",    at: 0.82 },
-  { key: "location", at: 0.90 },
+  { key: "label", at: 0.38 },
+  { key: "line1", at: 0.42 },
+  { key: "line2", at: 0.46 },
+  { key: "line3", at: 0.50 },
+  { key: "line4", at: 0.54 },
+  { key: "line5", at: 0.58 },
+  { key: "line6", at: 0.62 },
+  { key: "final", at: 0.68 },
 ] as const;
 
 export default function OriginSection() {
-  // Mechanical refs
-  const overlayRef   = useRef<HTMLDivElement>(null);
   const imageWrapRef = useRef<HTMLDivElement>(null);
   const titleTopRef  = useRef<HTMLDivElement>(null);
   const titleBotRef  = useRef<HTMLDivElement>(null);
-  const emberLineRef = useRef<HTMLDivElement>(null);
+  const storyRef     = useRef<HTMLDivElement>(null);
 
-  // Threshold reveal refs
-  const labelRef    = useRef<HTMLDivElement>(null);
-  const line1Ref    = useRef<HTMLParagraphElement>(null);
-  const line2Ref    = useRef<HTMLParagraphElement>(null);
-  const line3Ref    = useRef<HTMLParagraphElement>(null);
-  const line4Ref    = useRef<HTMLParagraphElement>(null);
-  const line5Ref    = useRef<HTMLParagraphElement>(null);
-  const line6Ref    = useRef<HTMLParagraphElement>(null);
-  const finalRef    = useRef<HTMLParagraphElement>(null);
-  const locationRef = useRef<HTMLParagraphElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
+  const line1Ref = useRef<HTMLParagraphElement>(null);
+  const line2Ref = useRef<HTMLParagraphElement>(null);
+  const line3Ref = useRef<HTMLParagraphElement>(null);
+  const line4Ref = useRef<HTMLParagraphElement>(null);
+  const line5Ref = useRef<HTMLParagraphElement>(null);
+  const line6Ref = useRef<HTMLParagraphElement>(null);
+  const finalRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     let raf = 0;
     const fired = new Set<string>();
 
     const refMap: Record<string, React.RefObject<HTMLElement | null>> = {
-      label:    labelRef,
-      line1:    line1Ref,
-      line2:    line2Ref,
-      line3:    line3Ref,
-      line4:    line4Ref,
-      line5:    line5Ref,
-      line6:    line6Ref,
-      final:    finalRef,
-      location: locationRef,
+      label: labelRef,
+      line1: line1Ref,
+      line2: line2Ref,
+      line3: line3Ref,
+      line4: line4Ref,
+      line5: line5Ref,
+      line6: line6Ref,
+      final: finalRef,
     };
 
     function reveal(key: string) {
@@ -64,38 +58,32 @@ export default function OriginSection() {
     }
 
     function update() {
-      const progress = Math.min(1, window.scrollY / window.innerHeight);
+      // 180vh container, 100vh sticky → usable scroll range = 0.8 × innerHeight
+      const scrollRange = 0.8 * window.innerHeight;
+      const progress = Math.min(1, window.scrollY / scrollRange);
 
-      // ── Mechanical ──────────────────────────────────────────────────────────
-
-      // Dark overlay: 0.92 → 0.65
-      if (overlayRef.current) {
-        overlayRef.current.style.opacity = String(0.92 - progress * 0.27);
-      }
-
-      // Image: scale 1.1 → 1.0
+      // Image: subtle parallax scale 1.1 → 1.0
       if (imageWrapRef.current) {
         imageWrapRef.current.style.transform = `scale(${1.1 - progress * 0.1})`;
       }
 
-      // Title split + fade: opacity 1 → 0.15 by progress 0.6
-      const titleOpacity = Math.max(0.15, 1 - progress * (0.85 / 0.6));
+      // Title split: exits between progress 0.1 and 0.55 — translateY ±100vh
+      const t = Math.max(0, Math.min(1, (progress - 0.1) / 0.45));
+      const offset = t * window.innerHeight;
       if (titleTopRef.current) {
-        titleTopRef.current.style.transform = `translateY(${progress * -120}px)`;
-        titleTopRef.current.style.opacity   = String(titleOpacity);
+        titleTopRef.current.style.transform = `translateY(${-offset}px)`;
       }
       if (titleBotRef.current) {
-        titleBotRef.current.style.transform = `translateY(${progress * 120}px)`;
-        titleBotRef.current.style.opacity   = String(titleOpacity);
+        titleBotRef.current.style.transform = `translateY(${offset}px)`;
       }
 
-      // Ember line: 0 → 120px over progress 0.20 → 0.38
-      if (emberLineRef.current) {
-        const t = Math.max(0, Math.min(1, (progress - 0.20) / 0.18));
-        emberLineRef.current.style.width = `${t * 120}px`;
+      // Story wrapper: opacity 0 → 1 between progress 0.35 and 0.65
+      if (storyRef.current) {
+        const storyOpacity = Math.max(0, Math.min(1, (progress - 0.35) / 0.3));
+        storyRef.current.style.opacity = String(storyOpacity);
       }
 
-      // ── Threshold reveals ────────────────────────────────────────────────────
+      // Individual story line reveals via CSS transition
       for (const { key, at } of THRESHOLDS) {
         if (progress > at) reveal(key);
       }
@@ -107,17 +95,13 @@ export default function OriginSection() {
     }
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    update(); // paint initial state synchronously
+    update();
 
     return () => {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
     };
   }, []);
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Shared styles
-  // ─────────────────────────────────────────────────────────────────────────────
 
   const revealBase: React.CSSProperties = {
     opacity: 0,
@@ -127,10 +111,9 @@ export default function OriginSection() {
 
   const storyLine: React.CSSProperties = {
     ...revealBase,
-    fontFamily: "var(--font-cormorant)",
+    fontFamily: "var(--font-body)",
     fontSize: "clamp(28px, 4vw, 52px)",
     fontStyle: "italic",
-    fontWeight: 300,
     color: "var(--bone)",
     lineHeight: 1.5,
     margin: "0 0 0.1em",
@@ -140,43 +123,36 @@ export default function OriginSection() {
   };
 
   const titleStyle: React.CSSProperties = {
-    fontFamily: "var(--font-bebas)",
-    fontSize: "clamp(80px, 13vw, 190px)",
-    letterSpacing: "0.04em",
-    color: "var(--cream)",
+    fontFamily: "var(--font-display)",
+    fontWeight: 700,
+    fontSize: "clamp(24px, 4.5vw, 60px)",
+    letterSpacing: "0.08em",
+    color: "var(--bone)",
     textAlign: "center",
-    lineHeight: 1.05,
+    lineHeight: 1.1,
     margin: 0,
     padding: "0 clamp(16px, 4vw, 48px)",
     textShadow: "0 1px 20px rgba(200,75,42,0.15)",
-    whiteSpace: "nowrap",
     willChange: "transform",
   };
 
   const titleWrap: React.CSSProperties = {
     position: "absolute",
     inset: 0,
-    zIndex: 3,
+    zIndex: 10,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     pointerEvents: "none",
-    willChange: "transform, opacity",
+    willChange: "transform",
   };
 
-  // ─────────────────────────────────────────────────────────────────────────────
-
   return (
-    <div style={{ height: "400vh" }}>
+    <div style={{ height: "180vh" }}>
       <section
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-          overflow: "hidden",
-        }}
+        style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}
       >
-        {/* ── Background image ── */}
+        {/* Background image */}
         <div
           ref={imageWrapRef}
           style={{
@@ -198,14 +174,14 @@ export default function OriginSection() {
           />
         </div>
 
-        {/* ── Grain ── */}
+        {/* Grain */}
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
             zIndex: 1,
-            opacity: 0.06,
+            opacity: 0.05,
             pointerEvents: "none",
             backgroundImage: GRAIN,
             backgroundRepeat: "repeat",
@@ -213,40 +189,41 @@ export default function OriginSection() {
           }}
         />
 
-        {/* ── Dark overlay ── */}
+        {/* Dark overlay — static 0.82, barely shows treeline edge */}
         <div
-          ref={overlayRef}
           aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
             background: "var(--black)",
-            opacity: 0.92,
+            opacity: 0.82,
             zIndex: 2,
             pointerEvents: "none",
           }}
         />
 
-        {/* ── Title — top half ── */}
+        {/* Title — top half (z:10, separate layer from story) */}
         <div ref={titleTopRef} style={titleWrap}>
           <h1 style={{ ...titleStyle, clipPath: "inset(0 0 50% 0)" }}>
             AIDEN URBINE CREATIVE
           </h1>
         </div>
 
-        {/* ── Title — bottom half ── */}
+        {/* Title — bottom half (z:10) */}
         <div ref={titleBotRef} style={titleWrap}>
           <h1 style={{ ...titleStyle, clipPath: "inset(50% 0 0 0)" }}>
             AIDEN URBINE CREATIVE
           </h1>
         </div>
 
-        {/* ── Story content — rises from the gap ── */}
+        {/* Story content (z:5) — completely separate layer */}
         <div
+          ref={storyRef}
           style={{
             position: "absolute",
             inset: 0,
-            zIndex: 4,
+            zIndex: 5,
+            opacity: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -254,7 +231,7 @@ export default function OriginSection() {
             padding: "0 clamp(24px, 6vw, 80px)",
           }}
         >
-          {/* Label row */}
+          {/* Ember label */}
           <div
             ref={labelRef}
             style={{
@@ -275,7 +252,7 @@ export default function OriginSection() {
             />
             <span
               style={{
-                fontFamily: "var(--font-dm-mono)",
+                fontFamily: "var(--font-mono)",
                 fontSize: "9px",
                 letterSpacing: "0.25em",
                 fontWeight: 300,
@@ -287,24 +264,6 @@ export default function OriginSection() {
             </span>
           </div>
 
-          {/* Ember fuse — draws left to right */}
-          <div
-            style={{
-              width: "100%",
-              maxWidth: 680,
-              marginBottom: 24,
-            }}
-          >
-            <div
-              ref={emberLineRef}
-              style={{
-                height: 1,
-                width: 0,
-                background: "var(--ember)",
-              }}
-            />
-          </div>
-
           {/* Story lines */}
           <p ref={line1Ref} style={storyLine}>Twenty-two years shaped</p>
           <p ref={line2Ref} style={storyLine}>by rivers and mountains.</p>
@@ -313,15 +272,14 @@ export default function OriginSection() {
           <p ref={line5Ref} style={storyLine}>I was behind a camera</p>
           <p ref={line6Ref} style={storyLine}>before I had a license.</p>
 
-          {/* Final line — bigger, ember */}
+          {/* Final line */}
           <p
             ref={finalRef}
             style={{
               ...revealBase,
-              fontFamily: "var(--font-cormorant)",
+              fontFamily: "var(--font-body)",
               fontSize: "clamp(32px, 5vw, 60px)",
               fontStyle: "italic",
-              fontWeight: 300,
               color: "var(--ember)",
               lineHeight: 1.4,
               margin: "0.6em 0 0",
@@ -333,48 +291,6 @@ export default function OriginSection() {
             That&apos;s still how I work.
           </p>
         </div>
-
-        {/* ── Location — bottom ── */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "clamp(32px, 5vh, 56px)",
-            left: 0,
-            right: 0,
-            zIndex: 5,
-            display: "flex",
-            justifyContent: "center",
-            pointerEvents: "none",
-          }}
-        >
-          <p
-            ref={locationRef}
-            style={{
-              ...revealBase,
-              fontFamily: "var(--font-dm-mono)",
-              fontSize: "9px",
-              letterSpacing: "0.4em",
-              fontWeight: 300,
-              color: "rgba(212,207,196,0.4)",
-              textTransform: "uppercase",
-            }}
-          >
-            MISSOULA · MONTANA · MMXXVI
-          </p>
-        </div>
-
-        {/* ── Bottom gradient — eases into ProjectCarousel ── */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: "auto 0 0 0",
-            height: "22%",
-            background: "linear-gradient(to top, var(--black) 0%, transparent 100%)",
-            zIndex: 6,
-            pointerEvents: "none",
-          }}
-        />
       </section>
     </div>
   );

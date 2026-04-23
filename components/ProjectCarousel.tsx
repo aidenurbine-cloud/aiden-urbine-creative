@@ -65,11 +65,82 @@ const SLIDES: Slide[] = [
   },
 ];
 
-// Card width = min(70vw, 100vw - 80px). At viewports > ~267px, resolves to 70vw.
-// Centering offset = (100vw - 70vw) / 2 = 15vw.
-// translateX(calc(15vw - activeIndex * (70vw + 16px))) centers the active card.
 const CARD_W = "min(70vw, calc(100vw - 80px))";
 const GAP = 16;
+const AUTO_DURATION = 6000;
+const RESUME_DELAY = 3000;
+
+// ── Segment — single progress indicator ──────────────────────────────────────
+
+function Segment({
+  isActive,
+  animKey,
+  isAnimating,
+  userInteracted,
+  onClick,
+  label,
+}: {
+  isActive: boolean;
+  animKey: number;
+  isAnimating: boolean;
+  userInteracted: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  const fillStyle: React.CSSProperties = userInteracted
+    ? { width: "100%", height: "100%", background: "var(--ember)" }
+    : {
+        width: "0%",
+        height: "100%",
+        background: "var(--ember)",
+        animation: `segmentFill ${AUTO_DURATION}ms linear forwards`,
+        animationPlayState: isAnimating ? "running" : "paused",
+      };
+
+  return (
+    <button
+      aria-label={label}
+      onClick={onClick}
+      style={{
+        height: 2,
+        width: isActive ? 48 : 24,
+        borderRadius: 100,
+        background: isActive ? "transparent" : "rgba(242,237,228,0.2)",
+        border: "none",
+        padding: 0,
+        cursor: "none",
+        position: "relative",
+        overflow: "hidden",
+        flexShrink: 0,
+        transition: "width 0.4s cubic-bezier(0.16,1,0.3,1)",
+      }}
+    >
+      {isActive && (
+        <div key={animKey} style={fillStyle} />
+      )}
+    </button>
+  );
+}
+
+// ── Play / Pause icon ─────────────────────────────────────────────────────────
+
+function PlayPauseIcon({ playing }: { playing: boolean }) {
+  if (playing) {
+    return (
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+        <rect x="1" y="1" width="3" height="8" rx="0.5" fill="var(--bone)" />
+        <rect x="6" y="1" width="3" height="8" rx="0.5" fill="var(--bone)" />
+      </svg>
+    );
+  }
+  return (
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+      <polygon points="2,1 9,5 2,9" fill="var(--bone)" />
+    </svg>
+  );
+}
+
+// ── Carousel card ─────────────────────────────────────────────────────────────
 
 function CarouselCard({
   slide,
@@ -102,33 +173,23 @@ function CarouselCard({
         priority={index === 0}
       />
 
-      {/* Gradient overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to top, rgba(14,12,9,0.9) 0%, rgba(14,12,9,0.3) 50%, transparent 100%)",
+            "linear-gradient(to top, rgba(26,18,8,0.9) 0%, rgba(26,18,8,0.3) 50%, transparent 100%)",
           zIndex: 1,
         }}
       />
 
-      {/* Warm vignette — photographic edge darkening */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          boxShadow: "inset 0 0 80px rgba(14,12,9,0.4)",
-          zIndex: 2,
-        }}
+        style={{ boxShadow: "inset 0 0 80px rgba(26,18,8,0.4)", zIndex: 2 }}
       />
 
-      {/* Bottom-left content */}
-      <div
-        className="absolute bottom-0 left-0"
-        style={{ zIndex: 3, padding: 48 }}
-      >
+      <div className="absolute bottom-0 left-0" style={{ zIndex: 3, padding: 48 }}>
         <p className="label-text mb-3">{slide.tag}</p>
 
-        {/* Ember line — draws in when active */}
         <div
           style={{
             height: 1,
@@ -154,11 +215,11 @@ function CarouselCard({
         <p
           className="mt-3 uppercase"
           style={{
-            fontFamily: "var(--font-dm-mono)",
+            fontFamily: "var(--font-mono)",
             fontSize: "9px",
             letterSpacing: "0.25em",
             fontWeight: 300,
-            color: "rgba(212,207,196,0.5)",
+            color: "rgba(242,237,228,0.5)",
           }}
         >
           {slide.location}
@@ -168,40 +229,64 @@ function CarouselCard({
   );
 }
 
+// ── Main component ────────────────────────────────────────────────────────────
+
 export default function ProjectCarousel() {
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const [activeIndex, setActiveIndex] = useState(0);
+  const [autoEnabled, setAutoEnabled] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
+  const [animKey, setAnimKey] = useState(0);
 
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isAnimating = autoEnabled && !isHovering && !userInteracted;
+
+  // ── Auto-advance ────────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!isAnimating) return;
+    const timer = setTimeout(() => {
+      setActiveIndex((i) => (i + 1) % SLIDES.length);
+      setAnimKey((k) => k + 1);
+    }, AUTO_DURATION);
+    return () => clearTimeout(timer);
+  }, [activeIndex, isAnimating]);
+
+  // ── Cleanup resume timer on unmount ─────────────────────────────────────────
+  useEffect(() => {
+    return () => {
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    };
+  }, []);
+
+  // ── Manual navigation ───────────────────────────────────────────────────────
   const goTo = useCallback((i: number) => {
     setActiveIndex(i);
+    setUserInteracted(true);
+    setAnimKey((k) => k + 1);
+
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = setTimeout(() => {
+      setUserInteracted(false);
+      setAnimKey((k) => k + 1);
+    }, RESUME_DELAY);
   }, []);
 
-  const scheduleNext = useCallback(
-    (current: number) => {
-      timerRef.current = setTimeout(() => {
-        goTo((current + 1) % SLIDES.length);
-      }, 5000);
-    },
-    [goTo]
-  );
-
-  const clearTimer = useCallback(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
+  // ── Hover handlers ──────────────────────────────────────────────────────────
+  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+    setAnimKey((k) => k + 1);
   }, []);
 
-  useEffect(() => {
-    clearTimer();
-    scheduleNext(activeIndex);
-    return clearTimer;
-  }, [activeIndex, scheduleNext, clearTimer]);
+  // ── Play / Pause toggle ─────────────────────────────────────────────────────
+  const togglePlay = useCallback(() => {
+    setAutoEnabled((prev) => {
+      if (!prev) setAnimKey((k) => k + 1);
+      return !prev;
+    });
+  }, []);
 
-  // translateX formula: centers the active card
-  // offset = 15vw (half of remaining space when card = 70vw)
-  // shift  = activeIndex * (70vw + gap)
   const translateX = `calc(15vw - ${activeIndex} * (${CARD_W} + ${GAP}px))`;
 
   return (
@@ -213,6 +298,8 @@ export default function ProjectCarousel() {
         paddingTop: "clamp(48px, 8vw, 96px)",
         paddingBottom: "clamp(48px, 6vw, 80px)",
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Section heading */}
       <motion.h2
@@ -231,7 +318,7 @@ export default function ProjectCarousel() {
         Selected Work
       </motion.h2>
 
-      {/* Carousel viewport — clips overflow */}
+      {/* Carousel viewport */}
       <motion.div
         style={{ overflow: "hidden" }}
         initial={{ opacity: 0, y: 32 }}
@@ -239,7 +326,6 @@ export default function ProjectCarousel() {
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         viewport={{ once: true, amount: 0.1 }}
       >
-        {/* Sliding track */}
         <div
           style={{
             display: "flex",
@@ -260,34 +346,73 @@ export default function ProjectCarousel() {
         </div>
       </motion.div>
 
-      {/* Dot indicators */}
+      {/* Floating pill controls */}
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
-          gap: 8,
           marginTop: "clamp(20px, 3vw, 32px)",
         }}
       >
-        {SLIDES.map((slide, i) => (
-          <button
-            key={slide.slug}
-            aria-label={`Go to ${slide.client}`}
-            onClick={() => goTo(i)}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 12,
+            padding: "8px 16px",
+            background: "rgba(26,18,8,0.7)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            border: "0.5px solid rgba(242,237,228,0.08)",
+            borderRadius: 100,
+          }}
+        >
+          {/* Segment indicators */}
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            {SLIDES.map((slide, i) => (
+              <Segment
+                key={slide.slug}
+                isActive={i === activeIndex}
+                animKey={animKey}
+                isAnimating={isAnimating}
+                userInteracted={userInteracted && i === activeIndex}
+                onClick={() => goTo(i)}
+                label={`Go to ${slide.client}`}
+              />
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div
             style={{
-              height: 6,
-              width: i === activeIndex ? 28 : 6,
-              borderRadius: 100,
-              background: i === activeIndex ? "var(--ember)" : "var(--ash)",
-              border: "none",
-              padding: 0,
-              cursor: "none",
-              transition: "width 0.4s cubic-bezier(0.16,1,0.3,1), background 0.3s ease",
+              width: 1,
+              height: 12,
+              background: "rgba(242,237,228,0.15)",
               flexShrink: 0,
             }}
           />
-        ))}
+
+          {/* Play / Pause button */}
+          <button
+            aria-label={autoEnabled ? "Pause auto-scroll" : "Play auto-scroll"}
+            onClick={togglePlay}
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: "50%",
+              border: "0.5px solid rgba(242,237,228,0.2)",
+              background: "transparent",
+              cursor: "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              transition: "border-color 0.2s ease",
+            }}
+          >
+            <PlayPauseIcon playing={autoEnabled} />
+          </button>
+        </div>
       </div>
     </section>
   );

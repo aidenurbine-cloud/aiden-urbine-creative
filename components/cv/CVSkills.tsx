@@ -57,8 +57,8 @@ function SkillBlock({
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: "easeOut", delay: index * 0.1 }}
       style={{
-        background: "#161614",
-        border: "1px solid #2A2A26",
+        background: "#1A1208",
+        border: "1px solid #2F2416",
         padding: "48px 40px",
       }}
     >
@@ -68,9 +68,10 @@ function SkillBlock({
           position: "absolute",
           top: 16,
           right: 20,
-          fontFamily: "var(--font-bebas)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
           fontSize: 80,
-          color: "#2A2A26",
+          color: "#2F2416",
           lineHeight: 1,
           pointerEvents: "none",
           letterSpacing: "0.02em",
@@ -88,10 +89,11 @@ function SkillBlock({
       {/* Category — main heading */}
       <div
         style={{
-          fontFamily: "var(--font-bebas)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
           fontSize: 32,
           letterSpacing: "0.06em",
-          color: "#EDE9E0",
+          color: "#F2EDE4",
           marginBottom: 6,
           lineHeight: 1,
         }}
@@ -102,7 +104,7 @@ function SkillBlock({
       {/* Descriptor */}
       <div
         style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "8px",
           letterSpacing: "0.25em",
           textTransform: "uppercase",
@@ -118,14 +120,14 @@ function SkillBlock({
           <li
             key={j}
             style={{
-              fontFamily: "var(--font-cormorant)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: 14,
-              color: "#7A7A72",
+              color: "#8C7B65",
               lineHeight: 1.9,
               padding: "6px 0",
               borderBottom:
-                j < block.items.length - 1 ? "1px solid #2A2A26" : "none",
+                j < block.items.length - 1 ? "1px solid #2F2416" : "none",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -136,7 +138,7 @@ function SkillBlock({
               style={{
                 width: 48,
                 height: 1,
-                background: "#2A2A26",
+                background: "#2F2416",
                 position: "relative",
                 flexShrink: 0,
               }}
@@ -171,7 +173,7 @@ export default function CVSkills() {
   return (
     <div
       className="min-h-screen flex flex-col items-start"
-      style={{ background: "#0A0A08", padding: "120px 56px" }}
+      style={{ background: "#1A1208", padding: "120px 56px" }}
     >
       <motion.div
         ref={eyebrowRef}
@@ -182,7 +184,7 @@ export default function CVSkills() {
         style={{ marginBottom: 64 }}
       >
         <span style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "9px",
           letterSpacing: "0.3em",
           textTransform: "uppercase",
@@ -194,7 +196,7 @@ export default function CVSkills() {
         <span style={{
           flex: 1,
           height: 1,
-          background: "#2A2A26",
+          background: "#2F2416",
           display: "block",
         }} />
       </motion.div>
@@ -205,11 +207,12 @@ export default function CVSkills() {
         animate={titleInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, delay: 0.1 }}
         style={{
-          fontFamily: "var(--font-bebas)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
           fontSize: "clamp(48px, 7vw, 96px)",
           letterSpacing: "0.04em",
           lineHeight: 0.95,
-          color: "#EDE9E0",
+          color: "#F2EDE4",
           marginBottom: 16,
         }}
       >
@@ -221,11 +224,11 @@ export default function CVSkills() {
         animate={titleInView ? { opacity: 1 } : {}}
         transition={{ duration: 0.7, delay: 0.3 }}
         style={{
-          fontFamily: "var(--font-cormorant)",
+          fontFamily: "var(--font-body)",
           fontWeight: 300,
           fontStyle: "italic",
           fontSize: 16,
-          color: "#4A4A44",
+          color: "#4A3F32",
           marginBottom: 80,
           maxWidth: 480,
           lineHeight: 1.7,

@@ -53,7 +53,7 @@ function ProgressDot({
   const bg = useTransform(
     activeFloat,
     [index - 0.4, index, index + 0.4],
-    ["#2A2A26", "#C84B2A", "#2A2A26"]
+    ["#2F2416", "#C84B2A", "#2F2416"]
   );
   return (
     <motion.div style={{ width, background: bg, height: "2px", flexShrink: 0 }} />
@@ -83,7 +83,7 @@ export default function CVExperience() {
     <div ref={containerRef} className="relative" style={{ height: "400vh" }}>
       <div
         className="sticky top-0 h-screen overflow-hidden"
-        style={{ background: "#161614" }}
+        style={{ background: "#1A1208" }}
       >
         <motion.div
           className="flex h-full"
@@ -96,7 +96,7 @@ export default function CVExperience() {
               style={{
                 width: "100vw",
                 padding: "0 56px",
-                borderRight: "1px solid #2A2A26",
+                borderRight: "1px solid #2F2416",
                 flexShrink: 0,
               }}
             >
@@ -106,7 +106,7 @@ export default function CVExperience() {
                   position: "absolute",
                   top: 56,
                   left: 56,
-                  fontFamily: "var(--font-dm-mono)",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "9px",
                   letterSpacing: "0.3em",
                   color: "#C84B2A",
@@ -122,10 +122,11 @@ export default function CVExperience() {
                   right: -20,
                   top: "50%",
                   transform: "translateY(-50%)",
-                  fontFamily: "var(--font-bebas)",
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
                   fontSize: "280px",
                   lineHeight: 1,
-                  color: "#2A2A26",
+                  color: "#2F2416",
                   opacity: 0.3,
                   pointerEvents: "none",
                   userSelect: "none",
@@ -138,7 +139,7 @@ export default function CVExperience() {
               <div style={{ maxWidth: 600, position: "relative", zIndex: 1 }}>
                 <div
                   style={{
-                    fontFamily: "var(--font-dm-mono)",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "10px",
                     letterSpacing: "0.25em",
                     textTransform: "uppercase",
@@ -151,11 +152,12 @@ export default function CVExperience() {
 
                 <div
                   style={{
-                    fontFamily: "var(--font-bebas)",
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
                     fontSize: "clamp(52px, 7vw, 96px)",
                     letterSpacing: "0.04em",
                     lineHeight: 0.95,
-                    color: "#EDE9E0",
+                    color: "#F2EDE4",
                     marginBottom: 16,
                     whiteSpace: "pre-line",
                   }}
@@ -165,11 +167,11 @@ export default function CVExperience() {
 
                 <div
                   style={{
-                    fontFamily: "var(--font-cormorant)",
+                    fontFamily: "var(--font-body)",
                     fontStyle: "italic",
                     fontWeight: 300,
                     fontSize: "22px",
-                    color: "#7A7A72",
+                    color: "#8C7B65",
                     marginBottom: 36,
                   }}
                 >
@@ -178,10 +180,10 @@ export default function CVExperience() {
 
                 <p
                   style={{
-                    fontFamily: "var(--font-cormorant)",
+                    fontFamily: "var(--font-body)",
                     fontSize: "17px",
                     lineHeight: 1.9,
-                    color: "#D4CFC4",
+                    color: "#F2EDE4",
                     maxWidth: 500,
                     fontWeight: 300,
                   }}
@@ -194,13 +196,13 @@ export default function CVExperience() {
                     <span
                       key={tag}
                       style={{
-                        fontFamily: "var(--font-dm-mono)",
+                        fontFamily: "var(--font-mono)",
                         fontSize: "8px",
                         letterSpacing: "0.2em",
                         textTransform: "uppercase",
                         padding: "6px 14px",
-                        border: "1px solid #2A2A26",
-                        color: "#4A4A44",
+                        border: "1px solid #2F2416",
+                        color: "#4A3F32",
                       }}
                     >
                       {tag}

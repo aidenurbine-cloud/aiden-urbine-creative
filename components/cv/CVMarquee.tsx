@@ -19,19 +19,19 @@ export default function CVMarquee() {
     <div
       className="overflow-hidden"
       style={{
-        background: "#161614",
-        borderTop: "1px solid #2A2A26",
-        borderBottom: "1px solid #2A2A26",
+        background: "#1A1208",
+        borderTop: "1px solid #2F2416",
+        borderBottom: "1px solid #2F2416",
         padding: "100px 0",
       }}
     >
       <p
         style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "9px",
           letterSpacing: "0.3em",
           textTransform: "uppercase",
-          color: "#7A7A72",
+          color: "#8C7B65",
           marginBottom: 48,
           padding: "0 56px",
         }}
@@ -54,10 +54,11 @@ export default function CVMarquee() {
               <span
                 className="transition-colors duration-300 hover:text-cream"
                 style={{
-                  fontFamily: "var(--font-bebas)",
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
                   fontSize: "clamp(36px, 5vw, 64px)",
                   letterSpacing: "0.06em",
-                  color: "#4A4A44",
+                  color: "#4A3F32",
                   whiteSpace: "nowrap",
                   cursor: "default",
                 }}

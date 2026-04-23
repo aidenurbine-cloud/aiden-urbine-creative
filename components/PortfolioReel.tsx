@@ -34,7 +34,7 @@ function ReelCard({ project, index }: { project: Project; index: number }) {
       {/* Dark overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "rgba(10,10,8,0.45)", zIndex: 1 }}
+        style={{ background: "rgba(26,18,8,0.45)", zIndex: 1 }}
       />
 
       {/* Bottom gradient — heavy */}
@@ -42,7 +42,7 @@ function ReelCard({ project, index }: { project: Project; index: number }) {
         className="absolute inset-x-0 bottom-0 pointer-events-none"
         style={{
           height: "80%",
-          background: "linear-gradient(to top, #0A0A08 0%, rgba(10,10,8,0.7) 40%, transparent 100%)",
+          background: "linear-gradient(to top, #1A1208 0%, rgba(26,18,8,0.7) 40%, transparent 100%)",
           zIndex: 2,
         }}
       />
@@ -52,7 +52,7 @@ function ReelCard({ project, index }: { project: Project; index: number }) {
         className="absolute inset-y-0 left-0 pointer-events-none"
         style={{
           width: "60%",
-          background: "linear-gradient(to right, rgba(10,10,8,0.75) 0%, transparent 100%)",
+          background: "linear-gradient(to right, rgba(26,18,8,0.75) 0%, transparent 100%)",
           zIndex: 2,
         }}
       />
@@ -89,7 +89,7 @@ function ReelCard({ project, index }: { project: Project; index: number }) {
         <p
           className="mb-2 uppercase"
           style={{
-            fontFamily: "var(--font-dm-mono)",
+            fontFamily: "var(--font-mono)",
             fontSize: "9px",
             letterSpacing: "0.25em",
             fontWeight: 300,
@@ -101,7 +101,8 @@ function ReelCard({ project, index }: { project: Project; index: number }) {
         <h3
           className="text-bone uppercase leading-none"
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "clamp(64px, 10vw, 130px)",
             letterSpacing: "-0.01em",
           }}
@@ -132,8 +133,8 @@ function ProjectBubbleNav({ active }: { active: string }) {
           alignItems: "center",
           gap: 6,
           padding: 10,
-          background: "#0D0D0B",
-          border: "0.5px solid rgba(212,207,196,0.08)",
+          background: "#1A1208",
+          border: "0.5px solid rgba(242,237,228,0.08)",
           boxShadow: "inset 0 0 12px rgba(0,0,0,0.4), 0 2px 20px rgba(0,0,0,0.3)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
@@ -159,8 +160,8 @@ function ProjectBubbleNav({ active }: { active: string }) {
                 borderRadius: 14,
                 padding: "10px 24px",
                 background: "transparent",
-                color: isActive ? "#EDE9E0" : "rgba(212,207,196,0.4)",
-                fontFamily: "var(--font-dm-mono)",
+                color: isActive ? "#F2EDE4" : "rgba(242,237,228,0.4)",
+                fontFamily: "var(--font-mono)",
                 fontSize: "9px",
                 fontWeight: 300,
                 letterSpacing: "0.1em",

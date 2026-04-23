@@ -26,7 +26,7 @@ export default function CVBackground() {
   const inView = useInView(ref, { once: true, margin: "-15%" });
 
   return (
-    <div style={{ background: "#0A0A08", padding: "120px 56px" }}>
+    <div style={{ background: "#1A1208", padding: "120px 56px" }}>
       {/* Label */}
       <motion.div
         initial={{ opacity: 0, x: -12 }}
@@ -35,7 +35,7 @@ export default function CVBackground() {
         style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 80 }}
       >
         <span style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "9px",
           letterSpacing: "0.3em",
           textTransform: "uppercase",
@@ -43,7 +43,7 @@ export default function CVBackground() {
         }}>
           Background
         </span>
-        <span style={{ flex: 1, height: 1, background: "#2A2A26", display: "block" }} />
+        <span style={{ flex: 1, height: 1, background: "#2F2416", display: "block" }} />
       </motion.div>
 
       {/* Items */}
@@ -60,13 +60,14 @@ export default function CVBackground() {
               gap: 48,
               paddingTop: 32,
               paddingBottom: 32,
-              borderBottom: "1px solid #2A2A26",
+              borderBottom: "1px solid #2F2416",
             }}
           >
             <div style={{
-              fontFamily: "var(--font-bebas)",
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
               fontSize: 36,
-              color: "#2A2A26",
+              color: "#2F2416",
               lineHeight: 1,
               paddingTop: 4,
             }}>
@@ -74,20 +75,21 @@ export default function CVBackground() {
             </div>
             <div>
               <div style={{
-                fontFamily: "var(--font-bebas)",
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
                 fontSize: 26,
                 letterSpacing: "0.06em",
-                color: "#EDE9E0",
+                color: "#F2EDE4",
                 marginBottom: 12,
               }}>
                 {item.title}
               </div>
               <div style={{
-                fontFamily: "var(--font-cormorant)",
+                fontFamily: "var(--font-body)",
                 fontWeight: 300,
                 fontSize: 15,
                 fontStyle: "italic",
-                color: "#7A7A72",
+                color: "#8C7B65",
                 lineHeight: 1.8,
                 maxWidth: 600,
               }}>

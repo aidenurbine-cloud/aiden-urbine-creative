@@ -53,7 +53,7 @@ export default function HeroSection() {
       {/* Dark overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "rgba(14,12,9,0.6)", zIndex: 1 }}
+        style={{ background: "rgba(26,18,8,0.6)", zIndex: 1 }}
       />
 
       {/* Grain texture */}
@@ -73,7 +73,7 @@ export default function HeroSection() {
         className="absolute inset-x-0 bottom-0 pointer-events-none"
         style={{
           height: "70%",
-          background: "linear-gradient(to top, var(--black) 0%, rgba(14,12,9,0.55) 45%, transparent 100%)",
+          background: "linear-gradient(to top, var(--black) 0%, rgba(26,18,8,0.55) 45%, transparent 100%)",
           zIndex: 2,
         }}
       />
@@ -107,7 +107,7 @@ export default function HeroSection() {
 
           <motion.p
             className="text-lg md:text-xl text-bone/75 max-w-md mx-auto mt-6"
-            style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontStyle: "italic" }}
+            style={{ fontFamily: "var(--font-body)", fontStyle: "italic" }}
             variants={lineVariants}
           >
             Documentary-style photo &amp; video for outdoor, lifestyle, and gear brands.

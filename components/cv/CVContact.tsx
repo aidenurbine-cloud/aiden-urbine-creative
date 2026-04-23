@@ -19,10 +19,10 @@ export default function CVContact() {
       ref={ref}
       className="relative flex flex-col items-center justify-center text-center overflow-hidden"
       style={{
-        background: "#0A0A08",
+        background: "#1A1208",
         minHeight: "80vh",
         padding: "80px 56px",
-        borderTop: "1px solid #2A2A26",
+        borderTop: "1px solid #2F2416",
       }}
     >
       {/* Ghost text */}
@@ -32,10 +32,11 @@ export default function CVContact() {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          fontFamily: "var(--font-bebas)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
           fontSize: "clamp(120px, 20vw, 280px)",
           letterSpacing: "0.04em",
-          color: "#2A2A26",
+          color: "#2F2416",
           opacity: 0.08,
           whiteSpace: "nowrap",
           pointerEvents: "none",
@@ -50,11 +51,11 @@ export default function CVContact() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7 }}
         style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "9px",
           letterSpacing: "0.3em",
           textTransform: "uppercase",
-          color: "#7A7A72",
+          color: "#8C7B65",
           marginBottom: 32,
         }}
       >
@@ -66,11 +67,12 @@ export default function CVContact() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, delay: 0.1 }}
         style={{
-          fontFamily: "var(--font-bebas)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
           fontSize: "clamp(56px, 9vw, 120px)",
           letterSpacing: "0.04em",
           lineHeight: 0.9,
-          color: "#EDE9E0",
+          color: "#F2EDE4",
           marginBottom: 16,
         }}
       >
@@ -90,13 +92,13 @@ export default function CVContact() {
                 onClick={() => window.print()}
                 className="transition-all duration-300 hover:border-ember hover:text-ember"
                 style={{
-                  fontFamily: "var(--font-dm-mono)",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "9px",
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
                   padding: "14px 32px",
-                  border: "1px solid #2A2A26",
-                  color: "#7A7A72",
+                  border: "1px solid #2F2416",
+                  color: "#8C7B65",
                   background: "none",
                   cursor: "none",
                 }}
@@ -112,13 +114,13 @@ export default function CVContact() {
                     : "transition-all duration-300 hover:border-ember hover:text-ember"
                 }
                 style={{
-                  fontFamily: "var(--font-dm-mono)",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "9px",
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
                   padding: "14px 32px",
-                  border: link.primary ? "1px solid #D4CFC4" : "1px solid #2A2A26",
-                  color: link.primary ? "#D4CFC4" : "#7A7A72",
+                  border: link.primary ? "1px solid #F2EDE4" : "1px solid #2F2416",
+                  color: link.primary ? "#F2EDE4" : "#8C7B65",
                   display: "inline-block",
                 }}
               >
@@ -137,7 +139,7 @@ export default function CVContact() {
         style={{
           marginTop: 56,
           paddingTop: 40,
-          borderTop: "1px solid #2A2A26",
+          borderTop: "1px solid #2F2416",
           width: "100%",
           display: "flex",
           justifyContent: "center",
@@ -152,21 +154,21 @@ export default function CVContact() {
         ].map((contact) => (
           <div key={contact.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <span style={{
-              fontFamily: "var(--font-dm-mono)",
+              fontFamily: "var(--font-mono)",
               fontSize: "8px",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#4A4A44",
+              color: "#4A3F32",
             }}>
               {contact.label}
             </span>
             <a
               href={contact.href}
               style={{
-                fontFamily: "var(--font-dm-mono)",
+                fontFamily: "var(--font-mono)",
                 fontSize: "10px",
                 letterSpacing: "0.15em",
-                color: "#D4CFC4",
+                color: "#F2EDE4",
                 textDecoration: "none",
               }}
             >

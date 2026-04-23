@@ -13,7 +13,7 @@ export default function CVHero() {
   return (
     <div
       className="relative min-h-screen flex flex-col justify-end items-start overflow-hidden"
-      style={{ background: "#0A0A08", padding: "0 56px 80px" }}
+      style={{ background: "#1A1208", padding: "0 56px 80px" }}
     >
       {/* Parallax image — oversized so travel doesn't reveal gaps */}
       <motion.div
@@ -38,7 +38,7 @@ export default function CVHero() {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(to top, #0A0A08 30%, rgba(10,10,8,0.3) 100%)",
+          background: "linear-gradient(to top, #1A1208 30%, rgba(26,18,8,0.3) 100%)",
           zIndex: 1,
         }}
       />
@@ -47,10 +47,10 @@ export default function CVHero() {
       <div
         className="absolute top-1/2 right-14 -translate-y-1/2 rotate-90"
         style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "9px",
           letterSpacing: "0.4em",
-          color: "#4A4A44",
+          color: "#4A3F32",
           zIndex: 2,
         }}
       >
@@ -64,7 +64,7 @@ export default function CVHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "9px",
           letterSpacing: "0.3em",
           textTransform: "uppercase",
@@ -80,7 +80,8 @@ export default function CVHero() {
       {/* Name */}
       <div
         style={{
-          fontFamily: "var(--font-bebas)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
           fontSize: "clamp(80px, 14vw, 200px)",
           lineHeight: 0.88,
           letterSpacing: "0.02em",
@@ -95,7 +96,7 @@ export default function CVHero() {
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
               transition={{ duration: 0.9, ease, delay: 0.1 + i * 0.12 }}
-              style={{ color: i === 1 ? "#4A4A44" : "#EDE9E0" }}
+              style={{ color: i === 1 ? "#4A3F32" : "#F2EDE4" }}
             >
               {word}
             </motion.span>
@@ -109,11 +110,11 @@ export default function CVHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.6 }}
         style={{
-          fontFamily: "var(--font-cormorant)",
+          fontFamily: "var(--font-body)",
           fontStyle: "italic",
           fontWeight: 300,
           fontSize: "clamp(18px, 2.5vw, 28px)",
-          color: "#7A7A72",
+          color: "#8C7B65",
           marginTop: 28,
           lineHeight: 1.5,
           position: "relative",
@@ -140,10 +141,10 @@ export default function CVHero() {
             key={item.label}
             href={item.href}
             style={{
-              fontFamily: "var(--font-dm-mono)",
+              fontFamily: "var(--font-mono)",
               fontSize: "9px",
               letterSpacing: "0.2em",
-              color: "#D4CFC4",
+              color: "#F2EDE4",
               textDecoration: "none",
               opacity: 0.7,
             }}

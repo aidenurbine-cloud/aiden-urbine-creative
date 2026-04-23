@@ -20,10 +20,10 @@ export default function CTAButton({
       style={{
         display: "inline-block",
         padding: "12px 32px",
-        border: hovered ? "1px solid #C84B2A" : "1px solid #D4CFC4",
+        border: hovered ? "1px solid #C84B2A" : "1px solid #F2EDE4",
         background: hovered ? "#C84B2A" : "none",
-        color: hovered ? "#EDE9E0" : "#D4CFC4",
-        fontFamily: "var(--font-dm-mono)",
+        color: hovered ? "#F2EDE4" : "#F2EDE4",
+        fontFamily: "var(--font-mono)",
         fontSize: "9px",
         letterSpacing: "0.25em",
         textTransform: "uppercase",

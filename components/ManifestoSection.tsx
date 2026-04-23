@@ -48,7 +48,7 @@ export default function ManifestoSection() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(14,12,9,0.65)",
+          background: "rgba(26,18,8,0.65)",
           zIndex: 1,
           pointerEvents: "none",
         }}
@@ -105,9 +105,10 @@ export default function ManifestoSection() {
           <motion.p
             variants={item}
             style={{
-              fontFamily: "var(--font-bebas)",
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
               fontSize: "18px",
-              color: "rgba(212,207,196,0.5)",
+              color: "rgba(242,237,228,0.5)",
               letterSpacing: "0.3em",
             }}
           >

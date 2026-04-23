@@ -23,12 +23,12 @@ const inputBase: React.CSSProperties = {
   width: "100%",
   background: "none",
   border: "none",
-  borderBottom: "1px solid #2A2A26",
+  borderBottom: "1px solid #2F2416",
   outline: "none",
-  fontFamily: "var(--font-cormorant)",
+  fontFamily: "var(--font-body)",
   fontWeight: 300,
   fontSize: 18,
-  color: "#D4CFC4",
+  color: "#F2EDE4",
   padding: "12px 0",
   transition: "border-color 0.3s ease",
   letterSpacing: "0.01em",
@@ -52,7 +52,7 @@ function Field({
     >
       <span
         style={{
-          fontFamily: "var(--font-dm-mono)",
+          fontFamily: "var(--font-mono)",
           fontSize: "9px",
           letterSpacing: "0.25em",
           textTransform: "uppercase",
@@ -82,13 +82,13 @@ export default function ContactPage() {
   }
 
   function borderFor(field: string): string {
-    return focused === field ? "#D4CFC4" : "#2A2A26";
+    return focused === field ? "#F2EDE4" : "#2F2416";
   }
 
   return (
     <main
       className="grain-overlay"
-      style={{ background: "#0A0A08", minHeight: "100vh" }}
+      style={{ background: "#1A1208", minHeight: "100vh" }}
     >
       <CVCursor />
       <Nav />
@@ -110,7 +110,7 @@ export default function ContactPage() {
             flexDirection: "column",
             justifyContent: "flex-end",
             padding: "clamp(120px, 14vw, 180px) clamp(32px, 6vw, 96px) clamp(64px, 8vw, 96px)",
-            borderRight: "1px solid #2A2A26",
+            borderRight: "1px solid #2F2416",
             position: "relative",
           }}
         >
@@ -121,10 +121,11 @@ export default function ContactPage() {
               top: "50%",
               left: 0,
               transform: "translateY(-50%)",
-              fontFamily: "var(--font-bebas)",
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
               fontSize: "clamp(100px, 18vw, 240px)",
               letterSpacing: "0.04em",
-              color: "#2A2A26",
+              color: "#2F2416",
               opacity: 0.12,
               whiteSpace: "nowrap",
               pointerEvents: "none",
@@ -140,7 +141,7 @@ export default function ContactPage() {
             animate={leftInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
             style={{
-              fontFamily: "var(--font-dm-mono)",
+              fontFamily: "var(--font-mono)",
               fontSize: "9px",
               letterSpacing: "0.25em",
               textTransform: "uppercase",
@@ -157,11 +158,12 @@ export default function ContactPage() {
             animate={leftInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1 }}
             style={{
-              fontFamily: "var(--font-bebas)",
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
               fontSize: "clamp(72px, 10vw, 144px)",
               letterSpacing: "0.03em",
               lineHeight: 0.88,
-              color: "#EDE9E0",
+              color: "#F2EDE4",
               marginBottom: 32,
             }}
           >
@@ -177,11 +179,11 @@ export default function ContactPage() {
             animate={leftInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.25 }}
             style={{
-              fontFamily: "var(--font-cormorant)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontStyle: "italic",
               fontSize: 18,
-              color: "#7A7A72",
+              color: "#8C7B65",
               lineHeight: 1.7,
               maxWidth: 360,
               marginBottom: 56,
@@ -202,7 +204,7 @@ export default function ContactPage() {
               flexDirection: "column",
               gap: 20,
               paddingTop: 32,
-              borderTop: "1px solid #2A2A26",
+              borderTop: "1px solid #2F2416",
             }}
           >
             {CONTACT_DETAILS.map((item) => (
@@ -212,11 +214,11 @@ export default function ContactPage() {
               >
                 <span
                   style={{
-                    fontFamily: "var(--font-dm-mono)",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "8px",
                     letterSpacing: "0.3em",
                     textTransform: "uppercase",
-                    color: "#4A4A44",
+                    color: "#4A3F32",
                     fontWeight: 300,
                     minWidth: 40,
                   }}
@@ -227,10 +229,10 @@ export default function ContactPage() {
                   <a
                     href={item.href}
                     style={{
-                      fontFamily: "var(--font-dm-mono)",
+                      fontFamily: "var(--font-mono)",
                       fontSize: "10px",
                       letterSpacing: "0.12em",
-                      color: "#D4CFC4",
+                      color: "#F2EDE4",
                       textDecoration: "none",
                       fontWeight: 300,
                       transition: "color 0.3s ease",
@@ -239,7 +241,7 @@ export default function ContactPage() {
                       ((e.target as HTMLElement).style.color = "#C84B2A")
                     }
                     onMouseLeave={(e) =>
-                      ((e.target as HTMLElement).style.color = "#D4CFC4")
+                      ((e.target as HTMLElement).style.color = "#F2EDE4")
                     }
                   >
                     {item.value}
@@ -247,10 +249,10 @@ export default function ContactPage() {
                 ) : (
                   <span
                     style={{
-                      fontFamily: "var(--font-dm-mono)",
+                      fontFamily: "var(--font-mono)",
                       fontSize: "10px",
                       letterSpacing: "0.12em",
-                      color: "#D4CFC4",
+                      color: "#F2EDE4",
                       fontWeight: 300,
                     }}
                   >
@@ -326,7 +328,7 @@ export default function ContactPage() {
                           setProjectType(projectType === type ? null : type)
                         }
                         style={{
-                          fontFamily: "var(--font-dm-mono)",
+                          fontFamily: "var(--font-mono)",
                           fontSize: "9px",
                           letterSpacing: "0.2em",
                           textTransform: "uppercase",
@@ -335,11 +337,11 @@ export default function ContactPage() {
                           border:
                             projectType === type
                               ? "1px solid #C84B2A"
-                              : "1px solid #2A2A26",
+                              : "1px solid #2F2416",
                           background:
                             projectType === type ? "#C84B2A" : "none",
                           color:
-                            projectType === type ? "#EDE9E0" : "#7A7A72",
+                            projectType === type ? "#F2EDE4" : "#8C7B65",
                           cursor: "pointer",
                           transition: "all 0.25s ease",
                         }}
@@ -377,15 +379,15 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     style={{
-                      fontFamily: "var(--font-dm-mono)",
+                      fontFamily: "var(--font-mono)",
                       fontSize: "9px",
                       letterSpacing: "0.25em",
                       textTransform: "uppercase",
                       fontWeight: 300,
                       padding: "16px 40px",
-                      border: "1px solid #D4CFC4",
+                      border: "1px solid #F2EDE4",
                       background: "none",
-                      color: "#D4CFC4",
+                      color: "#F2EDE4",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
                     }}
@@ -393,13 +395,13 @@ export default function ContactPage() {
                       const el = e.currentTarget;
                       el.style.background = "#C84B2A";
                       el.style.borderColor = "#C84B2A";
-                      el.style.color = "#EDE9E0";
+                      el.style.color = "#F2EDE4";
                     }}
                     onMouseLeave={(e) => {
                       const el = e.currentTarget;
                       el.style.background = "none";
-                      el.style.borderColor = "#D4CFC4";
-                      el.style.color = "#D4CFC4";
+                      el.style.borderColor = "#F2EDE4";
+                      el.style.color = "#F2EDE4";
                     }}
                   >
                     Send It
@@ -420,7 +422,7 @@ export default function ContactPage() {
               >
                 <div
                   style={{
-                    fontFamily: "var(--font-dm-mono)",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "9px",
                     letterSpacing: "0.25em",
                     textTransform: "uppercase",
@@ -432,11 +434,12 @@ export default function ContactPage() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "var(--font-bebas)",
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
                     fontSize: "clamp(64px, 9vw, 120px)",
                     letterSpacing: "0.03em",
                     lineHeight: 0.9,
-                    color: "#EDE9E0",
+                    color: "#F2EDE4",
                   }}
                 >
                   GOT IT.
@@ -447,11 +450,11 @@ export default function ContactPage() {
                 </div>
                 <p
                   style={{
-                    fontFamily: "var(--font-cormorant)",
+                    fontFamily: "var(--font-body)",
                     fontWeight: 300,
                     fontStyle: "italic",
                     fontSize: 18,
-                    color: "#7A7A72",
+                    color: "#8C7B65",
                     lineHeight: 1.7,
                     maxWidth: 320,
                   }}

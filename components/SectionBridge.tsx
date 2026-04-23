@@ -58,7 +58,8 @@ export default function SectionBridge() {
       >
         <p
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "clamp(72px, 11vw, 140px)",
             letterSpacing: "-0.01em",
             lineHeight: 1,
@@ -75,11 +76,11 @@ export default function SectionBridge() {
         </p>
         <p
           style={{
-            fontFamily: "var(--font-dm-mono)",
+            fontFamily: "var(--font-mono)",
             fontSize: "9px",
             letterSpacing: "0.25em",
             fontWeight: 300,
-            color: "rgba(212,207,196,0.2)",
+            color: "rgba(242,237,228,0.2)",
             paddingBottom: 8,
             opacity: fired ? 1 : 0,
             transform: fired ? "translateY(0)" : "translateY(8px)",

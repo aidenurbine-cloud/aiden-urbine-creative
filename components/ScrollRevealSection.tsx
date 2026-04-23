@@ -33,7 +33,8 @@ function RevealLine({
       <span
         className="block text-bone leading-none uppercase"
         style={{
-          fontFamily: "var(--font-bebas)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
           fontSize: "clamp(3.5rem, 9vw, 8rem)",
           letterSpacing: "-0.01em",
         }}
@@ -103,7 +104,7 @@ export default function ScrollRevealSection() {
           <motion.p
             className="max-w-xs mt-10 text-bone/50"
             style={{
-              fontFamily: "var(--font-cormorant)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontStyle: "italic",
               fontSize: "1.1rem",
@@ -139,7 +140,7 @@ export default function ScrollRevealSection() {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "linear-gradient(to right, #0A0A08 0%, transparent 20%)",
+                "linear-gradient(to right, #1A1208 0%, transparent 20%)",
               zIndex: 10,
             }}
           />

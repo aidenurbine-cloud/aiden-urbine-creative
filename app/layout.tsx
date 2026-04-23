@@ -1,29 +1,7 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Cormorant_Garamond, DM_Mono } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
-
-const bebasNeue = Bebas_Neue({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-bebas",
-  display: "swap",
-});
-
-const cormorantGaramond = Cormorant_Garamond({
-  weight: ["300"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-const dmMono = DM_Mono({
-  weight: ["300"],
-  subsets: ["latin"],
-  variable: "--font-dm-mono",
-  display: "swap",
-});
+import CVProgress from "@/components/cv/CVProgress";
 
 export const metadata: Metadata = {
   title: "Aiden Urbine Creative",
@@ -37,9 +15,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${bebasNeue.variable} ${cormorantGaramond.variable} ${dmMono.variable} bg-black text-bone antialiased`}
-      >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Rufina:wght@400;700&family=IM+Fell+English:ital@1&family=DM+Mono:wght@300&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="bg-black text-bone antialiased">
+        <CVProgress />
         <CustomCursor />
         {children}
       </body>

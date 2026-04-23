@@ -36,12 +36,12 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         />
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: "rgba(10,10,8,0.5)", zIndex: 1 }}
+          style={{ background: "rgba(26,18,8,0.5)", zIndex: 1 }}
         />
         <div
           className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
           style={{
-            background: "linear-gradient(to top, #0A0A08 0%, transparent 100%)",
+            background: "linear-gradient(to top, #1A1208 0%, transparent 100%)",
             zIndex: 2,
           }}
         />
@@ -54,7 +54,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <p
             className="mb-3 uppercase"
             style={{
-              fontFamily: "var(--font-dm-mono)",
+              fontFamily: "var(--font-mono)",
               fontSize: "9px",
               letterSpacing: "0.25em",
               fontWeight: 300,
@@ -66,7 +66,8 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <h1
             className="text-bone uppercase leading-none"
             style={{
-              fontFamily: "var(--font-bebas)",
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
               fontSize: "clamp(3.5rem, 10vw, 9rem)",
               letterSpacing: "-0.01em",
             }}
@@ -82,7 +83,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <p
             className="mb-2 uppercase"
             style={{
-              fontFamily: "var(--font-dm-mono)",
+              fontFamily: "var(--font-mono)",
               fontSize: "9px",
               letterSpacing: "0.25em",
               fontWeight: 300,
@@ -94,7 +95,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           <p
             className="text-bone/60"
             style={{
-              fontFamily: "var(--font-cormorant)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontStyle: "italic",
               fontSize: "1.4rem",
@@ -112,7 +113,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           href="/work"
           className="inline-flex items-center gap-3 text-bone/40 hover:text-bone transition-colors duration-300"
           style={{
-            fontFamily: "var(--font-dm-mono)",
+            fontFamily: "var(--font-mono)",
             fontSize: "9px",
             letterSpacing: "0.25em",
             fontWeight: 300,

@@ -17,7 +17,7 @@ export default function AboutPage() {
         style={{
           position: "relative",
           minHeight: "80vh",
-          background: "#0A0A08",
+          background: "#1A1208",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
@@ -27,7 +27,7 @@ export default function AboutPage() {
         <p
           className="uppercase"
           style={{
-            fontFamily: "var(--font-dm-mono)",
+            fontFamily: "var(--font-mono)",
             fontSize: "9px",
             letterSpacing: "0.25em",
             fontWeight: 300,
@@ -39,9 +39,10 @@ export default function AboutPage() {
         </p>
         <h1
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "clamp(80px, 14vw, 180px)",
-            color: "#EDE9E0",
+            color: "#F2EDE4",
             lineHeight: 1,
             letterSpacing: "-0.01em",
             marginBottom: "1.5rem",
@@ -52,11 +53,11 @@ export default function AboutPage() {
         </h1>
         <p
           style={{
-            fontFamily: "var(--font-cormorant)",
+            fontFamily: "var(--font-body)",
             fontStyle: "italic",
             fontWeight: 300,
             fontSize: "20px",
-            color: "rgba(212,207,196,0.6)",
+            color: "rgba(242,237,228,0.6)",
           }}
         >
           Photo &amp; Video — Missoula, Montana
@@ -66,15 +67,16 @@ export default function AboutPage() {
       {/* Origin */}
       <section
         style={{
-          background: "#0A0A08",
+          background: "#1A1208",
           padding: "6rem clamp(2rem, 6vw, 6rem)",
         }}
       >
         <h2
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "clamp(3rem, 8vw, 7rem)",
-            color: "#2A2A26",
+            color: "#2F2416",
             lineHeight: 1,
             marginBottom: "2rem",
           }}
@@ -83,10 +85,10 @@ export default function AboutPage() {
         </h2>
         <p
           style={{
-            fontFamily: "var(--font-cormorant)",
+            fontFamily: "var(--font-body)",
             fontSize: "18px",
             fontWeight: 300,
-            color: "#D4CFC4",
+            color: "#F2EDE4",
             maxWidth: 600,
             lineHeight: 1.7,
           }}
@@ -101,7 +103,7 @@ export default function AboutPage() {
       {/* What I Do */}
       <section
         style={{
-          background: "#0A0A08",
+          background: "#1A1208",
           padding: "6rem clamp(2rem, 6vw, 6rem)",
         }}
       >
@@ -117,7 +119,7 @@ export default function AboutPage() {
             <p
               className="uppercase"
               style={{
-                fontFamily: "var(--font-dm-mono)",
+                fontFamily: "var(--font-mono)",
                 fontSize: "9px",
                 letterSpacing: "0.25em",
                 fontWeight: 300,
@@ -129,10 +131,10 @@ export default function AboutPage() {
             </p>
             <p
               style={{
-                fontFamily: "var(--font-cormorant)",
+                fontFamily: "var(--font-body)",
                 fontSize: "16px",
                 fontWeight: 300,
-                color: "#D4CFC4",
+                color: "#F2EDE4",
                 lineHeight: 1.7,
               }}
             >
@@ -147,7 +149,7 @@ export default function AboutPage() {
             <p
               className="uppercase"
               style={{
-                fontFamily: "var(--font-dm-mono)",
+                fontFamily: "var(--font-mono)",
                 fontSize: "9px",
                 letterSpacing: "0.25em",
                 fontWeight: 300,
@@ -159,10 +161,10 @@ export default function AboutPage() {
             </p>
             <p
               style={{
-                fontFamily: "var(--font-cormorant)",
+                fontFamily: "var(--font-body)",
                 fontSize: "16px",
                 fontWeight: 300,
-                color: "#D4CFC4",
+                color: "#F2EDE4",
                 lineHeight: 1.7,
               }}
             >
@@ -176,7 +178,7 @@ export default function AboutPage() {
             <p
               className="uppercase"
               style={{
-                fontFamily: "var(--font-dm-mono)",
+                fontFamily: "var(--font-mono)",
                 fontSize: "9px",
                 letterSpacing: "0.25em",
                 fontWeight: 300,
@@ -188,10 +190,10 @@ export default function AboutPage() {
             </p>
             <p
               style={{
-                fontFamily: "var(--font-cormorant)",
+                fontFamily: "var(--font-body)",
                 fontSize: "16px",
                 fontWeight: 300,
-                color: "#D4CFC4",
+                color: "#F2EDE4",
                 lineHeight: 1.7,
               }}
             >
@@ -206,15 +208,16 @@ export default function AboutPage() {
       {/* Outside the Lens */}
       <section
         style={{
-          background: "#0A0A08",
+          background: "#1A1208",
           padding: "6rem clamp(2rem, 6vw, 6rem)",
         }}
       >
         <h2
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "clamp(2.5rem, 6vw, 5rem)",
-            color: "#2A2A26",
+            color: "#2F2416",
             lineHeight: 1,
             marginBottom: "2rem",
           }}
@@ -223,11 +226,11 @@ export default function AboutPage() {
         </h2>
         <p
           style={{
-            fontFamily: "var(--font-cormorant)",
+            fontFamily: "var(--font-body)",
             fontStyle: "italic",
             fontSize: "18px",
             fontWeight: 300,
-            color: "rgba(212,207,196,0.6)",
+            color: "rgba(242,237,228,0.6)",
             maxWidth: 560,
             lineHeight: 1.7,
           }}
@@ -247,9 +250,10 @@ export default function AboutPage() {
       >
         <p
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "clamp(2rem, 4vw, 3rem)",
-            color: "rgba(212,207,196,0.5)",
+            color: "rgba(242,237,228,0.5)",
             letterSpacing: "0.05em",
           }}
         >

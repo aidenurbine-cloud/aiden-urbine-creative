@@ -4,9 +4,9 @@ import { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
 const lines = [
-  { text: "NOT CONTENT.", color: "#2A2A26" },
-  { text: "IMAGES", color: "#EDE9E0" },
-  { text: "THAT HOLD UP.", color: "#2A2A26" },
+  { text: "NOT CONTENT.", color: "#2F2416" },
+  { text: "IMAGES", color: "#F2EDE4" },
+  { text: "THAT HOLD UP.", color: "#2F2416" },
 ];
 
 const lineVariants = {
@@ -72,7 +72,8 @@ export default function StatementSection() {
             <motion.span
               className="block uppercase"
               style={{
-                fontFamily: "var(--font-bebas)",
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
                 fontSize: "clamp(3rem, 10.5vw, 10rem)",
                 letterSpacing: "-0.01em",
                 lineHeight: 0.92,

@@ -92,7 +92,7 @@ function ClientCard({ client }: { client: ClientEntry }) {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(145deg, #161614 0%, #0A0A08 100%)",
+            background: "linear-gradient(145deg, #1A1208 0%, #1A1208 100%)",
             zIndex: 0,
           }}
         />
@@ -103,7 +103,7 @@ function ClientCard({ client }: { client: ClientEntry }) {
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(10,10,8,0.5)",
+          background: "rgba(26,18,8,0.5)",
           zIndex: 1,
           pointerEvents: "none",
         }}
@@ -115,7 +115,7 @@ function ClientCard({ client }: { client: ClientEntry }) {
           position: "absolute",
           inset: "auto 0 0 0",
           height: "70%",
-          background: "linear-gradient(to top, #0A0A08 0%, transparent 100%)",
+          background: "linear-gradient(to top, #1A1208 0%, transparent 100%)",
           zIndex: 2,
           pointerEvents: "none",
         }}
@@ -134,7 +134,7 @@ function ClientCard({ client }: { client: ClientEntry }) {
       >
         {/* Ember underline */}
         <div style={{ position: "relative", height: 1, marginBottom: 12, overflow: "hidden" }}>
-          <div style={{ position: "absolute", inset: 0, background: "#2A2A26" }} />
+          <div style={{ position: "absolute", inset: 0, background: "#2F2416" }} />
           <div
             className="origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
             style={{ position: "absolute", inset: 0, background: "#C84B2A" }}
@@ -144,7 +144,7 @@ function ClientCard({ client }: { client: ClientEntry }) {
         <p
           className="uppercase"
           style={{
-            fontFamily: "var(--font-dm-mono)",
+            fontFamily: "var(--font-mono)",
             fontSize: "8px",
             letterSpacing: "0.25em",
             fontWeight: 300,
@@ -156,9 +156,10 @@ function ClientCard({ client }: { client: ClientEntry }) {
         </p>
         <h2
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "36px",
-            color: "#EDE9E0",
+            color: "#F2EDE4",
             lineHeight: 1,
             letterSpacing: "-0.01em",
           }}
@@ -187,7 +188,7 @@ export default function WorkPage() {
         <p
           className="uppercase"
           style={{
-            fontFamily: "var(--font-dm-mono)",
+            fontFamily: "var(--font-mono)",
             fontSize: "9px",
             letterSpacing: "0.25em",
             fontWeight: 300,
@@ -199,9 +200,10 @@ export default function WorkPage() {
         </p>
         <h1
           style={{
-            fontFamily: "var(--font-bebas)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
             fontSize: "clamp(80px, 12vw, 160px)",
-            color: "#EDE9E0",
+            color: "#F2EDE4",
             lineHeight: 1,
             letterSpacing: "-0.01em",
             marginBottom: "1rem",
@@ -211,11 +213,11 @@ export default function WorkPage() {
         </h1>
         <p
           style={{
-            fontFamily: "var(--font-cormorant)",
+            fontFamily: "var(--font-body)",
             fontStyle: "italic",
             fontWeight: 300,
             fontSize: "18px",
-            color: "rgba(212,207,196,0.6)",
+            color: "rgba(242,237,228,0.6)",
           }}
         >
           Photo and video for brands built to last.
@@ -228,7 +230,7 @@ export default function WorkPage() {
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
           gap: "2px",
-          background: "#0A0A08",
+          background: "#1A1208",
         }}
       >
         {clients.map((client) => (

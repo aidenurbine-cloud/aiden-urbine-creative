@@ -10,7 +10,7 @@ const B = "/images/badfish/";
 
 export default function BadfishPage() {
   return (
-    <main style={{ background: "#0A0A08", minHeight: "100vh" }}>
+    <main style={{ background: "#1A1208", minHeight: "100vh" }}>
       <Nav />
 
       {/* ── Hero ───────────────────────────────────────────── */}
@@ -29,7 +29,7 @@ export default function BadfishPage() {
             position: "absolute",
             inset: "auto 0 0 0",
             height: "60%",
-            background: "linear-gradient(to top, #0A0A08 0%, rgba(10,10,8,0.6) 40%, transparent 100%)",
+            background: "linear-gradient(to top, #1A1208 0%, rgba(26,18,8,0.6) 40%, transparent 100%)",
             zIndex: 1,
           }}
         />
@@ -37,7 +37,7 @@ export default function BadfishPage() {
         <div style={{ position: "absolute", bottom: 0, left: 0, padding: "48px", zIndex: 2 }}>
           <p
             style={{
-              fontFamily: "var(--font-dm-mono)",
+              fontFamily: "var(--font-mono)",
               fontSize: "9px",
               letterSpacing: "0.25em",
               fontWeight: 300,
@@ -50,9 +50,10 @@ export default function BadfishPage() {
           </p>
           <h1
             style={{
-              fontFamily: "var(--font-bebas)",
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
               fontSize: "clamp(80px, 12vw, 160px)",
-              color: "#D4CFC4",
+              color: "#F2EDE4",
               lineHeight: 1,
               letterSpacing: "-0.01em",
               textTransform: "uppercase",
@@ -64,7 +65,7 @@ export default function BadfishPage() {
       </div>
 
       {/* ── Image sequence ─────────────────────────────────── */}
-      <div style={{ background: "#0A0A08", display: "flex", flexDirection: "column", gap: 2 }}>
+      <div style={{ background: "#1A1208", display: "flex", flexDirection: "column", gap: 2 }}>
 
         {/* Row 1 — Full width, 80vh */}
         <div style={{ position: "relative", height: "80vh", overflow: "hidden" }}>
@@ -156,14 +157,14 @@ export default function BadfishPage() {
       </div>
 
       {/* ── Closing line ───────────────────────────────────── */}
-      <div style={{ padding: "120px 0", textAlign: "center", background: "#0A0A08" }}>
+      <div style={{ padding: "120px 0", textAlign: "center", background: "#1A1208" }}>
         <p
           style={{
-            fontFamily: "var(--font-cormorant)",
+            fontFamily: "var(--font-body)",
             fontSize: "24px",
             fontStyle: "italic",
             fontWeight: 300,
-            color: "rgba(212,207,196,0.5)",
+            color: "rgba(242,237,228,0.5)",
           }}
         >
           Salida, Colorado.

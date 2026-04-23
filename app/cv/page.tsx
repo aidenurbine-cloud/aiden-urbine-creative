@@ -1,4 +1,3 @@
-import CVProgress from "@/components/cv/CVProgress";
 import CVNav from "@/components/cv/CVNav";
 import CVHero from "@/components/cv/CVHero";
 import CVManifesto from "@/components/cv/CVManifesto";
@@ -17,7 +16,6 @@ export const metadata = {
 export default function CVPage() {
   return (
     <>
-      <CVProgress />
       <CVNav />
       <CVHero />
       <CVManifesto />

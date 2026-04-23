@@ -24,17 +24,17 @@ export default function CVManifesto() {
   return (
     <div
       className="min-h-screen flex flex-col justify-center"
-      style={{ background: "#0A0A08", padding: "80px 56px" }}
+      style={{ background: "#1A1208", padding: "80px 56px" }}
     >
       <div ref={ref} className="max-w-[900px]">
         {lines.map((line, i) => (
           <span key={i} className="block overflow-hidden" style={{ marginBottom: 2 }}>
             <motion.span
               className="block"
-              initial={{ y: "105%", color: line.sub ? "#4A4A44" : "#2A2A26" }}
+              initial={{ y: "105%", color: line.sub ? "#4A3F32" : "#2F2416" }}
               animate={
                 isInView
-                  ? { y: 0, color: line.sub ? "#7A7A72" : "#EDE9E0" }
+                  ? { y: 0, color: line.sub ? "#8C7B65" : "#F2EDE4" }
                   : {}
               }
               transition={{
@@ -42,7 +42,8 @@ export default function CVManifesto() {
                 color: { duration: 0.8, delay: i * 0.2 },
               }}
               style={{
-                fontFamily: "var(--font-bebas)",
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
                 fontSize: line.sub
                   ? "clamp(24px, 3.5vw, 52px)"
                   : "clamp(40px, 6vw, 88px)",
