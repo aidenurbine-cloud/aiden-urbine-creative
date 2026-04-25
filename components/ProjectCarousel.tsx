@@ -1,63 +1,47 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
-type Slide = {
-  slug: string;
-  client: string;
-  tag: string;
-  location: string;
-  image: string;
-  href: string;
-};
-
-const SLIDES: Slide[] = [
+const projects = [
   {
-    slug: "montana-knife-company",
-    client: "Montana Knife Co",
+    title: "MONTANA KNIFE CO.",
     tag: "Photo + Video",
     location: "Missoula, MT",
     image: "/images/mkc/mkc mexico-376.jpg",
     href: "/work/montana-knife-company",
   },
   {
-    slug: "marin-moto-ranch",
-    client: "Marin Moto Ranch",
+    title: "MARIN MOTO RANCH",
     tag: "Photo + Video",
     location: "Montana",
-    image: "/images/MMR HOMEPAGE.jpg",
+    image: "/images/MMR HOMEPAGE.JPG",
     href: "/work/marin-moto-ranch",
   },
   {
-    slug: "badfish",
-    client: "Badfish SUP",
+    title: "BADFISH SUP",
     tag: "Photo + Video",
     location: "Salida, CO",
     image: "/images/BADFISH homepage opreview.jpg",
     href: "/work/badfish",
   },
   {
-    slug: "rough-country",
-    client: "Rough Country",
+    title: "ROUGH COUNTRY",
     tag: "Photo + Video",
     location: "Nationwide",
     image: "/images/ROUGH COUNTRY BACKGROUND.png",
     href: "/work/rough-country",
   },
   {
-    slug: "turtlebox",
-    client: "Turtlebox",
+    title: "TURTLEBOX",
     tag: "Video",
     location: "Austin, TX",
-    image: "/images/turtlebox/turtlebox-hero.jpg",
+    image: "/images/ROUGH COUNTRY BACKGROUND.png",
     href: "/work/turtlebox",
   },
   {
-    slug: "personal-collection",
-    client: "Personal",
+    title: "PERSONAL",
     tag: "Photo",
     location: "Montana",
     image: "/images/PERSONAL HOMEPAGE.jpg",
@@ -65,320 +49,382 @@ const SLIDES: Slide[] = [
   },
 ];
 
-const CARD_W = "min(70vw, calc(100vw - 80px))";
-const GAP = 16;
-const AUTO_DURATION = 6000;
-const RESUME_DELAY = 3000;
-
-// ── Segment — single progress indicator ──────────────────────────────────────
-
-function Segment({
-  isActive,
-  animKey,
-  isAnimating,
-  userInteracted,
-  onClick,
-  label,
-}: {
-  isActive: boolean;
-  animKey: number;
-  isAnimating: boolean;
-  userInteracted: boolean;
-  onClick: () => void;
-  label: string;
-}) {
-  const fillStyle: React.CSSProperties = userInteracted
-    ? { width: "100%", height: "100%", background: "var(--ember)" }
-    : {
-        width: "0%",
-        height: "100%",
-        background: "var(--ember)",
-        animation: `segmentFill ${AUTO_DURATION}ms linear forwards`,
-        animationPlayState: isAnimating ? "running" : "paused",
-      };
-
-  return (
-    <button
-      aria-label={label}
-      onClick={onClick}
-      style={{
-        height: 2,
-        width: isActive ? 48 : 24,
-        borderRadius: 100,
-        background: isActive ? "transparent" : "rgba(242,237,228,0.2)",
-        border: "none",
-        padding: 0,
-        cursor: "none",
-        position: "relative",
-        overflow: "hidden",
-        flexShrink: 0,
-        transition: "width 0.4s cubic-bezier(0.16,1,0.3,1)",
-      }}
-    >
-      {isActive && (
-        <div key={animKey} style={fillStyle} />
-      )}
-    </button>
-  );
-}
-
-// ── Play / Pause icon ─────────────────────────────────────────────────────────
-
-function PlayPauseIcon({ playing }: { playing: boolean }) {
-  if (playing) {
-    return (
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-        <rect x="1" y="1" width="3" height="8" rx="0.5" fill="var(--bone)" />
-        <rect x="6" y="1" width="3" height="8" rx="0.5" fill="var(--bone)" />
-      </svg>
-    );
-  }
-  return (
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-      <polygon points="2,1 9,5 2,9" fill="var(--bone)" />
-    </svg>
-  );
-}
-
-// ── Carousel card ─────────────────────────────────────────────────────────────
-
-function CarouselCard({
-  slide,
-  index,
-  activeIndex,
-}: {
-  slide: Slide;
-  index: number;
-  activeIndex: number;
-}) {
-  const isActive = index === activeIndex;
-
-  return (
-    <Link
-      href={slide.href}
-      className="carousel-card block relative flex-shrink-0"
-      style={{
-        width: CARD_W,
-        height: "75vh",
-        transform: isActive ? "scale(1)" : "scale(0.95)",
-        transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
-      }}
-    >
-      <Image
-        src={slide.image}
-        alt={slide.client}
-        fill
-        sizes="70vw"
-        className="object-cover"
-        priority={index === 0}
-      />
-
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(26,18,8,0.9) 0%, rgba(26,18,8,0.3) 50%, transparent 100%)",
-          zIndex: 1,
-        }}
-      />
-
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ boxShadow: "inset 0 0 80px rgba(26,18,8,0.4)", zIndex: 2 }}
-      />
-
-      <div className="absolute bottom-0 left-0" style={{ zIndex: 3, padding: 48 }}>
-        <p className="label-text mb-3">{slide.tag}</p>
-
-        <div
-          style={{
-            height: 1,
-            background: "var(--ember)",
-            marginBottom: 16,
-            width: isActive ? 40 : 0,
-            transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)",
-            transitionDelay: isActive ? "0.15s" : "0s",
-          }}
-        />
-
-        <h3
-          className="font-display text-bone uppercase"
-          style={{
-            fontSize: "clamp(56px, 8vw, 110px)",
-            letterSpacing: "-0.01em",
-            lineHeight: 0.9,
-          }}
-        >
-          {slide.client}
-        </h3>
-
-        <p
-          className="mt-3 uppercase"
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "9px",
-            letterSpacing: "0.25em",
-            fontWeight: 300,
-            color: "rgba(242,237,228,0.5)",
-          }}
-        >
-          {slide.location}
-        </p>
-      </div>
-    </Link>
-  );
-}
-
-// ── Main component ────────────────────────────────────────────────────────────
+const LAST = projects.length - 1;
 
 export default function ProjectCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [autoEnabled, setAutoEnabled] = useState(true);
-  const [isHovering, setIsHovering] = useState(false);
-  const [userInteracted, setUserInteracted] = useState(false);
-  const [animKey, setAnimKey] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [fillKey, setFillKey] = useState(0);
 
-  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const dragStartX = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
-  const isAnimating = autoEnabled && !isHovering && !userInteracted;
+  const goTo = useCallback((index: number) => {
+    setCurrent(index);
+    setFillKey((k) => k + 1);
+    setPaused(false);
+  }, []);
 
-  // ── Auto-advance ────────────────────────────────────────────────────────────
+  // Auto-advance
   useEffect(() => {
-    if (!isAnimating) return;
-    const timer = setTimeout(() => {
-      setActiveIndex((i) => (i + 1) % SLIDES.length);
-      setAnimKey((k) => k + 1);
-    }, AUTO_DURATION);
-    return () => clearTimeout(timer);
-  }, [activeIndex, isAnimating]);
-
-  // ── Cleanup resume timer on unmount ─────────────────────────────────────────
-  useEffect(() => {
+    if (paused) return;
+    intervalRef.current = setInterval(() => {
+      setCurrent((c) => {
+        const next = c >= LAST ? 0 : c + 1;
+        setFillKey((k) => k + 1);
+        return next;
+      });
+    }, 6000);
     return () => {
-      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
+  }, [current, paused]);
+
+  // Drag — mouse
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
+    dragStartX.current = e.clientX;
+    isDragging.current = true;
   }, []);
 
-  // ── Manual navigation ───────────────────────────────────────────────────────
-  const goTo = useCallback((i: number) => {
-    setActiveIndex(i);
-    setUserInteracted(true);
-    setAnimKey((k) => k + 1);
+  const onMouseUp = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging.current || dragStartX.current === null) return;
+      isDragging.current = false;
+      const delta = e.clientX - dragStartX.current;
+      dragStartX.current = null;
+      if (Math.abs(delta) < 60) return;
+      if (delta < 0 && current < LAST) goTo(current + 1);
+      if (delta > 0 && current > 0) goTo(current - 1);
+    },
+    [current, goTo]
+  );
 
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    resumeTimerRef.current = setTimeout(() => {
-      setUserInteracted(false);
-      setAnimKey((k) => k + 1);
-    }, RESUME_DELAY);
+  const onMouseLeave = useCallback(() => {
+    isDragging.current = false;
+    dragStartX.current = null;
   }, []);
 
-  // ── Hover handlers ──────────────────────────────────────────────────────────
-  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
-  const handleMouseLeave = useCallback(() => {
-    setIsHovering(false);
-    setAnimKey((k) => k + 1);
+  // Drag — touch
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    dragStartX.current = e.touches[0].clientX;
   }, []);
 
-  // ── Play / Pause toggle ─────────────────────────────────────────────────────
-  const togglePlay = useCallback(() => {
-    setAutoEnabled((prev) => {
-      if (!prev) setAnimKey((k) => k + 1);
-      return !prev;
-    });
-  }, []);
-
-  const translateX = `calc(15vw - ${activeIndex} * (${CARD_W} + ${GAP}px))`;
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (dragStartX.current === null) return;
+      const delta = e.changedTouches[0].clientX - dragStartX.current;
+      dragStartX.current = null;
+      if (Math.abs(delta) < 60) return;
+      if (delta < 0 && current < LAST) goTo(current + 1);
+      if (delta > 0 && current > 0) goTo(current - 1);
+    },
+    [current, goTo]
+  );
 
   return (
     <section
-      className="bg-black"
       style={{
         position: "relative",
-        zIndex: 2,
-        paddingTop: "clamp(48px, 8vw, 96px)",
-        paddingBottom: "clamp(48px, 6vw, 80px)",
+        overflow: "hidden",
+        background: "#1A1208",
+        paddingTop: 80,
+        paddingBottom: 0,
+        userSelect: "none",
       }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       {/* Section heading */}
-      <motion.h2
-        className="font-display text-cream uppercase"
+      <p
         style={{
-          fontSize: "clamp(48px, 6vw, 80px)",
-          letterSpacing: "-0.01em",
-          paddingLeft: "clamp(24px, 5vw, 80px)",
-          marginBottom: "clamp(24px, 4vw, 48px)",
+          fontFamily: "var(--font-mono)",
+          fontSize: "9px",
+          letterSpacing: "0.25em",
+          color: "var(--ember)",
+          textTransform: "uppercase",
+          fontWeight: 300,
+          paddingLeft: 80,
+          marginBottom: 32,
         }}
-        initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        viewport={{ once: true, amount: 0.5 }}
       >
         Selected Work
-      </motion.h2>
+      </p>
 
-      {/* Carousel viewport */}
-      <motion.div
-        style={{ overflow: "hidden" }}
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        viewport={{ once: true, amount: 0.1 }}
+      {/* Track */}
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          willChange: "transform",
+          transition: "transform 0.75s cubic-bezier(0.16,1,0.3,1)",
+          transform: `translateX(calc(-${current} * 100%))`,
+        }}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
-        <div
-          style={{
-            display: "flex",
-            gap: GAP,
-            transform: `translateX(${translateX})`,
-            transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
-            willChange: "transform",
-          }}
-        >
-          {SLIDES.map((slide, i) => (
-            <CarouselCard
-              key={slide.slug}
-              slide={slide}
-              index={i}
-              activeIndex={activeIndex}
-            />
-          ))}
-        </div>
-      </motion.div>
+        {projects.map((project, i) => (
+          <div
+            key={project.title}
+            style={{
+              width: "100%",
+              flexShrink: 0,
+              padding: "0 80px",
+              boxSizing: "border-box",
+            }}
+          >
+            <Link
+              href={project.href}
+              className="carousel-card-inner"
+              style={{
+                display: "block",
+                width: "100%",
+                height: "75vh",
+                position: "relative",
+                cursor: "none",
+              }}
+              draggable={false}
+            >
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 80vw"
+                className="object-cover"
+                priority={i === 0}
+                draggable={false}
+              />
 
-      {/* Floating pill controls */}
+              {/* Gradient overlay */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(to top, rgba(26,18,8,0.92) 0%, rgba(26,18,8,0.3) 50%, transparent 100%)",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                }}
+              />
+
+              {/* Ember bottom line */}
+              <div
+                className="carousel-ember-line"
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  height: 2,
+                  background: "#C84B2A",
+                  zIndex: 3,
+                  pointerEvents: "none",
+                }}
+              />
+
+              {/* View Project label */}
+              <div
+                className="carousel-view-label"
+                style={{
+                  position: "absolute",
+                  bottom: 40,
+                  right: 40,
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "9px",
+                  letterSpacing: "0.25em",
+                  fontWeight: 300,
+                  color: "#F2EDE4",
+                  textTransform: "uppercase",
+                  zIndex: 3,
+                  pointerEvents: "none",
+                }}
+              >
+                View Project →
+              </div>
+
+              {/* Text content */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  padding: 40,
+                  zIndex: 2,
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "9px",
+                    letterSpacing: "0.25em",
+                    fontWeight: 300,
+                    color: "#C84B2A",
+                    textTransform: "uppercase",
+                    marginBottom: 8,
+                  }}
+                >
+                  {project.tag}
+                </p>
+
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "clamp(40px, 6vw, 80px)",
+                    color: "#F2EDE4",
+                    letterSpacing: "-0.01em",
+                    lineHeight: 0.95,
+                    margin: 0,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {project.title}
+                </h3>
+
+                <p
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "9px",
+                    letterSpacing: "0.25em",
+                    fontWeight: 300,
+                    color: "#8C7B65",
+                    textTransform: "uppercase",
+                    marginTop: 10,
+                  }}
+                >
+                  {project.location}
+                </p>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
+
+      {/* Left arrow */}
+      <button
+        aria-label="Previous project"
+        onClick={() => goTo(current - 1)}
+        className="carousel-arrow-btn"
+        style={{
+          position: "absolute",
+          top: "calc(40px + 37.5vh)",
+          left: 96,
+          transform: "translateY(-50%)",
+          width: 44,
+          height: 44,
+          background: "rgba(26,18,8,0.7)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: "0.5px solid rgba(242,237,228,0.15)",
+          color: "#F2EDE4",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "none",
+          zIndex: 10,
+          opacity: current === 0 ? 0 : 1,
+          pointerEvents: current === 0 ? "none" : "auto",
+          transition: "opacity 0.3s ease",
+        }}
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M9 2L4 7L9 12" stroke="#F2EDE4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {/* Right arrow */}
+      <button
+        aria-label="Next project"
+        onClick={() => goTo(current + 1)}
+        className="carousel-arrow-btn"
+        style={{
+          position: "absolute",
+          top: "calc(40px + 37.5vh)",
+          right: 96,
+          transform: "translateY(-50%)",
+          width: 44,
+          height: 44,
+          background: "rgba(26,18,8,0.7)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: "0.5px solid rgba(242,237,228,0.15)",
+          color: "#F2EDE4",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "none",
+          zIndex: 10,
+          opacity: current === LAST ? 0 : 1,
+          pointerEvents: current === LAST ? "none" : "auto",
+          transition: "opacity 0.3s ease",
+        }}
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M5 2L10 7L5 12" stroke="#F2EDE4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {/* Pill */}
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "clamp(20px, 3vw, 32px)",
+          marginTop: 16,
+          paddingBottom: 48,
         }}
       >
         <div
+          className="carousel-pill"
           style={{
             display: "inline-flex",
             alignItems: "center",
             gap: 12,
-            padding: "8px 16px",
-            background: "rgba(26,18,8,0.7)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
+            background: "rgba(26,18,8,0.8)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
             border: "0.5px solid rgba(242,237,228,0.08)",
-            borderRadius: 100,
+            padding: "10px 18px",
           }}
         >
-          {/* Segment indicators */}
+          {/* Progress segments */}
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            {SLIDES.map((slide, i) => (
-              <Segment
-                key={slide.slug}
-                isActive={i === activeIndex}
-                animKey={animKey}
-                isAnimating={isAnimating}
-                userInteracted={userInteracted && i === activeIndex}
+            {projects.map((p, i) => (
+              <button
+                key={p.title}
+                aria-label={`Go to ${p.title}`}
                 onClick={() => goTo(i)}
-                label={`Go to ${slide.client}`}
-              />
+                className="carousel-segment"
+                style={{
+                  height: 2,
+                  width: i === current ? 40 : 18,
+                  background:
+                    i === current
+                      ? "rgba(242,237,228,0.12)"
+                      : "rgba(242,237,228,0.15)",
+                  border: "none",
+                  padding: 0,
+                  cursor: "none",
+                  position: "relative",
+                  flexShrink: 0,
+                  transition: "width 0.4s ease",
+                }}
+              >
+                {i === current && (
+                  <div
+                    key={fillKey}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      height: "100%",
+                      width: "0%",
+                      background: "#C84B2A",
+                      animation: `fillBar 6s linear forwards`,
+                      animationPlayState: paused ? "paused" : "running",
+                    }}
+                  />
+                )}
+              </button>
             ))}
           </div>
 
@@ -386,31 +432,42 @@ export default function ProjectCarousel() {
           <div
             style={{
               width: 1,
-              height: 12,
-              background: "rgba(242,237,228,0.15)",
+              height: 10,
+              background: "rgba(242,237,228,0.1)",
+              margin: "0 4px",
               flexShrink: 0,
             }}
           />
 
-          {/* Play / Pause button */}
+          {/* Pause / Play */}
           <button
-            aria-label={autoEnabled ? "Pause auto-scroll" : "Play auto-scroll"}
-            onClick={togglePlay}
+            aria-label={paused ? "Play" : "Pause"}
+            onClick={() => setPaused((p) => !p)}
+            className="carousel-pause-btn"
             style={{
               width: 28,
               height: 28,
-              borderRadius: "50%",
-              border: "0.5px solid rgba(242,237,228,0.2)",
+              border: "0.5px solid rgba(242,237,228,0.15)",
               background: "transparent",
-              cursor: "none",
+              color: "rgba(242,237,228,0.7)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              cursor: "none",
               flexShrink: 0,
-              transition: "border-color 0.2s ease",
+              transition: "color 0.2s ease",
             }}
           >
-            <PlayPauseIcon playing={autoEnabled} />
+            {paused ? (
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <polygon points="2,1 9,5 2,9" fill="currentColor" />
+              </svg>
+            ) : (
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <rect x="1" y="1" width="3" height="8" rx="0" fill="currentColor" />
+                <rect x="6" y="1" width="3" height="8" rx="0" fill="currentColor" />
+              </svg>
+            )}
           </button>
         </div>
       </div>

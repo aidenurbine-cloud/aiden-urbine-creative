@@ -61,14 +61,39 @@ body {
   font-weight: 300;
 }
 
+/* Cursor dot + ring — root-level override beats * { border-radius: 0 !important } via specificity */
+div.cursor-dot  { border-radius: 50% !important; }
+div.cursor-ring { border-radius: 50% !important; }
+
+/* Marquee dot — same fix */
+span.marquee-dot { border-radius: 50% !important; }
+
 /* Thin ember scrollbar */
 ::-webkit-scrollbar { width: 2px; }
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--ember); }
 
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-6px); }
+}
+
+@keyframes fillBar {
+  from { width: 0% }
+  to   { width: 100% }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0) }
+  to   { transform: translateX(-50%) }
 }
 
 @layer utilities {
@@ -94,6 +119,25 @@ body {
     border-radius: 6px !important;
     overflow: hidden;
   }
+
+  /* Carousel — override global border-radius: 0 !important */
+  .carousel-pill      { border-radius: 100px !important; }
+  .carousel-segment   { border-radius: 100px !important; overflow: hidden; }
+  .carousel-card-inner { border-radius: 8px !important; overflow: hidden; }
+  .carousel-pause-btn { border-radius: 50% !important; }
+  .carousel-arrow-btn { border-radius: 50% !important; }
+
+  /* Card hover effects */
+  .carousel-card-inner { filter: brightness(1); transition: filter 0.3s ease; }
+  .carousel-card-inner:hover { filter: brightness(1.12); }
+  .carousel-ember-line { width: 0%; transition: width 0.4s ease; }
+  .carousel-card-inner:hover .carousel-ember-line { width: 100%; }
+  .carousel-view-label { opacity: 0; transition: opacity 0.3s ease; }
+  .carousel-card-inner:hover .carousel-view-label { opacity: 1; }
+
+  /* Gallery image hover */
+  .gallery-img { filter: brightness(1); }
+  .gallery-img:hover { filter: brightness(0.85); }
 
   .grain-overlay {
     position: relative;

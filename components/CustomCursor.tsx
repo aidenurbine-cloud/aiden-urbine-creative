@@ -1,93 +1,81 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const dotX = useMotionValue(-100);
-  const dotY = useMotionValue(-100);
-  const ringX = useMotionValue(-132);
-  const ringY = useMotionValue(-132);
-  const [hovered, setHovered] = useState(false);
-  const rafRef = useRef<number>(0);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let targetX = -100;
-    let targetY = -100;
-    let curX = -132;
-    let curY = -132;
+    let tx = -200, ty = -200;
+    let rx = -200, ry = -200;
+    let rafId: number;
 
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    function lerp(a: number, b: number, t: number) {
+      return a + (b - a) * t;
+    }
 
-    const tick = () => {
-      curX = lerp(curX, targetX - 32, 0.12);
-      curY = lerp(curY, targetY - 32, 0.12);
-      ringX.set(curX);
-      ringY.set(curY);
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
+    function tick() {
+      rx = lerp(rx, tx, 0.1);
+      ry = lerp(ry, ty, 0.1);
+      if (ringRef.current) {
+        ringRef.current.style.left = rx + "px";
+        ringRef.current.style.top = ry + "px";
+      }
+      rafId = requestAnimationFrame(tick);
+    }
 
-    const onMove = (e: MouseEvent) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      dotX.set(e.clientX - 3);
-      dotY.set(e.clientY - 3);
-    };
-    const onEnter = (e: MouseEvent) => {
-      if ((e.target as Element).closest("a, button")) setHovered(true);
-    };
-    const onLeave = (e: MouseEvent) => {
-      if ((e.target as Element).closest("a, button")) setHovered(false);
-    };
+    rafId = requestAnimationFrame(tick);
+
+    function onMove(e: MouseEvent) {
+      if (dotRef.current) {
+        dotRef.current.style.left = e.clientX + "px";
+        dotRef.current.style.top = e.clientY + "px";
+      }
+      tx = e.clientX;
+      ty = e.clientY;
+    }
 
     document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseover", onEnter);
-    document.addEventListener("mouseout", onLeave);
-
     return () => {
-      cancelAnimationFrame(rafRef.current);
       document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseover", onEnter);
-      document.removeEventListener("mouseout", onLeave);
+      cancelAnimationFrame(rafId);
     };
-  }, [dotX, dotY, ringX, ringY]);
+  }, []);
 
   return (
     <>
-      {/* Dot — snaps exactly to cursor */}
-      <motion.div
-        className="fixed pointer-events-none"
+      <div
+        ref={dotRef}
+        className="cursor-dot"
         style={{
-          x: dotX,
-          y: dotY,
-          top: 0,
-          left: 0,
+          position: "fixed",
+          top: "-200px",
+          left: "-200px",
           width: 6,
           height: 6,
           borderRadius: "50%",
           background: "#C84B2A",
+          pointerEvents: "none",
           zIndex: 99999,
+          transform: "translate(-50%, -50%)",
         }}
       />
-      {/* Ring — lerps behind at 0.12, grows on hover */}
-      <motion.div
-        className="fixed pointer-events-none"
-        animate={{
-          scale: hovered ? 1 : 0.5,
-          borderColor: hovered ? "#C84B2A" : "rgba(200,75,42,0.35)",
-        }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
+      <div
+        ref={ringRef}
+        className="cursor-ring"
         style={{
-          x: ringX,
-          y: ringY,
-          top: 0,
-          left: 0,
-          width: 64,
-          height: 64,
+          position: "fixed",
+          top: "-200px",
+          left: "-200px",
+          width: 32,
+          height: 32,
           borderRadius: "50%",
-          border: "1px solid rgba(200,75,42,0.35)",
+          border: "1px solid rgba(200,75,42,0.4)",
+          background: "transparent",
+          pointerEvents: "none",
           zIndex: 99998,
+          transform: "translate(-50%, -50%)",
         }}
       />
     </>

@@ -16,7 +16,9 @@
       "Bash(/opt/homebrew/bin/node node_modules/.bin/next build)",
       "Bash(npm run:*)",
       "Bash(npx next:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(grep -E '\\\\.\\(jpg|jpeg|png|webp\\)$')",
+      "Bash(xargs -I {} basename {})"
     ]
   }
 }

@@ -17,9 +17,21 @@ type ClientEntry = {
 const clients: ClientEntry[] = [
   {
     name: "Montana Knife Company",
+    tag: "Product Photo + Video",
+    href: "/work/mkc",
+    image: "/images/MKC GALLERY/MKC GRAND OPENING TURTLEBOX.jpg",
+  },
+  {
+    name: "Rough Country",
     tag: "Photo + Video",
-    href: "/work/montana-knife-company",
-    image: "/images/mkc/mkc.JPEG",
+    href: "/work/rough-country",
+    image: "/images/ROUGH COUNTRY GALLERY/AIDEN URBINE X RC.jpg",
+  },
+  {
+    name: "Badfish SUP",
+    tag: "Photo + Video",
+    href: "/work/badfish",
+    image: "/images/BADFISH homepage opreview.jpg",
   },
   {
     name: "Marin Moto Ranch",
@@ -28,15 +40,15 @@ const clients: ClientEntry[] = [
     image: "/images/MMR HOMEPAGE.jpg",
   },
   {
+    name: "Personal",
+    tag: "Personal Collection",
+    href: "/work/personal",
+    image: "/images/PERSONAL HOMEPAGE.jpg",
+  },
+  {
     name: "Forrest Tool Co",
     tag: "Photo",
     href: "/work/forrest-tool",
-  },
-  {
-    name: "Badfish SUP",
-    tag: "Photo + Video",
-    href: "/work/badfish",
-    image: "/images/BADFISH homepage opreview.jpg",
   },
   {
     name: "Surf Hotel BV",
@@ -52,11 +64,6 @@ const clients: ClientEntry[] = [
     name: "Ark Valley Welding",
     tag: "Photo",
     href: "/work/ark-valley",
-  },
-  {
-    name: "Rough Country",
-    tag: "Photo + Video",
-    href: "/work/rough-country",
   },
   {
     name: "Turtlebox",
