@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
-import CVProgress from "@/components/cv/CVProgress";
 
 export const metadata: Metadata = {
   title: "Aiden Urbine Creative",
@@ -19,12 +18,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Rufina:wght@400;700&family=IM+Fell+English:ital@1&family=DM+Mono:wght@300&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-black text-bone antialiased">
-        <CVProgress />
+      <body style={{ background: "var(--bg)", color: "var(--bone)" }}>
         <CustomCursor />
         {children}
       </body>

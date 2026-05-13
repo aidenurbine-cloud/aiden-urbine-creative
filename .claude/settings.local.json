@@ -18,7 +18,37 @@
       "Bash(npx next:*)",
       "Bash(python3:*)",
       "Bash(grep -E '\\\\.\\(jpg|jpeg|png|webp\\)$')",
-      "Bash(xargs -I {} basename {})"
+      "Bash(xargs -I {} basename {})",
+      "Bash(xargs ls *)",
+      "Bash(rm -f components/AboutPreview.tsx components/ClientStrip.tsx components/CTAButton.tsx components/CustomCursor.tsx components/Footer.tsx components/HeroSection.tsx components/ManifestoSection.tsx components/Nav.tsx components/OriginSection.tsx components/PortfolioReel.tsx components/ProjectCarousel.tsx components/ProjectGallery.tsx components/PullQuote.tsx components/ScrollHint.tsx components/ScrollRevealSection.tsx components/SectionBridge.tsx components/ServicesStrip.tsx components/StatementSection.tsx components/WorkCard.tsx components/projects.ts)",
+      "Bash(rm -rf components/cv/)",
+      "Bash(rm -rf app/about/ app/contact/ app/cv/)",
+      "Bash(rm -f app/work/badfish/page.tsx app/work/mkc/page.tsx app/work/marin-moto-ranch/page.tsx app/work/personal/page.tsx app/work/rough-country/page.tsx)",
+      "Bash(rmdir app/work/badfish)",
+      "Bash(npm run *)",
+      "Read(//tmp/**)",
+      "Bash(curl -s http://localhost:3001/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" http://localhost:3001/home)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" -H \"Cookie: auc-access=true\" http://localhost:3001/home)",
+      "Bash(curl -s -H \"Cookie: auc-access=true\" http://localhost:3001/home)",
+      "Bash(curl -s -H \"Cookie: auc-access=true\" http://localhost:3001/work/mkc)",
+      "Bash(curl -s -H \"Cookie: auc-access=true\" http://localhost:3001/work/badfish)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3001/home)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -H \"Cookie: auc-access=true\" http://localhost:3001/home)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/home)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -H \"Cookie: auc-access=true\" http://localhost:3000/home)",
+      "mcp__stitch__create_project",
+      "mcp__stitch__generate_screen_from_text",
+      "mcp__stitch__list_screens",
+      "mcp__stitch__get_screen",
+      "WebFetch(domain:contribution.usercontent.google.com)",
+      "Bash(curl -s \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2RmOGU4ZTk2N2MyYzRhMzA4NDcyMGYyMTQ5YTM3Y2E2EgsSBxCx_uDXuAQYAZIBIwoKcHJvamVjdF9pZBIVQhMyODY3MzM4Njg1ODI3NzAyNDU4&filename=&opi=89354086\")",
+      "WebFetch(domain:lh3.googleusercontent.com)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "stitch"
+  ]
 }

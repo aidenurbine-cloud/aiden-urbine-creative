@@ -3,74 +3,31 @@
 @tailwind utilities;
 
 :root {
-  /* Faded West — semantic palette */
-  --bg-primary:    #F2EDE4;
-  --bg-secondary:  #E0D5C5;
-  --bg-tertiary:   #D4C4AE;
-  --bg-dark:       #1A1208;
-  --text-primary:  #1A1208;
-  --text-secondary:#4A3F32;
-  --text-muted:    #8C7B65;
-  --text-light:    #F2EDE4;
-  --border-primary:#C4B49A;
-  --border-subtle: #E0D5C5;
-  --ember:         #C84B2A;
-  --amber:         #D4914A;
+  --bg:      #0E0B08;
+  --bg-2:    #171209;
+  --bone:    #F2EDE4;
+  --muted:   #8C7B65;
+  --ember:   #C84B2A;
+  --border:  rgba(242,237,228,0.08);
 
-  /* Convenience aliases — used throughout components */
-  --black:         #1A1208;
-  --black-warm:    #1A1208;
-  --charcoal:      #1A1208;
-  --ash:           #2F2416;
-  --bone:          #F2EDE4;
-  --cream:         #F2EDE4;
-  --gold:          #B8972A;
-
-  /* Fonts */
-  --font-display: 'Rufina', serif;
-  --font-body:    'IM Fell English', serif;
+  --font-display: 'DM Sans', sans-serif;
   --font-mono:    'DM Mono', monospace;
 }
 
-html,
-body {
-  background-color: var(--black);
+html, body {
+  background-color: var(--bg);
   color: var(--bone);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 * {
-  border-radius: 0 !important;
   box-sizing: border-box;
   cursor: none !important;
 }
 
-/* Explicit font-family overrides */
-.font-display {
-  font-family: var(--font-display);
-  font-weight: 700;
-  text-shadow: 0 1px 20px rgba(200, 75, 42, 0.15);
-}
-.font-body {
-  font-family: var(--font-body);
-  font-style: italic;
-}
-.font-mono {
-  font-family: var(--font-mono);
-  font-weight: 300;
-}
-
-/* Cursor dot + ring — root-level override beats * { border-radius: 0 !important } via specificity */
-div.cursor-dot  { border-radius: 50% !important; }
-div.cursor-ring { border-radius: 50% !important; }
-
-/* Marquee dot — same fix */
-span.marquee-dot { border-radius: 50% !important; }
-
-/* Thin ember scrollbar */
 ::-webkit-scrollbar { width: 2px; }
-::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--ember); }
 
 @keyframes shake {
@@ -81,80 +38,17 @@ span.marquee-dot { border-radius: 50% !important; }
   80%       { transform: translateX(4px); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
 }
 
-@keyframes fillBar {
-  from { width: 0% }
-  to   { width: 100% }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes marquee {
-  from { transform: translateX(0) }
-  to   { transform: translateX(-50%) }
-}
-
-@layer utilities {
-  .label-text {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    color: var(--ember);
-    text-transform: uppercase;
-    font-weight: 300;
-  }
-
-  .manifesto-body {
-    font-family: var(--font-body);
-    font-size: 19px;
-    font-style: italic;
-    color: var(--bone);
-    line-height: 1.95;
-  }
-
-  /* Carousel card — overrides the global border-radius: 0 !important */
-  .carousel-card {
-    border-radius: 6px !important;
-    overflow: hidden;
-  }
-
-  /* Carousel — override global border-radius: 0 !important */
-  .carousel-pill      { border-radius: 100px !important; }
-  .carousel-segment   { border-radius: 100px !important; overflow: hidden; }
-  .carousel-card-inner { border-radius: 8px !important; overflow: hidden; }
-  .carousel-pause-btn { border-radius: 50% !important; }
-  .carousel-arrow-btn { border-radius: 50% !important; }
-
-  /* Card hover effects */
-  .carousel-card-inner { filter: brightness(1); transition: filter 0.3s ease; }
-  .carousel-card-inner:hover { filter: brightness(1.12); }
-  .carousel-ember-line { width: 0%; transition: width 0.4s ease; }
-  .carousel-card-inner:hover .carousel-ember-line { width: 100%; }
-  .carousel-view-label { opacity: 0; transition: opacity 0.3s ease; }
-  .carousel-card-inner:hover .carousel-view-label { opacity: 1; }
-
-  /* Gallery image hover */
-  .gallery-img { filter: brightness(1); }
-  .gallery-img:hover { filter: brightness(0.85); }
-
-  .grain-overlay {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .grain-overlay::after {
-    content: "";
-    position: absolute;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-    pointer-events: none;
-    z-index: 10;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 200px 200px;
-  }
+@keyframes scrollPulse {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%       { transform: translateY(4px); opacity: 0.8; }
 }

@@ -7,38 +7,54 @@ export default function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let tx = -200, ty = -200;
-    let rx = -200, ry = -200;
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
+
+    let mouseX = -100, mouseY = -100;
+    let ringX = -100, ringY = -100;
     let rafId: number;
 
-    function lerp(a: number, b: number, t: number) {
-      return a + (b - a) * t;
-    }
+    const onMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = `${mouseX}px`;
+      dot.style.top = `${mouseY}px`;
+    };
 
-    function tick() {
-      rx = lerp(rx, tx, 0.1);
-      ry = lerp(ry, ty, 0.1);
-      if (ringRef.current) {
-        ringRef.current.style.left = rx + "px";
-        ringRef.current.style.top = ry + "px";
+    const onOver = (e: MouseEvent) => {
+      if ((e.target as Element).closest("a, button, [role='button']")) {
+        ring.style.width = "56px";
+        ring.style.height = "56px";
+        ring.style.borderColor = "#C84B2A";
       }
-      rafId = requestAnimationFrame(tick);
-    }
+    };
 
-    rafId = requestAnimationFrame(tick);
-
-    function onMove(e: MouseEvent) {
-      if (dotRef.current) {
-        dotRef.current.style.left = e.clientX + "px";
-        dotRef.current.style.top = e.clientY + "px";
+    const onOut = (e: MouseEvent) => {
+      if (!(e.relatedTarget as Element | null)?.closest("a, button, [role='button']")) {
+        ring.style.width = "32px";
+        ring.style.height = "32px";
+        ring.style.borderColor = "rgba(200,75,42,0.35)";
       }
-      tx = e.clientX;
-      ty = e.clientY;
-    }
+    };
+
+    const animate = () => {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = `${ringX}px`;
+      ring.style.top = `${ringY}px`;
+      rafId = requestAnimationFrame(animate);
+    };
 
     document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseover", onOver);
+    document.addEventListener("mouseout", onOut);
+    rafId = requestAnimationFrame(animate);
+
     return () => {
       document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseover", onOver);
+      document.removeEventListener("mouseout", onOut);
       cancelAnimationFrame(rafId);
     };
   }, []);
@@ -47,11 +63,8 @@ export default function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className="cursor-dot"
         style={{
           position: "fixed",
-          top: "-200px",
-          left: "-200px",
           width: 6,
           height: 6,
           borderRadius: "50%",
@@ -59,23 +72,25 @@ export default function CustomCursor() {
           pointerEvents: "none",
           zIndex: 99999,
           transform: "translate(-50%, -50%)",
+          top: -100,
+          left: -100,
         }}
       />
       <div
         ref={ringRef}
-        className="cursor-ring"
         style={{
           position: "fixed",
-          top: "-200px",
-          left: "-200px",
           width: 32,
           height: 32,
           borderRadius: "50%",
-          border: "1px solid rgba(200,75,42,0.4)",
+          border: "1px solid rgba(200,75,42,0.35)",
           background: "transparent",
           pointerEvents: "none",
           zIndex: 99998,
           transform: "translate(-50%, -50%)",
+          transition: "width 0.3s ease, height 0.3s ease, border-color 0.3s ease",
+          top: -100,
+          left: -100,
         }}
       />
     </>
