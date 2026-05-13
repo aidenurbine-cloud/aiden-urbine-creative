@@ -348,7 +348,7 @@ function Hero() {
         }}
       >
         <Image
-          src="/images/hero.jpg"
+          src="/images/hero.JPG"
           alt=""
           fill
           priority
