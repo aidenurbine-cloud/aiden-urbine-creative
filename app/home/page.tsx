@@ -207,7 +207,7 @@ function Nav() {
       </span>
 
       <div style={{ display: "flex", gap: "40px" }}>
-        {(["Work", "About", "Contact"] as const).map((label) => (
+        {(["Work", "Contact"] as const).map((label) => (
           <Link
             key={label}
             href={`/${label.toLowerCase()}`}
@@ -375,34 +375,6 @@ function Hero() {
           ref={layer1Ref}
           style={{ ...layerBase, opacity: 1 }}
         >
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "6px 14px",
-              borderRadius: "999px",
-              border: "1px solid rgba(242,237,228,0.1)",
-              background: "rgba(242,237,228,0.08)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              marginBottom: "32px",
-            }}
-          >
-            <span style={{ color: "#C84B2A", fontSize: "8px", lineHeight: "1" }}>●</span>
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "10px",
-                color: "#8C7B65",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-              }}
-            >
-              Missoula, Montana
-            </span>
-          </div>
-
           <h1
             className="hero-name"
             style={{
@@ -778,230 +750,6 @@ function WorkGrid() {
   );
 }
 
-// ─── About ───────────────────────────────────────────────────────
-function About() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  const scrollToWork = () =>
-    document.getElementById("work-section")?.scrollIntoView({ behavior: "smooth" });
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(28px)";
-    el.style.transition = "opacity 0.8s ease, transform 0.8s ease";
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        el.style.opacity = "1";
-        el.style.transform = "translateY(0)";
-        observer.disconnect();
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <section style={{ background: "#0E0B08", padding: "100px 56px", width: "100%" }}>
-      <div ref={sectionRef}>
-
-        {/* ── TOP ROW: portrait | bio + stats ── */}
-        <div style={{
-          background: "rgba(242,237,228,0.02)",
-          border: "1px solid rgba(242,237,228,0.06)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderRadius: 16,
-          padding: "36px 40px",
-          marginBottom: 8,
-        }}>
-        <div className="about-top" style={{ display: "flex", gap: 48, alignItems: "flex-start" }}>
-
-          {/* Portrait */}
-          <div style={{
-            width: 340,
-            flexShrink: 0,
-            position: "relative",
-            aspectRatio: "3/4",
-            overflow: "hidden",
-            borderRadius: 12,
-            boxShadow: "0 24px 48px rgba(0,0,0,0.5)",
-          }}>
-            <Image
-              src="/images/aiden-portrait.jpg"
-              alt="Aiden Urbine"
-              fill
-              sizes="340px"
-              style={{ objectFit: "cover", objectPosition: "center 15%" }}
-            />
-          </div>
-
-          {/* Bio + stats */}
-          <div style={{ flex: 1 }}>
-            <p style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "9px",
-              color: "#C84B2A",
-              textTransform: "uppercase",
-              letterSpacing: "0.25em",
-              margin: "0 0 16px",
-            }}>
-              About
-            </p>
-            <h2 style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "clamp(40px, 5vw, 64px)",
-              color: "#F2EDE4",
-              margin: "0 0 24px",
-              lineHeight: 1.0,
-              letterSpacing: "-0.02em",
-            }}>
-              Aiden Urbine
-            </h2>
-            <p style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              fontSize: "17px",
-              color: "rgba(242,237,228,0.7)",
-              lineHeight: 1.85,
-              maxWidth: 640,
-              margin: "0 0 48px",
-            }}>
-              From Buena Vista, Colorado. Now based in Missoula, MT. I shoot photo
-              and video for outdoor brands that actually mean something.
-              Grew up on the Arkansas River watching my dad kayak and shoot.
-              That&apos;s still what drives me. Deeply rooted in surf and
-              whitewater culture, endlessly inspired by the West.
-            </p>
-
-            {/* Stats — inline pipe-separated */}
-            <p style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "9px",
-              color: "#8C7B65",
-              textTransform: "uppercase",
-              letterSpacing: "0.2em",
-              lineHeight: 2,
-              margin: 0,
-            }}>
-              12+ Years Behind a Lens
-              <span style={{ color: "rgba(200,75,42,0.4)", margin: "0 12px" }}>|</span>
-              5 Shooting States
-              <span style={{ color: "rgba(200,75,42,0.4)", margin: "0 12px" }}>|</span>
-              ∞ Miles of Dirt Roads
-              <span style={{ color: "rgba(200,75,42,0.4)", margin: "0 12px" }}>|</span>
-              1 Eye That Matters
-            </p>
-          </div>
-        </div>
-        </div>
-
-        {/* ── IMAGE STACK ──────────────────────────────────── */}
-        <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
-          <div className="about-img-cell" style={{
-            position: "relative",
-            height: 480,
-            overflow: "hidden",
-            borderRadius: 12,
-          }}>
-            <Image
-              src="/images/personal-gallery/honest%20story.JPG"
-              alt=""
-              fill
-              sizes="100vw"
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-          <div className="about-img-cell" style={{
-            position: "relative",
-            height: 480,
-            overflow: "hidden",
-            borderRadius: 12,
-          }}>
-            <Image
-              src="/images/personal-gallery/real%20light.JPG"
-              alt=""
-              fill
-              sizes="100vw"
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-        </div>
-
-        {/* ── CTA ROW ──────────────────────────────────────── */}
-        <div style={{
-          marginTop: 40,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 16,
-        }}>
-          <p style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 300,
-            fontStyle: "italic",
-            fontSize: "15px",
-            color: "#8C7B65",
-            margin: 0,
-            textAlign: "center",
-          }}>
-            Currently based in Missoula, Montana. Available for projects.
-          </p>
-          <div style={{ display: "flex", gap: 12 }}>
-            <button
-              onClick={scrollToWork}
-              className="about-cta-work"
-              style={{
-                fontFamily: "var(--font-body)",
-                fontWeight: 500,
-                fontSize: "13px",
-                color: "#F2EDE4",
-                background: "rgba(242,237,228,0.08)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                border: "1px solid rgba(242,237,228,0.15)",
-                borderRadius: "100px",
-                padding: "12px 28px",
-                cursor: "pointer",
-              }}
-            >
-              View Work →
-            </button>
-            <a
-              href="https://instagram.com/urbineaiden"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="about-cta-ig"
-              style={{
-                fontFamily: "var(--font-body)",
-                fontWeight: 500,
-                fontSize: "13px",
-                color: "#C84B2A",
-                background: "rgba(200,75,42,0.1)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                border: "1px solid rgba(200,75,42,0.25)",
-                borderRadius: "100px",
-                padding: "12px 28px",
-                textDecoration: "none",
-                display: "inline-block",
-              }}
-            >
-              @urbineaiden
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
 // ─── Footer ──────────────────────────────────────────────────────
 function Footer() {
   return (
@@ -1048,7 +796,7 @@ function Footer() {
         </a>
 
         <a
-          href="mailto:aiden@aidenurbine.co"
+          href="mailto:aiden@aidenurbine.com"
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: "9px",
@@ -1060,7 +808,7 @@ function Footer() {
           onMouseEnter={(e) => (e.currentTarget.style.color = "var(--bone)")}
           onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
         >
-          aiden@aidenurbine.co
+          aiden@aidenurbine.com
         </a>
       </div>
     </footer>
@@ -1076,8 +824,6 @@ export default function HomePage() {
       <Hero />
       <EmberLine />
       <WorkGrid />
-      <EmberLine />
-      <About />
       <Footer />
       <style>{`
         @media (max-width: 768px) {
@@ -1088,14 +834,7 @@ export default function HomePage() {
             align-items: center !important;
             text-align: center !important;
           }
-          .about-top { flex-direction: column !important; }
         }
-        .about-img-cell img { transition: transform 0.4s ease, filter 0.4s ease; }
-        .about-img-cell:hover img { transform: scale(1.02); filter: brightness(1.08); }
-        .about-cta-work { transition: all 0.3s ease; }
-        .about-cta-work:hover { background: rgba(242,237,228,0.15) !important; }
-        .about-cta-ig { transition: all 0.3s ease; }
-        .about-cta-ig:hover { background: rgba(200,75,42,0.2) !important; }
       `}</style>
     </main>
   );

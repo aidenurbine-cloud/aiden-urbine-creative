@@ -74,7 +74,7 @@ export default function ContactClient() {
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\nProject Type: ${projectType}\n\nMessage:\n${message}`
     );
-    window.location.href = `mailto:aidenurbine@icloud.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:aiden@aidenurbine.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -196,8 +196,8 @@ export default function ContactClient() {
             {[
               {
                 label: "Email",
-                value: "aidenurbine@icloud.com",
-                href: "mailto:aidenurbine@icloud.com",
+                value: "aiden@aidenurbine.com",
+                href: "mailto:aiden@aidenurbine.com",
               },
               {
                 label: "Instagram",
