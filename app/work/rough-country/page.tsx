@@ -2,45 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import Gallery, { GalleryItem } from "@/components/Gallery";
 
-const RC_PATTERN = [
-  { height: "75vh", count: 1, flexes: [1] },
-  { height: "58vh", count: 2, flexes: [0.6, 0.4] },
-  { height: "52vh", count: 3, flexes: [1, 1, 1] },
-  { height: "65vh", count: 1, flexes: [1] },
-  { height: "60vh", count: 2, flexes: [0.4, 0.6] },
-  { height: "55vh", count: 2, flexes: [1, 1] },
-];
-
 const IMAGES: GalleryItem[] = [
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-2.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-3.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-4.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-5.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-6.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-7.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-8.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-9.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-10.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-11.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-12.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-13.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-14.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-15.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-16.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-17.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC-18.jpg", alt: "Rough Country" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-2.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-3.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-4.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-5.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-6.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-7.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-8.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/AIDENURBINE_TRUCK_APRIL%20SNOW-9.jpg", alt: "Rough Country — Truck" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/HEADSHOT.jpg", alt: "Rough Country — Portrait" },
-  { type: "image", src: "/images/ROUGH%20COUNTRY%20GALLERY/SUNRISE.jpg", alt: "Rough Country — Sunrise" },
+  { type: "image", src: "/images/rough-country-gallery/1.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/2.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/3.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/4.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/5.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/6.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/7.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/8.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/9.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/10.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/11.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/12.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/13.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/14.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/15.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/16.jpg", alt: "Rough Country" },
 ];
 
 export const metadata = {
@@ -57,15 +35,16 @@ export default function RoughCountryPage() {
           width: "100%",
           height: "100vh",
           overflow: "hidden",
+          background: "#0E0B08",
         }}
       >
         <Image
-          src="/images/ROUGH%20COUNTRY%20GALLERY/AIDEN%20URBINE%20X%20RC.jpg"
+          src="/images/preview/rough-country-preview.png"
           alt="Rough Country"
           fill
           priority
           sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: "center" }}
+          style={{ objectFit: "cover", objectPosition: "center 20%" }}
         />
 
         {/* Bottom gradient only */}
@@ -106,12 +85,12 @@ export default function RoughCountryPage() {
           <h1
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 500,
+              fontWeight: 700,
               fontSize: "clamp(64px, 10vw, 140px)",
               color: "#F2EDE4",
               lineHeight: 0.88,
               margin: 0,
-              letterSpacing: "-0.01em",
+              letterSpacing: "-0.02em",
             }}
           >
             ROUGH COUNTRY
@@ -119,13 +98,13 @@ export default function RoughCountryPage() {
 
           <p
             style={{
-              fontFamily: "var(--font-display)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "16px",
               color: "#8C7B65",
               margin: "14px 0 10px",
               maxWidth: 480,
-              lineHeight: 1.5,
+              lineHeight: 1.85,
             }}
           >
             Current brand ambassador. My truck is my homebase so shooting for
@@ -154,7 +133,6 @@ export default function RoughCountryPage() {
           clientName="ROUGH COUNTRY"
           tag="Photo + Video"
           location="Nationwide"
-          rowPattern={RC_PATTERN}
         />
       </div>
 

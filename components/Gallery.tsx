@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 
@@ -17,189 +17,147 @@ interface GalleryProps {
   clientName: string;
   tag: string;
   location: string;
-  rowPattern?: RowPattern;
 }
 
-// 12-item repeating pattern. Each entry describes one row.
-// Positions not listed are consumed individually as full-width fallback.
-const PATTERN: Array<{ height: string; count: number; flexes: number[] }> = [
-  { height: "85vh", count: 1, flexes: [1] },
-  { height: "65vh", count: 2, flexes: [0.6, 0.4] },
-  { height: "85vh", count: 1, flexes: [1] },
-  { height: "60vh", count: 3, flexes: [1, 1, 1] },
-  { height: "65vh", count: 2, flexes: [0.65, 0.35] },
-  { height: "85vh", count: 1, flexes: [1] },
-  { height: "65vh", count: 2, flexes: [1, 1] },
-];
-
-type RowPattern = Array<{ height: string; count: number; flexes: number[] }>;
-
-function buildRows(items: GalleryItem[], pattern: RowPattern) {
-  const rows: Array<{
-    height: string;
-    flexes: number[];
-    items: GalleryItem[];
-    startIndex: number;
-  }> = [];
-
-  const cycleLen = pattern.reduce((sum, p) => sum + p.count, 0);
-  let i = 0;
-  while (i < items.length) {
-    const cyclePos = i % cycleLen;
-    let patternRow = pattern[pattern.length - 1];
-    let consumed = 0;
-    for (const p of pattern) {
-      if (cyclePos === consumed) {
-        patternRow = p;
-        break;
-      }
-      consumed += p.count;
-    }
-
-    const slice = items.slice(i, i + patternRow.count);
-    if (slice.length === 0) break;
-
-    rows.push({
-      height: patternRow.height,
-      flexes: patternRow.flexes.slice(0, slice.length),
-      items: slice,
-      startIndex: i,
-    });
-    i += slice.length;
-  }
-  return rows;
+const GALLERY_CSS = `
+.gallery-container {
+  columns: 2;
+  column-gap: 6px;
+  padding: 6px;
+  background: #0E0B08;
+  width: 100%;
 }
-
-function PlayIcon() {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        pointerEvents: "none",
-      }}
-    >
-      <div
-        style={{
-          width: 48,
-          height: 48,
-          borderRadius: "50%",
-          background: "rgba(26,18,8,0.6)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-          border: "1px solid rgba(242,237,228,0.2)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <polygon points="5,3 13,8 5,13" fill="#F2EDE4" />
-        </svg>
-      </div>
-    </div>
-  );
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 6px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
 }
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-position: center 20%;
+  transition: transform 0.6s ease, filter 0.4s ease;
+}
+`;
 
-function GridSlot({
+function MasonryItem({
   item,
-  flex,
-  height,
+  index,
   onClick,
-  globalIndex,
 }: {
   item: GalleryItem;
-  flex: number;
-  height: string;
+  index: number;
   onClick: () => void;
-  globalIndex: number;
 }) {
   const [hovered, setHovered] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = wrapperRef.current;
+    const el = ref.current;
     if (!el) return;
     el.style.opacity = "0";
-    el.style.transform = "translateY(20px)";
+    el.style.transform = "translateY(16px)";
     el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        el.style.transitionDelay = `${(globalIndex % 3) * 0.1}s`;
+        el.style.transitionDelay = `${index * 0.05}s`;
         el.style.opacity = "1";
         el.style.transform = "translateY(0)";
         observer.disconnect();
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [globalIndex]);
+  }, [index]);
+
+  if (item.type === "video" && item.vimeoId) {
+    return (
+      <div
+        ref={ref}
+        className="gallery-item"
+        onClick={onClick}
+      >
+        <iframe
+          src={`https://player.vimeo.com/video/${item.vimeoId}?background=1&autoplay=1&loop=1&muted=1`}
+          frameBorder={0}
+          allow="autoplay"
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "177.78%",
+            height: "100%",
+            transform: "translate(-50%, -50%)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: "50%",
+              background: "rgba(26,18,8,0.6)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              border: "1px solid rgba(242,237,228,0.2)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <polygon points="5,3 13,8 5,13" fill="#F2EDE4" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
-      ref={wrapperRef}
-      style={{
-        position: "relative",
-        flex,
-        height,
-        overflow: "hidden",
-        minWidth: 0,
-        cursor: "pointer",
-      }}
+      ref={ref}
+      className="gallery-item"
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {item.type === "video" && item.vimeoId ? (
-        <>
-          <iframe
-            src={`https://player.vimeo.com/video/${item.vimeoId}?background=1&autoplay=1&loop=1&muted=1`}
-            frameBorder={0}
-            allow="autoplay"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              width: "177.78%",
-              height: "100%",
-              transform: "translate(-50%, -50%)",
-              pointerEvents: "none",
-            }}
-          />
-          <PlayIcon />
-        </>
-      ) : (
-        <>
-          <Image
-            src={item.src}
-            alt={item.alt ?? ""}
-            fill
-            sizes="(max-width: 768px) 100vw, 60vw"
-            style={{
-              objectFit: "cover",
-              objectPosition: "center 20%",
-              transition: "transform 0.4s ease",
-              transform: hovered ? "scale(1.02)" : "scale(1)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "rgba(26,18,8,0.25)",
-              opacity: hovered ? 1 : 0,
-              transition: "opacity 0.4s ease",
-              pointerEvents: "none",
-            }}
-          />
-        </>
-      )}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={item.src}
+        alt={item.alt ?? ""}
+        style={{
+          transform: hovered ? "scale(1.02)" : "scale(1)",
+          filter: hovered ? "brightness(0.85)" : "brightness(1)",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(14,11,8,0.2)",
+          opacity: hovered ? 1 : 0,
+          transition: "opacity 0.4s ease",
+          pointerEvents: "none",
+        }}
+      />
     </div>
   );
 }
@@ -221,8 +179,6 @@ function LightboxMedia({ item }: { item: GalleryItem }) {
     );
   }
 
-  // Plain <img> so the browser sizes it naturally by aspect ratio.
-  // next/image fill requires a fixed-size container which clips tall images.
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -240,7 +196,7 @@ function LightboxMedia({ item }: { item: GalleryItem }) {
   );
 }
 
-export default function Gallery({ items, clientName, rowPattern }: GalleryProps) {
+export default function Gallery({ items, clientName }: GalleryProps) {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -260,25 +216,18 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
     [total]
   );
 
-  const openAt = useCallback(
-    (index: number) => {
-      setCurrentIndex(index);
-      setIsOpen(true);
-    },
-    []
-  );
+  const openAt = useCallback((index: number) => {
+    setCurrentIndex(index);
+    setIsOpen(true);
+  }, []);
 
   const close = useCallback(() => setIsOpen(false), []);
 
-  // Body scroll lock
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  // Keyboard navigation — reads currentIndexRef so this effect only runs on open/close
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -290,7 +239,6 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
     return () => document.removeEventListener("keydown", onKey);
   }, [isOpen, goTo, close]);
 
-  // Filmstrip auto-scroll
   useEffect(() => {
     if (!isOpen || !filmstripRef.current) return;
     const strip = filmstripRef.current;
@@ -300,7 +248,6 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
     strip.scrollTo({ left: center, behavior: "smooth" });
   }, [isOpen, currentIndex]);
 
-  // Touch swipe
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   }, []);
@@ -316,42 +263,21 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
     [goTo]
   );
 
-  const rows = useMemo(() => buildRows(items, rowPattern ?? PATTERN), [items, rowPattern]);
-
   return (
     <>
-      {/* Grid — full bleed wrapper */}
-      <div
-        style={{
-          background: "var(--bg)",
-          display: "flex",
-          flexDirection: "column",
-          gap: 3,
-          padding: 0,
-          width: "100%",
-        }}
-      >
-        {rows.map((row, ri) => (
-          <div
-            key={ri}
-            style={{ display: "flex", gap: 3, height: row.height }}
-          >
-            {row.items.map((item, ii) => (
-              <GridSlot
-                key={ii}
-                item={item}
-                flex={row.flexes[ii]}
-                height={row.height}
-                globalIndex={row.startIndex + ii}
-                onClick={() => openAt(row.startIndex + ii)}
-              />
-            ))}
-          </div>
+      <style>{GALLERY_CSS}</style>
+
+      <div className="gallery-container">
+        {items.map((item, i) => (
+          <MasonryItem
+            key={i}
+            item={item}
+            index={i}
+            onClick={() => openAt(i)}
+          />
         ))}
       </div>
 
-      {/* Lightbox — rendered into document.body via portal so no ancestor
-          transform/overflow/stacking context can trap or clip it */}
       {mounted && isOpen && createPortal(
         <div
           style={{
@@ -377,9 +303,9 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
               <span
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontWeight: 500,
+                  fontWeight: 700,
                   fontSize: 14,
-                  letterSpacing: "0.1em",
+                  letterSpacing: "-0.02em",
                   color: "#F2EDE4",
                 }}
               >
@@ -431,7 +357,6 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
           >
             <LightboxMedia item={items[currentIndex]} />
 
-            {/* Left arrow */}
             <button
               onClick={() => goTo(currentIndex - 1)}
               aria-label="Previous"
@@ -458,7 +383,6 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
               </svg>
             </button>
 
-            {/* Right arrow */}
             <button
               onClick={() => goTo(currentIndex + 1)}
               aria-label="Next"
@@ -515,9 +439,7 @@ export default function Gallery({ items, clientName, rowPattern }: GalleryProps)
                     flexShrink: 0,
                     cursor: "pointer",
                     opacity: isActive ? 1 : 0.4,
-                    border: isActive
-                      ? "1px solid #C84B2A"
-                      : "1px solid transparent",
+                    border: isActive ? "1px solid #C84B2A" : "1px solid transparent",
                     transition: "opacity 0.2s ease, border-color 0.2s ease",
                     overflow: "hidden",
                   }}

@@ -137,7 +137,8 @@ function ScrollProgress() {
 
 // ─── Nav ─────────────────────────────────────────────────────────
 const pillBtnStyle: React.CSSProperties = {
-  fontFamily: "var(--font-mono)",
+  fontFamily: "var(--font-body)",
+  fontWeight: 400,
   fontSize: "11px",
   color: "#F2EDE4",
   letterSpacing: "0.1em",
@@ -211,7 +212,8 @@ function Nav() {
             key={label}
             href={`/${label.toLowerCase()}`}
             style={{
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-body)",
+              fontWeight: 400,
               fontSize: "11px",
               color: "#8C7B65",
               letterSpacing: "0.15em",
@@ -405,7 +407,7 @@ function Hero() {
             className="hero-name"
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 800,
+              fontWeight: 700,
               fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#F2EDE4",
               lineHeight: 0.92,
@@ -419,11 +421,11 @@ function Hero() {
             className="hero-sub"
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 300,
+              fontWeight: 400,
               fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#8C7B65",
               lineHeight: 0.92,
-              letterSpacing: "-0.01em",
+              letterSpacing: "-0.02em",
               margin: 0,
             }}
           >
@@ -435,10 +437,11 @@ function Hero() {
         <div ref={layer2Ref} style={layerBase}>
           <p
             style={{
-              fontFamily: "var(--font-display)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "clamp(28px, 4vw, 52px)",
               color: "#F2EDE4",
+              lineHeight: 1.85,
               margin: 0,
             }}
           >
@@ -450,10 +453,11 @@ function Hero() {
         <div ref={layer3Ref} style={layerBase}>
           <p
             style={{
-              fontFamily: "var(--font-display)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "clamp(28px, 4vw, 52px)",
               color: "#F2EDE4",
+              lineHeight: 1.85,
               margin: 0,
             }}
           >
@@ -465,7 +469,7 @@ function Hero() {
         <div ref={layer4Ref} style={layerBase}>
           <p
             style={{
-              fontFamily: "var(--font-display)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "clamp(24px, 3.2vw, 44px)",
               color: "#C84B2A",
@@ -677,8 +681,7 @@ function WorkGrid() {
                 <p
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontWeight: 300,
-                    fontStyle: "italic",
+                    fontWeight: 500,
                     fontSize: "clamp(28px, 3vw, 42px)",
                     color: "#F2EDE4",
                     lineHeight: 1,
@@ -723,7 +726,7 @@ function WorkGrid() {
                   backdropFilter: "blur(20px)",
                   WebkitBackdropFilter: "blur(20px)",
                 }} />
-                <span className="wc-pill-text" style={{ position: "relative", zIndex: 1, fontFamily: "var(--font-display)", fontWeight: 500, fontSize: 12, color: "#F2EDE4" }}>
+                <span className="wc-pill-text" style={{ position: "relative", zIndex: 1, fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 12, color: "#F2EDE4" }}>
                   View Project
                 </span>
                 <span className="wc-pill-text" style={{ position: "relative", zIndex: 1, color: "#C84B2A", fontSize: 12 }}>→</span>
@@ -850,7 +853,7 @@ function About() {
             </p>
             <h2 style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 500,
+              fontWeight: 700,
               fontSize: "clamp(40px, 5vw, 64px)",
               color: "#F2EDE4",
               margin: "0 0 24px",
@@ -860,7 +863,7 @@ function About() {
               Aiden Urbine
             </h2>
             <p style={{
-              fontFamily: "var(--font-display)",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "17px",
               color: "rgba(242,237,228,0.7)",
@@ -906,7 +909,7 @@ function About() {
             borderRadius: 12,
           }}>
             <Image
-              src="/images/PERSONAL%20GALLERY/honest%20story.JPG"
+              src="/images/personal-gallery/honest%20story.JPG"
               alt=""
               fill
               sizes="100vw"
@@ -920,7 +923,7 @@ function About() {
             borderRadius: 12,
           }}>
             <Image
-              src="/images/PERSONAL%20GALLERY/real%20light.JPG"
+              src="/images/personal-gallery/real%20light.JPG"
               alt=""
               fill
               sizes="100vw"
@@ -939,7 +942,7 @@ function About() {
           gap: 16,
         }}>
           <p style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-body)",
             fontWeight: 300,
             fontStyle: "italic",
             fontSize: "15px",
@@ -954,7 +957,7 @@ function About() {
               onClick={scrollToWork}
               className="about-cta-work"
               style={{
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-body)",
                 fontWeight: 500,
                 fontSize: "13px",
                 color: "#F2EDE4",
@@ -975,7 +978,7 @@ function About() {
               rel="noopener noreferrer"
               className="about-cta-ig"
               style={{
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-body)",
                 fontWeight: 500,
                 fontSize: "13px",
                 color: "#C84B2A",
@@ -1016,9 +1019,9 @@ function Footer() {
       <span
         style={{
           fontFamily: "var(--font-display)",
-          fontWeight: 500,
+          fontWeight: 700,
           fontSize: "13px",
-          letterSpacing: "0.15em",
+          letterSpacing: "-0.02em",
           color: "var(--bone)",
         }}
       >

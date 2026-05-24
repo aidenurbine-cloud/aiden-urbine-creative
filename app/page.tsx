@@ -77,10 +77,10 @@ export default function GatePage() {
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontWeight: 500,
+            fontWeight: 700,
             fontSize: "clamp(32px, 5vw, 64px)",
             color: "var(--bone)",
-            letterSpacing: "0.15em",
+            letterSpacing: "-0.02em",
             lineHeight: 1,
             margin: 0,
           }}
