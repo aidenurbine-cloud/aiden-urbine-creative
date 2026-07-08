@@ -345,12 +345,12 @@ function Hero() {
         style={{
           position: "sticky",
           top: 0,
-          height: "100vh",
+          height: "100dvh",
           overflow: "hidden",
         }}
       >
         <Image
-          src="/images/hero.JPG"
+          src="/images/personal-gallery/hero.JPG"
           alt=""
           fill
           priority
