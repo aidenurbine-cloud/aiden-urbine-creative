@@ -4,10 +4,11 @@
 Name: Aiden Urbine Creative
 Focus: Photo & Video — Outdoor, lifestyle, and gear brands
 Location: Missoula, Montana
-Aesthetic: Dark, editorial, moody. Gritty and raw. Minimal retouching. Heavy shadow.
+Aesthetic: Quiet, neutral, editorial. Cool grey gallery walls that let the photography carry all the color. Gritty and raw outdoor work. Minimal retouching. Photography leads; the UI recedes.
 
 ## Design Rules
-- Dark backgrounds only. Never use white as a primary background.
+- Light cool-neutral backgrounds (--bg #E9E9E7). No warm tint, never pure white, never dark as the page base. One rust-ember accent (#C84B2A), a whisper, used sparingly.
+- Photo scrims stay dark and text OVER photographs stays light (--bone) for legibility — this is intentional and separate from the page palette.
 - Typography: Bebas Neue (display), Cormorant Garamond (body), DM Mono (labels)
 - Ember (#C84B2A) is the only accent color for CTAs and labels. Use sparingly.
 - No border-radius above 2px. Sharp corners only.
@@ -15,19 +16,22 @@ Aesthetic: Dark, editorial, moody. Gritty and raw. Minimal retouching. Heavy sha
 - Add grain/noise texture overlay to all hero sections.
 - Images always take priority. Layouts serve the photography.
 
-## Color Tokens
---black:    #0A0A08
---charcoal: #161614
---ash:      #2A2A26
---bone:     #D4CFC4
---cream:    #EDE9E0
---ember:    #C84B2A
---gold:     #B8972A
+## Color Tokens (defined in app/globals.css :root)
+--bg:      #E9E9E7   /* cool neutral paper — page background  */
+--bg-2:    #F3F3F1   /* lighter surface / panels             */
+--card:    #DCDCD9   /* grey — image placeholder / panel     */
+--ink:     #1C1C1B   /* near-black — primary text            */
+--muted:   #6E6E6A   /* neutral grey — secondary text        */
+--border:  rgba(20,20,18,0.12)   /* neutral hairline         */
+--ember:   #C84B2A   /* rust accent — a whisper, sparingly   */
+--bone:    #F2F2F0   /* light text that sits OVER photos     */
 
-## Fonts
-- Display: Bebas Neue (Google Fonts)
-- Body: Cormorant Garamond Light 300 (Google Fonts)
-- Mono: DM Mono Light 300 (Google Fonts)
+## Fonts (loaded in app/layout.tsx, tokens in app/globals.css)
+- Display: Bebas Neue — var(--font-display) — headlines, names, big type (condensed vintage caps)
+- Editorial italic: Cormorant Garamond — var(--font-serif) — the statement line / quiet moments
+- Body/UI: DM Sans 300/400 — var(--font-body) — bio, nav, small text
+- Mono: DM Mono 300 — var(--font-mono) — labels, section eyebrows
+- NOTE: Syne was tried and rejected ("feels bleh / generic"). Do not reintroduce it.
 
 ## Component Defaults
 - Navigation: Fixed, minimal, transparent over hero. Logo left, links right.

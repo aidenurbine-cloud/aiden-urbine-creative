@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Gallery, { GalleryItem } from "@/components/Gallery";
+import { BLUR } from "@/lib/blur";
 
 const IMAGES: GalleryItem[] = [
   { type: "image", src: "/images/rough-country-gallery/1.jpg", alt: "Rough Country" },
@@ -22,12 +23,21 @@ const IMAGES: GalleryItem[] = [
 ];
 
 export const metadata = {
-  title: "Rough Country — Aiden Urbine Creative",
+  title: "Rough Country",
+  description: "Brand ambassador content for Rough Country — nationwide, shot from the truck.",
+  openGraph: {
+    title: "Rough Country",
+    images: [{ url: "/images/preview/rough-country-preview.jpg", alt: "Rough Country" }],
+  },
+  twitter: {
+    card: "summary_large_image" as const,
+    images: ["/images/preview/rough-country-preview.jpg"],
+  },
 };
 
 export default function RoughCountryPage() {
   return (
-    <main style={{ background: "#0E0B08", minHeight: "100vh" }}>
+    <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
       {/* Hero */}
       <div
         style={{
@@ -35,15 +45,17 @@ export default function RoughCountryPage() {
           width: "100%",
           height: "100vh",
           overflow: "hidden",
-          background: "#0E0B08",
+          background: "var(--bg)",
         }}
       >
         <Image
-          src="/images/preview/rough-country-preview.png"
+          src="/images/preview/rough-country-preview.jpg"
           alt="Rough Country"
           fill
           priority
           sizes="100vw"
+          placeholder="blur"
+          blurDataURL={BLUR}
           style={{ objectFit: "cover", objectPosition: "center 20%" }}
         />
 
@@ -101,7 +113,7 @@ export default function RoughCountryPage() {
               fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "16px",
-              color: "#8C7B65",
+              color: "rgba(245,242,234,0.7)",
               margin: "14px 0 10px",
               maxWidth: 480,
               lineHeight: 1.85,
@@ -115,7 +127,7 @@ export default function RoughCountryPage() {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: "9px",
-              color: "#8C7B65",
+              color: "rgba(245,242,234,0.6)",
               letterSpacing: "0.25em",
               textTransform: "uppercase",
               margin: 0,
@@ -127,7 +139,7 @@ export default function RoughCountryPage() {
       </div>
 
       {/* Gallery — full bleed */}
-      <div style={{ width: "100%", background: "#0E0B08" }}>
+      <div style={{ width: "100%", background: "var(--bg)" }}>
         <Gallery
           items={IMAGES}
           clientName="ROUGH COUNTRY"
@@ -143,11 +155,11 @@ export default function RoughCountryPage() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          background: "#0E0B08",
-          borderTop: "1px solid rgba(242,237,228,0.06)",
+          background: "var(--bg)",
+          borderTop: "1px solid var(--border)",
         }}
       >
-        <Link href="/home" className="rc-back">
+        <Link href="/work" className="rc-back">
           ← Back to Work
         </Link>
         <Link href="/work/personal" className="rc-next">
@@ -159,13 +171,13 @@ export default function RoughCountryPage() {
         .rc-back, .rc-next {
           font-family: var(--font-mono);
           font-size: 9px;
-          color: #8C7B65;
+          color: var(--muted);
           text-decoration: none;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           transition: color 0.3s;
         }
-        .rc-back:hover { color: #F2EDE4; }
+        .rc-back:hover { color: var(--ink); }
         .rc-next:hover { color: #C84B2A; }
         @media (max-width: 768px) {
           h1 { font-size: clamp(48px, 12vw, 80px) !important; }

@@ -6,8 +6,8 @@ import Link from "next/link";
 const FIELD_BASE: React.CSSProperties = {
   background: "transparent",
   border: "none",
-  borderBottom: "1px solid rgba(242,237,228,0.12)",
-  color: "#F2EDE4",
+  borderBottom: "1px solid rgba(20,20,18,0.12)",
+  color: "var(--ink)",
   fontFamily: "var(--font-body)",
   fontSize: "14px",
   padding: "12px 0",
@@ -82,13 +82,13 @@ export default function ContactClient() {
     ...FIELD_BASE,
     borderBottom: focused
       ? "1px solid #C84B2A"
-      : "1px solid rgba(242,237,228,0.12)",
+      : "1px solid rgba(20,20,18,0.12)",
   });
 
   return (
     <main
       style={{
-        background: "#0E0B08",
+        background: "var(--bg)",
         minHeight: "100vh",
         position: "relative",
       }}
@@ -103,7 +103,7 @@ export default function ContactClient() {
           zIndex: 100,
           fontFamily: "var(--font-mono)",
           fontSize: "9px",
-          color: backHover ? "#F2EDE4" : "#8C7B65",
+          color: backHover ? "var(--ink)" : "var(--muted)",
           letterSpacing: "0.15em",
           textTransform: "uppercase",
           textDecoration: "none",
@@ -155,7 +155,7 @@ export default function ContactClient() {
               fontFamily: "var(--font-display)",
               fontWeight: 700,
               fontSize: "clamp(48px, 6vw, 80px)",
-              color: "#F2EDE4",
+              color: "var(--ink)",
               lineHeight: 0.9,
               letterSpacing: "-0.02em",
               margin: 0,
@@ -181,7 +181,7 @@ export default function ContactClient() {
               fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "16px",
-              color: "#8C7B65",
+              color: "var(--muted)",
               lineHeight: 1.8,
               maxWidth: 360,
               margin: "0 0 48px",
@@ -211,7 +211,7 @@ export default function ContactClient() {
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: "9px",
-                    color: "#8C7B65",
+                    color: "var(--muted)",
                     letterSpacing: "0.15em",
                     textTransform: "uppercase",
                     minWidth: 72,
@@ -227,12 +227,12 @@ export default function ContactClient() {
                     style={{
                       fontFamily: "var(--font-body)",
                       fontSize: "14px",
-                      color: "#F2EDE4",
+                      color: "var(--ink)",
                       textDecoration: "none",
                       transition: "color 0.3s",
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = "#C84B2A")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "#F2EDE4")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink)")}
                   >
                     {value}
                   </a>
@@ -241,7 +241,7 @@ export default function ContactClient() {
                     style={{
                       fontFamily: "var(--font-body)",
                       fontSize: "14px",
-                      color: "#F2EDE4",
+                      color: "var(--ink)",
                     }}
                   >
                     {value}
@@ -264,8 +264,8 @@ export default function ContactClient() {
         >
           <div
             style={{
-              background: "rgba(242,237,228,0.03)",
-              border: "1px solid rgba(242,237,228,0.07)",
+              background: "rgba(20,20,18,0.03)",
+              border: "1px solid rgba(20,20,18,0.07)",
               padding: 48,
             }}
           >
@@ -283,7 +283,7 @@ export default function ContactClient() {
                     fontFamily: "var(--font-display)",
                     fontWeight: 700,
                     fontSize: 48,
-                    color: "#F2EDE4",
+                    color: "var(--ink)",
                     letterSpacing: "-0.02em",
                     margin: "0 0 16px",
                   }}
@@ -295,7 +295,7 @@ export default function ContactClient() {
                     fontFamily: "var(--font-body)",
                     fontWeight: 300,
                     fontSize: 16,
-                    color: "#8C7B65",
+                    color: "var(--muted)",
                     margin: 0,
                   }}
                 >
@@ -384,8 +384,8 @@ export default function ContactClient() {
                     background: btnHover ? "#C84B2A" : "transparent",
                     border: btnHover
                       ? "1px solid #C84B2A"
-                      : "1px solid rgba(242,237,228,0.2)",
-                    color: btnHover ? "#F2EDE4" : "#D4CFC4",
+                      : "1px solid rgba(20,20,18,0.2)",
+                    color: btnHover ? "#F5F2EA" : "var(--ink)",
                     fontFamily: "var(--font-body)",
                     fontSize: "12px",
                     letterSpacing: "0.2em",
@@ -413,11 +413,11 @@ export default function ContactClient() {
           }
         }
         select option {
-          background: #0E0B08;
-          color: #F2EDE4;
+          background: var(--bg);
+          color: var(--ink);
         }
         ::placeholder {
-          color: rgba(242,237,228,0.25);
+          color: rgba(20,20,18,0.25);
         }
       `}</style>
     </main>
