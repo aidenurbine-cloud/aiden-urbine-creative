@@ -6,7 +6,7 @@ const DESCRIPTION =
   "Photo & video for outdoor, lifestyle, and gear brands. Based in Missoula, Montana.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aidenurbinecreative.com"),
+  metadataBase: new URL("https://aidenurbine.com"),
   title: {
     default: "Aiden Urbine Creative",
     template: "%s — Aiden Urbine Creative",
