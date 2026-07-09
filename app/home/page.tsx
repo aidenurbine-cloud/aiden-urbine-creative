@@ -3,13 +3,14 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { BLUR } from "@/lib/blur";
 
 const PROJECTS = [
-  { slug: "mkc",              image: "/images/preview/mkc%20preview.jpg",         tag: "Photo + Video", name: "Montana Knife Co." },
-  { slug: "badfish",          image: "/images/preview/badfish-preview.jpg",       tag: "Photo",         name: "Badfish SUP" },
-  { slug: "marin-moto-ranch", image: "/images/preview/marin-preview.jpg",         tag: "Photo + Video", name: "Marin Moto Ranch" },
-  { slug: "rough-country",    image: "/images/preview/rough-country-preview.png", tag: "Photo + Video", name: "Rough Country" },
-  { slug: "personal",         image: "/images/preview/personal-preview.jpg",      tag: "Photo",         name: "Personal" },
+  { slug: "mkc",              image: "/images/preview/mkc%20preview.jpg",          name: "Montana Knife Co." },
+  { slug: "badfish",          image: "/images/preview/badfish-preview.jpg",        name: "Badfish SUP" },
+  { slug: "marin-moto-ranch", image: "/images/preview/marin-preview.jpg",          name: "Marin Moto Ranch" },
+  { slug: "rough-country",    image: "/images/preview/rough-country-preview.jpg",  name: "Rough Country" },
+  { slug: "personal",         image: "/images/preview/personal-preview.jpg",       name: "Personal" },
 ];
 
 // ─── Grain overlay ───────────────────────────────────────────────
@@ -22,73 +23,13 @@ function GrainOverlay() {
       aria-hidden="true"
       style={{
         position: "absolute",
-        inset: "-50%",
-        width: "200%",
-        height: "200%",
+        inset: 0,
         pointerEvents: "none",
         zIndex: 4,
-        opacity: 0.045,
+        opacity: 0.05,
         backgroundImage: GRAIN_SVG,
         backgroundRepeat: "repeat",
         backgroundSize: "200px 200px",
-      }}
-    />
-  );
-}
-
-// ─── Scroll helpers ───────────────────────────────────────────────
-function getOpacity(
-  p: number,
-  inStart: number, inEnd: number,
-  outStart: number, outEnd: number
-): number {
-  if (p < inStart) return 0;
-  if (p < inEnd)   return (p - inStart) / (inEnd - inStart);
-  if (p < outStart) return 1;
-  if (p < outEnd)  return 1 - (p - outStart) / (outEnd - outStart);
-  return 0;
-}
-
-function getY(
-  p: number,
-  inStart: number, inEnd: number,
-  outStart: number, outEnd: number,
-  dist = 20
-): number {
-  if (p < inStart) return dist;
-  if (p < inEnd)   return dist * (1 - (p - inStart) / (inEnd - inStart));
-  if (p < outStart) return 0;
-  if (p < outEnd)  return -dist * (p - outStart) / (outEnd - outStart);
-  return -dist;
-}
-
-// ─── Section seam helpers ────────────────────────────────────────
-function EmberLine() {
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        height: 1,
-        margin: 0,
-        background:
-          "linear-gradient(to right, transparent, rgba(200,75,42,0.3) 30%, rgba(200,75,42,0.3) 70%, transparent)",
-      }}
-    />
-  );
-}
-
-function FadeStrip({ dir }: { dir: "down" | "up" }) {
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        height: 80,
-        pointerEvents: "none",
-        margin: 0,
-        background:
-          dir === "down"
-            ? "linear-gradient(to bottom, #0E0B08 0%, rgba(14,11,8,0) 100%)"
-            : "linear-gradient(to top, #0E0B08 0%, rgba(14,11,8,0) 100%)",
       }}
     />
   );
@@ -110,24 +51,13 @@ function ScrollProgress() {
   }, []);
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        height: "1px",
-        zIndex: 200,
-        pointerEvents: "none",
-      }}
-    >
+    <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "1px", zIndex: 200, pointerEvents: "none" }}>
       <div
         ref={barRef}
         style={{
           height: "1px",
           width: "0%",
           background: "linear-gradient(to right, #C84B2A, rgba(200,75,42,0.6))",
-          boxShadow: "0 0 8px rgba(200,75,42,0.4)",
           transition: "width 0.1s linear",
         }}
       />
@@ -136,20 +66,18 @@ function ScrollProgress() {
 }
 
 // ─── Nav ─────────────────────────────────────────────────────────
-const pillBtnStyle: React.CSSProperties = {
+const navLinkStyle: React.CSSProperties = {
   fontFamily: "var(--font-body)",
   fontWeight: 400,
   fontSize: "11px",
-  color: "#F2EDE4",
-  letterSpacing: "0.1em",
+  color: "var(--muted)",
+  letterSpacing: "0.15em",
+  textTransform: "uppercase",
   textDecoration: "none",
-  padding: "8px 18px",
-  borderRadius: "999px",
-  border: "1px solid rgba(242,237,228,0.12)",
-  background: "rgba(242,237,228,0.06)",
-  backdropFilter: "blur(12px)",
-  WebkitBackdropFilter: "blur(12px)",
-  whiteSpace: "nowrap",
+  background: "none",
+  border: "none",
+  cursor: "pointer",
+  padding: 0,
 };
 
 function Nav() {
@@ -163,7 +91,7 @@ function Nav() {
         el.style.opacity = "1";
         el.style.backdropFilter = "blur(24px)";
         el.style.setProperty("-webkit-backdrop-filter", "blur(24px)");
-        el.style.background = "rgba(14,11,8,0.6)";
+        el.style.background = "rgba(243,243,241,0.8)";
       } else {
         el.style.opacity = "0";
         el.style.backdropFilter = "blur(0px)";
@@ -175,6 +103,10 @@ function Nav() {
     update();
     return () => window.removeEventListener("scroll", update);
   }, []);
+
+  const scrollToAbout = () => {
+    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <nav
@@ -189,314 +121,125 @@ function Nav() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "0 48px",
-        borderBottom: "0.5px solid rgba(242,237,228,0.06)",
+        padding: "0 32px",
+        borderBottom: "0.5px solid var(--border)",
         transition: "all 0.4s ease",
         opacity: 0,
       }}
     >
-      <span
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "13px",
-          color: "#F2EDE4",
-          letterSpacing: "0.3em",
-        }}
+      <Link
+        href="/home"
+        style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "var(--ink)", letterSpacing: "0.3em", textDecoration: "none" }}
       >
-        AUC
-      </span>
+        AU
+      </Link>
 
-      <div style={{ display: "flex", gap: "40px" }}>
-        {(["Work", "Contact"] as const).map((label) => (
-          <Link
-            key={label}
-            href={`/${label.toLowerCase()}`}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 400,
-              fontSize: "11px",
-              color: "#8C7B65",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-            }}
-          >
-            {label}
-          </Link>
-        ))}
+      <div style={{ display: "flex", gap: "36px", alignItems: "center" }}>
+        <Link href="/work" className="nav-link" style={navLinkStyle}>Work</Link>
+        <button onClick={scrollToAbout} className="nav-link" style={navLinkStyle}>About</button>
+        <Link href="/contact" className="nav-link" style={navLinkStyle}>Contact</Link>
       </div>
 
-      <a
-        href="https://instagram.com/urbineaiden"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={pillBtnStyle}
-      >
-        Instagram ↗
-      </a>
+      <style>{`
+        .nav-link { transition: color 0.3s; }
+        .nav-link:hover { color: var(--ember); }
+      `}</style>
     </nav>
   );
 }
 
 // ─── Hero ────────────────────────────────────────────────────────
 function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const layer1Ref = useRef<HTMLDivElement>(null);
-  const layer2Ref = useRef<HTMLDivElement>(null);
-  const layer3Ref = useRef<HTMLDivElement>(null);
-  const layer4Ref = useRef<HTMLDivElement>(null);
-  const layer6Ref = useRef<HTMLDivElement>(null);
-
-  const scrollToWork = () => {
-    const section = sectionRef.current;
-    if (!section) return;
-    window.scrollTo({
-      top: section.offsetTop + section.offsetHeight,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    const onScroll = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-      const scrolled = Math.max(0, window.scrollY - section.offsetTop);
-      const maxScroll = section.offsetHeight - window.innerHeight;
-      const p = Math.max(0, Math.min(1, scrolled / maxScroll));
-
-      // Layer 1 — name + badge: visible 0→0.15, fades 0.15→0.22
-      if (layer1Ref.current) {
-        let opacity: number, y: number;
-        if (p < 0.15) {
-          opacity = 1; y = 0;
-        } else if (p < 0.22) {
-          const t = (p - 0.15) / 0.07;
-          opacity = 1 - t; y = -20 * t;
-        } else {
-          opacity = 0; y = -20;
-        }
-        layer1Ref.current.style.opacity = String(opacity);
-        layer1Ref.current.style.transform = `translateY(${y}px)`;
-      }
-
-      // Layer 2 — "From Buena Vista, Colorado."
-      if (layer2Ref.current) {
-        layer2Ref.current.style.opacity = String(getOpacity(p, 0.15, 0.23, 0.28, 0.35));
-        layer2Ref.current.style.transform = `translateY(${getY(p, 0.15, 0.23, 0.28, 0.35)}px)`;
-      }
-
-      // Layer 3 — "Now based in Missoula, MT."
-      if (layer3Ref.current) {
-        layer3Ref.current.style.opacity = String(getOpacity(p, 0.35, 0.43, 0.48, 0.55));
-        layer3Ref.current.style.transform = `translateY(${getY(p, 0.35, 0.43, 0.48, 0.55)}px)`;
-      }
-
-      // Layer 4 — "Outdoor brand content." ember
-      if (layer4Ref.current) {
-        layer4Ref.current.style.opacity = String(getOpacity(p, 0.55, 0.63, 0.68, 0.75));
-        layer4Ref.current.style.transform = `translateY(${getY(p, 0.55, 0.63, 0.68, 0.75)}px)`;
-      }
-
-      // Layer 6 — CTA: fades in 0.75→0.85, stays
-      if (layer6Ref.current) {
-        let opacity: number, y: number;
-        if (p < 0.75) {
-          opacity = 0; y = 20;
-        } else if (p < 0.85) {
-          const t = (p - 0.75) / 0.10;
-          opacity = t; y = 20 * (1 - t);
-        } else {
-          opacity = 1; y = 0;
-        }
-        layer6Ref.current.style.opacity = String(opacity);
-        layer6Ref.current.style.transform = `translateY(${y}px)`;
-        layer6Ref.current.style.pointerEvents = opacity > 0.5 ? "auto" : "none";
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const layerBase: React.CSSProperties = {
-    position: "absolute",
-    inset: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    textAlign: "center",
-    zIndex: 5,
-    opacity: 0,
-    pointerEvents: "none",
-    willChange: "opacity, transform",
-    padding: "0 48px",
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      id="hero-section"
-      style={{ position: "relative", height: "300vh" }}
-    >
-      {/* Sticky viewport */}
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "100dvh",
-          overflow: "hidden",
-        }}
-      >
+    <section style={{ position: "relative", height: "100dvh", overflow: "hidden" }}>
+      <div style={{ position: "absolute", inset: 0, animation: "kenBurns 22s ease-out forwards" }}>
         <Image
-          src="/images/personal-gallery/hero.JPG"
-          alt=""
+          src="/homepage%20hero-1.jpg"
+          alt="Aiden Urbine — outdoor brand photography, Missoula, Montana"
           fill
           priority
           sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: "center", zIndex: 0 }}
+          placeholder="blur"
+          blurDataURL={BLUR}
+          style={{ objectFit: "cover", objectPosition: "center" }}
         />
+      </div>
 
-        <div
-          aria-hidden="true"
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "rgba(14,11,8,0.42)", zIndex: 1 }} />
+      <GrainOverlay />
+
+      {/* Center — name + one line */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          padding: "0 24px",
+        }}
+      >
+        <h1
+          className="hero-name"
           style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(14,11,8,0.45)",
-            zIndex: 1,
+            fontFamily: "var(--font-display)",
+            fontWeight: 400,
+            fontSize: "clamp(64px, 13vw, 190px)",
+            color: "var(--bone)",
+            lineHeight: 0.92,
+            letterSpacing: "0.02em",
+            margin: 0,
           }}
-        />
-
-        <GrainOverlay />
-
-        {/* Layer 1 — name + badge, starts visible */}
-        <div
-          ref={layer1Ref}
-          style={{ ...layerBase, opacity: 1 }}
         >
-          <h1
-            className="hero-name"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "clamp(56px, 8.5vw, 120px)",
-              color: "#F2EDE4",
-              lineHeight: 0.92,
-              letterSpacing: "-0.02em",
-              margin: 0,
-            }}
-          >
-            AIDEN URBINE
-          </h1>
-          <p
-            className="hero-sub"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 400,
-              fontSize: "clamp(56px, 8.5vw, 120px)",
-              color: "#8C7B65",
-              lineHeight: 0.92,
-              letterSpacing: "-0.02em",
-              margin: 0,
-            }}
-          >
-            CREATIVE
-          </p>
-        </div>
+          AIDEN URBINE
+        </h1>
+        <p
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "11px",
+            color: "var(--ember)",
+            letterSpacing: "0.28em",
+            textTransform: "uppercase",
+            margin: "20px 0 0",
+          }}
+        >
+          Outdoor Brand Content — Missoula, MT
+        </p>
+      </div>
 
-        {/* Layer 2 — "From Buena Vista, Colorado." */}
-        <div ref={layer2Ref} style={layerBase}>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              fontSize: "clamp(28px, 4vw, 52px)",
-              color: "#F2EDE4",
-              lineHeight: 1.85,
-              margin: 0,
-            }}
-          >
-            From Buena Vista, Colorado.
-          </p>
-        </div>
-
-        {/* Layer 3 — "Now based in Missoula, MT." */}
-        <div ref={layer3Ref} style={layerBase}>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              fontSize: "clamp(28px, 4vw, 52px)",
-              color: "#F2EDE4",
-              lineHeight: 1.85,
-              margin: 0,
-            }}
-          >
-            Now based in Missoula, MT.
-          </p>
-        </div>
-
-        {/* Layer 4 — "Outdoor brand content." ember */}
-        <div ref={layer4Ref} style={layerBase}>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              fontSize: "clamp(24px, 3.2vw, 44px)",
-              color: "#C84B2A",
-              margin: 0,
-              maxWidth: 600,
-            }}
-          >
-            Outdoor brand content.
-          </p>
-        </div>
-
-        {/* Layer 6 — CTA: View Work ↓ */}
-        <div ref={layer6Ref} style={layerBase}>
-          <button
-            onClick={scrollToWork}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "11px",
-                color: "#F2EDE4",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-              }}
-            >
-              View Work
-            </span>
-            <span
-              style={{
-                fontSize: "16px",
-                color: "#F2EDE4",
-                opacity: 0.6,
-                animation: "arrowBob 1.4s ease-in-out infinite",
-              }}
-            >
-              ↓
-            </span>
-          </button>
-        </div>
+      {/* Minimal scroll indicator */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 28,
+          left: 0,
+          right: 0,
+          zIndex: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 8,
+          pointerEvents: "none",
+        }}
+      >
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "var(--bone)", letterSpacing: "0.3em", opacity: 0.7 }}>
+          SCROLL
+        </span>
+        <span style={{ fontSize: "14px", color: "var(--bone)", opacity: 0.6, animation: "arrowBob 1.6s ease-in-out infinite" }}>
+          ↓
+        </span>
       </div>
 
       <style>{`
         @keyframes arrowBob {
           0%, 100% { transform: translateY(0); }
-          50%       { transform: translateY(6px); }
+          50%      { transform: translateY(6px); }
+        }
+        @media (max-width: 768px) {
+          .hero-name { font-size: clamp(52px, 16vw, 96px) !important; }
         }
       `}</style>
     </section>
@@ -513,11 +256,11 @@ function WorkGrid() {
       if (!el) return;
       el.style.opacity = "0";
       el.style.transform = "translateY(24px)";
-      el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+      el.style.transition = "opacity 0.8s ease, transform 0.8s ease";
       const obs = new IntersectionObserver(
         ([entry]) => {
           if (!entry.isIntersecting) return;
-          el.style.transitionDelay = `${i * 0.1}s`;
+          el.style.transitionDelay = `${i * 0.08}s`;
           el.style.opacity = "1";
           el.style.transform = "translateY(0)";
           obs.disconnect();
@@ -531,60 +274,26 @@ function WorkGrid() {
   }, []);
 
   return (
-    <section id="work-section" style={{ background: "#0E0B08" }}>
+    <section id="work" style={{ background: "var(--bg)", padding: "120px 24px" }}>
       {/* Header */}
       <div
-        style={{
-          padding: "32px 24px 24px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-        }}
+        className="wc-header"
+        style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "48px" }}
       >
-        <p
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "11px",
-            color: "#C84B2A",
-            textTransform: "uppercase",
-            letterSpacing: "0.35em",
-            margin: 0,
-          }}
-        >
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ember)", textTransform: "uppercase", letterSpacing: "0.35em", margin: 0 }}>
           Selected Work
         </p>
-
         <Link
           href="/work"
-          className="wc-all-link"
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "10px",
-            color: "rgba(242,237,228,0.6)",
-            textDecoration: "none",
-            background: "rgba(242,237,228,0.05)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            border: "1px solid rgba(200,75,42,0.3)",
-            borderRadius: "100px",
-            padding: "10px 22px",
-            letterSpacing: "0.2em",
-          }}
+          className="wc-all"
+          style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--muted)", textDecoration: "none", letterSpacing: "0.2em", textTransform: "uppercase" }}
         >
           All Projects →
         </Link>
       </div>
 
       {/* Grid */}
-      <div
-        className="wc-grid"
-        style={{
-          padding: "0 24px 120px",
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "16px",
-        }}
-      >
+      <div className="wc-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px" }}>
         {PROJECTS.map((project, i) => {
           const isLast = i === PROJECTS.length - 1;
           return (
@@ -596,113 +305,41 @@ function WorkGrid() {
               style={{
                 position: "relative",
                 overflow: "hidden",
-                cursor: "pointer",
                 aspectRatio: "16/9",
-                background: "#161209",
+                background: "var(--card)",
                 gridColumn: isLast ? "1 / -1" : undefined,
-                borderRadius: "16px",
-                boxShadow:
-                  "0 4px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(242,237,228,0.04) inset",
-                transition:
-                  "transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease",
+                borderRadius: "4px",
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease",
               }}
             >
               <Image
                 src={project.image}
                 alt={project.name}
                 fill
-                sizes={isLast ? "(max-width:768px) 100vw, calc(100vw - 48px)" : "(max-width:768px) 100vw, calc(50vw - 32px)"}
+                sizes={isLast ? "(max-width:768px) 100vw, calc(100vw - 48px)" : "(max-width:768px) 100vw, calc(50vw - 36px)"}
+                placeholder="blur"
+                blurDataURL={BLUR}
                 className="wc-img"
                 style={{ objectFit: "cover", objectPosition: "center" }}
               />
-
-              {/* Always-visible bottom content */}
-              <div
+              <span
+                className="wc-name"
                 style={{
                   position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  padding: "20px 24px",
-                  background:
-                    "linear-gradient(to top, rgba(14,11,8,0.9) 0%, rgba(14,11,8,0.4) 60%, transparent 100%)",
-                  pointerEvents: "none",
+                  left: 28,
+                  bottom: 24,
+                  zIndex: 2,
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 400,
+                  fontSize: "clamp(32px, 3.4vw, 52px)",
+                  color: "var(--bone)",
+                  letterSpacing: "0.01em",
+                  lineHeight: 1,
+                  textShadow: "0 2px 24px rgba(0,0,0,0.85)",
                 }}
               >
-                {/* Ember accent bar */}
-                <div style={{
-                  position: "absolute",
-                  left: 0,
-                  bottom: 0,
-                  width: 3,
-                  height: 40,
-                  background: "#C84B2A",
-                }} />
-                <p
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "8px",
-                    color: "#C84B2A",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.2em",
-                    margin: "0 0 6px",
-                  }}
-                >
-                  {project.tag}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 500,
-                    fontSize: "clamp(28px, 3vw, 42px)",
-                    color: "#F2EDE4",
-                    lineHeight: 1,
-                    margin: 0,
-                    textShadow: "0 2px 20px rgba(0,0,0,0.8)",
-                  }}
-                >
-                  {project.name}
-                </p>
-              </div>
-
-              {/* Hover pill — SVG border draw */}
-              <div
-                className="wc-pill"
-                style={{
-                  position: "absolute",
-                  bottom: 20,
-                  right: 20,
-                  width: 160,
-                  height: 44,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                }}
-              >
-                <svg
-                  className="wc-pill-border"
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible" }}
-                >
-                  <rect
-                    className="wc-pill-rect"
-                    x="0.5" y="0.5" width="159" height="43" rx="21.5"
-                    fill="none" stroke="rgba(242,237,228,0.5)" strokeWidth="1"
-                  />
-                </svg>
-                <div className="wc-pill-bg" style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: 22,
-                  background: "rgba(242,237,228,0.1)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                }} />
-                <span className="wc-pill-text" style={{ position: "relative", zIndex: 1, fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 12, color: "#F2EDE4" }}>
-                  View Project
-                </span>
-                <span className="wc-pill-text" style={{ position: "relative", zIndex: 1, color: "#C84B2A", fontSize: 12 }}>→</span>
-              </div>
+                {project.name}
+              </span>
             </Link>
           );
         })}
@@ -710,40 +347,137 @@ function WorkGrid() {
 
       <style>{`
         .wc { display: block; text-decoration: none; }
-        .wc:hover {
-          transform: translateY(-6px) !important;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 1px 0 rgba(242,237,228,0.08) inset !important;
-        }
-        .wc-img { transition: transform 0.6s ease !important; }
-        .wc:hover .wc-img { transform: scale(1.04) !important; }
-
-        /* Pill — SVG border draw animation */
-        .wc-pill { pointer-events: none; }
-        .wc-pill-rect {
-          stroke-dasharray: 370;
-          stroke-dashoffset: 370;
-          transition: stroke-dashoffset 1.4s linear;
-        }
-        .wc-pill-bg {
-          opacity: 0;
-          transition: opacity 0.25s ease 0.1s;
-        }
-        .wc-pill-text {
-          opacity: 0;
-          transition: opacity 0.25s ease 0.1s;
-        }
-        .wc:hover .wc-pill-rect { stroke-dashoffset: 0; }
-        .wc:hover .wc-pill-bg,
-        .wc:hover .wc-pill-text { opacity: 1; }
-
-        .wc-all-link { transition: color 0.3s, border-color 0.3s; }
-        .wc-all-link:hover {
-          color: #C84B2A !important;
-          border-color: #C84B2A !important;
-        }
+        .wc:hover, .wc:focus-visible { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(20,20,18,0.2); outline: none; }
+        .wc-img { transition: transform 0.6s ease, filter 0.6s ease; filter: grayscale(1); }
+        .wc:hover .wc-img, .wc:focus-visible .wc-img { transform: scale(1.04); filter: grayscale(0) brightness(0.85); }
+        .wc-name { opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .wc:hover .wc-name, .wc:focus-visible .wc-name { opacity: 1; transform: translateY(0); }
+        .wc-all:hover { color: var(--ember); }
         @media (max-width: 768px) {
-          .wc-grid { grid-template-columns: 1fr !important; padding: 0 16px 80px !important; }
+          .wc-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
           .wc { aspect-ratio: 4/3 !important; grid-column: auto !important; }
+          .wc-name { opacity: 1 !important; transform: none !important; }
+          .wc-img { filter: none !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// ─── Statement ───────────────────────────────────────────────────
+function Statement() {
+  const ref = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(16px)";
+    el.style.transition = "opacity 1s ease, transform 1s ease";
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+        obs.disconnect();
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section style={{ position: "relative", height: "70vh", overflow: "hidden" }}>
+      <Image
+        src="/images/personal-gallery/honest%20story.JPG"
+        alt=""
+        fill
+        sizes="100vw"
+        placeholder="blur"
+        blurDataURL={BLUR}
+        style={{ objectFit: "cover", objectPosition: "center" }}
+      />
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "rgba(14,11,8,0.6)", zIndex: 1 }} />
+      <GrainOverlay />
+      <div style={{ position: "absolute", inset: 0, zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 24px" }}>
+        <p
+          ref={ref}
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "clamp(20px, 2.5vw, 34px)",
+            color: "var(--bone)",
+            lineHeight: 1.5,
+            maxWidth: 600,
+            textAlign: "center",
+            margin: 0,
+          }}
+        >
+          The good frames don&apos;t come easy. They show up cold, early, and a long way from the truck.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ─── About ───────────────────────────────────────────────────────
+function About() {
+  return (
+    <section id="about" style={{ background: "var(--bg)", padding: "120px 24px" }}>
+      <div className="ab-wrap" style={{ maxWidth: 1080, margin: "0 auto", display: "flex", gap: 64, alignItems: "center" }}>
+        {/* Portrait */}
+        <div style={{ position: "relative", width: "100%", maxWidth: 380, aspectRatio: "3/4", flexShrink: 0, borderRadius: 4, overflow: "hidden" }}>
+          <Image
+            src="/images/aiden-portrait.jpg"
+            alt="Aiden Urbine"
+            fill
+            sizes="(max-width:768px) 100vw, 380px"
+            placeholder="blur"
+            blurDataURL={BLUR}
+            style={{ objectFit: "cover", objectPosition: "center 15%" }}
+          />
+        </div>
+
+        {/* Text */}
+        <div style={{ flex: 1 }}>
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ember)", textTransform: "uppercase", letterSpacing: "0.3em", margin: "0 0 20px" }}>
+            About
+          </p>
+          <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(44px, 5.5vw, 84px)", color: "var(--ink)", lineHeight: 0.95, letterSpacing: "0.01em", margin: "0 0 24px" }}>
+            AIDEN URBINE
+          </h2>
+          <p style={{ fontFamily: "var(--font-body)", fontWeight: 300, fontSize: "17px", color: "var(--muted)", lineHeight: 1.85, maxWidth: 480, margin: "0 0 40px" }}>
+            Photographer and creative director based in Missoula, Montana — raised on the
+            Arkansas River in Buena Vista, Colorado. The outdoor life drives the work:
+            whitewater, dirt roads, elk camps, and the brands that live out there. Two years
+            and counting behind the content for Montana Knife Co., plus Badfish, Rough
+            Country, and more.
+          </p>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <Link href="/work" className="ab-btn">View Work →</Link>
+            <Link href="/contact" className="ab-btn">Get in Touch →</Link>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        .ab-btn {
+          font-family: var(--font-mono);
+          font-size: 11px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: var(--ink);
+          text-decoration: none;
+          padding: 14px 28px;
+          border: 1px solid var(--border);
+          border-radius: 2px;
+          transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .ab-btn:hover { background: var(--ember); color: #F2F2F0; border-color: var(--ember); }
+        @media (max-width: 768px) {
+          .ab-wrap { flex-direction: column !important; gap: 40px !important; align-items: flex-start !important; }
         }
       `}</style>
     </section>
@@ -757,60 +491,33 @@ function Footer() {
       className="site-footer"
       style={{
         background: "var(--bg)",
-        borderTop: "1px solid rgba(242,237,228,0.06)",
-        padding: "40px 56px",
+        borderTop: "1px solid var(--border)",
+        padding: "48px 32px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <span
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 700,
-          fontSize: "13px",
-          letterSpacing: "-0.02em",
-          color: "var(--bone)",
-        }}
-      >
+      <Link href="/home" style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "18px", letterSpacing: "0.02em", color: "var(--ink)", textDecoration: "none" }}>
         AIDEN URBINE
-      </span>
+      </Link>
 
       <div style={{ display: "flex", gap: 32 }}>
-        <a
-          href="https://instagram.com/urbineaiden"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "9px",
-            color: "var(--muted)",
-            textDecoration: "none",
-            letterSpacing: "0.15em",
-            transition: "color 0.3s",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--bone)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
-        >
+        <a href="https://instagram.com/urbineaiden" target="_blank" rel="noopener noreferrer" className="ft-link" style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "var(--muted)", textDecoration: "none", letterSpacing: "0.15em" }}>
           @urbineaiden
         </a>
-
-        <a
-          href="mailto:aiden@aidenurbine.com"
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "9px",
-            color: "var(--muted)",
-            textDecoration: "none",
-            letterSpacing: "0.15em",
-            transition: "color 0.3s",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--bone)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
-        >
+        <a href="mailto:aiden@aidenurbine.com" className="ft-link" style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "var(--muted)", textDecoration: "none", letterSpacing: "0.15em" }}>
           aiden@aidenurbine.com
         </a>
       </div>
+
+      <style>{`
+        .ft-link { transition: color 0.3s; }
+        .ft-link:hover { color: var(--ink); }
+        @media (max-width: 768px) {
+          .site-footer { flex-direction: column !important; gap: 24px !important; text-align: center !important; }
+        }
+      `}</style>
     </footer>
   );
 }
@@ -822,20 +529,10 @@ export default function HomePage() {
       <ScrollProgress />
       <Nav />
       <Hero />
-      <EmberLine />
       <WorkGrid />
+      <Statement />
+      <About />
       <Footer />
-      <style>{`
-        @media (max-width: 768px) {
-          .hero-name, .hero-sub { font-size: clamp(36px, 10vw, 72px) !important; }
-          .site-footer {
-            flex-direction: column !important;
-            gap: 24px !important;
-            align-items: center !important;
-            text-align: center !important;
-          }
-        }
-      `}</style>
     </main>
   );
 }

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Gallery, { GalleryItem } from "@/components/Gallery";
+import { BLUR } from "@/lib/blur";
 
 type ProjectData = {
   slug: string;
@@ -90,7 +91,7 @@ const PROJECTS: ProjectData[] = [
     tag: "Photo + Video",
     location: "Nationwide",
     desc: "Current brand ambassador. My truck is my homebase, so shooting for one of the staples of the auto industry just makes sense.",
-    preview: "/images/preview/rough-country-preview.png",
+    preview: "/images/preview/rough-country-preview.jpg",
     images: [
       { type: "image", src: "/images/rough-country-gallery/1.jpg", alt: "Rough Country" },
       { type: "image", src: "/images/rough-country-gallery/2.jpg", alt: "Rough Country" },
@@ -134,7 +135,7 @@ const PROJECTS: ProjectData[] = [
       { type: "image", src: "/images/personal-gallery/IMG_0265.JPG", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/IMG_0267.JPG", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/IMG_0268.JPG", alt: "Personal" },
-      { type: "image", src: "/images/personal-gallery/IMG_4968.PNG", alt: "Personal" },
+      { type: "image", src: "/images/personal-gallery/IMG_4968.jpg", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/IMG_5092.JPG", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/John%20parc-0.JPG", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/John%20parc-0%202.JPG", alt: "Personal" },
@@ -175,7 +176,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
   if (!project) return {};
-  return { title: `${project.name} — Aiden Urbine Creative` };
+  return {
+    title: project.name,
+    description: project.desc,
+    openGraph: {
+      title: project.name,
+      description: project.desc,
+      images: [{ url: project.preview, alt: project.name }],
+    },
+    twitter: { card: "summary_large_image", images: [project.preview] },
+  };
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -196,7 +206,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           width: "100%",
           height: "100vh",
           overflow: "hidden",
-          background: "#0E0B08",
+          background: "var(--bg)",
         }}
       >
         <Image
@@ -205,6 +215,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           fill
           priority
           sizes="100vw"
+          placeholder="blur"
+          blurDataURL={BLUR}
           style={{ objectFit: "cover", objectPosition: "center 20%" }}
         />
 
@@ -263,7 +275,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "16px",
-              color: "var(--muted)",
+              color: "rgba(245,242,234,0.7)",
               lineHeight: 1.85,
               marginTop: 12,
               margin: "12px 0 0",
@@ -276,7 +288,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: "9px",
-              color: "var(--muted)",
+              color: "rgba(245,242,234,0.7)",
               letterSpacing: "0.25em",
               textTransform: "uppercase",
               margin: "10px 0 0",
@@ -313,10 +325,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           justifyContent: "space-between",
           alignItems: "center",
           background: "var(--bg)",
-          borderTop: "1px solid rgba(242,237,228,0.06)",
+          borderTop: "1px solid var(--border)",
         }}
       >
-        <Link href="/home" className="proj-back">
+        <Link href="/work" className="proj-back">
           ← Back to Work
         </Link>
 
@@ -335,7 +347,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           text-transform: uppercase;
           transition: color 0.3s;
         }
-        .proj-back:hover { color: var(--bone); }
+        .proj-back:hover { color: var(--ink); }
         .proj-next:hover { color: var(--ember); }
         @media (max-width: 768px) {
           h1 { font-size: clamp(48px, 12vw, 80px) !important; }

@@ -24,7 +24,7 @@ const GALLERY_CSS = `
   columns: 2;
   column-gap: 6px;
   padding: 6px;
-  background: #0E0B08;
+  background: var(--bg);
   width: 100%;
 }
 .gallery-item {

@@ -3,21 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --bg:      #0E0B08;
-  --bg-2:    #171209;
-  --bone:    #F2EDE4;
-  --muted:   #8C7B65;
-  --ember:   #C84B2A;
-  --border:  rgba(242,237,228,0.08);
+  /* ── Palette: Light Neutral — cool greys, no warm ────────────────
+     Page chrome uses these. Photo scrims and text-over-photos stay
+     dark/light on purpose and are NOT driven by these tokens. */
+  --bg:      #E9E9E7;   /* cool neutral paper                  */
+  --bg-2:    #F3F3F1;   /* lighter surface / panels            */
+  --card:    #DCDCD9;   /* grey — image placeholder / panel    */
+  --ink:     #1C1C1B;   /* near-black — primary text           */
+  --muted:   #6E6E6A;   /* neutral grey — secondary text       */
+  --border:  rgba(20,20,18,0.12);   /* neutral hairline        */
+  --ember:   #C84B2A;   /* rust accent — a whisper of color    */
 
-  --font-display: 'Syne', sans-serif;
+  /* Light text that sits OVER photographs (hero, card captions,
+     lightbox). Keep light regardless of page palette. */
+  --bone:    #F2F2F0;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'Cormorant Garamond', serif;
   --font-body:    'DM Sans', sans-serif;
   --font-mono:    'DM Mono', monospace;
 }
 
 html, body {
   background-color: var(--bg);
-  color: var(--bone);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -25,6 +34,33 @@ html, body {
 * {
   box-sizing: border-box;
   cursor: none !important;
+}
+
+/* The custom cursor hides the pointer site-wide, but text fields need a
+   visible caret target — restore a real cursor over form inputs. */
+input, textarea, select {
+  cursor: text !important;
+}
+select { cursor: pointer !important; }
+
+/* Keyboard focus — visible ember ring (custom cursor can't help keyboard users). */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 2px;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 ::-webkit-scrollbar { width: 2px; }
