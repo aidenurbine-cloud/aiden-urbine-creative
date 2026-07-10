@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://aidenurbine.com"),
   title: {
     default: "Aiden Urbine Creative",
-    template: "%s — Aiden Urbine Creative",
+    template: "%s · Aiden Urbine Creative",
   },
   description: DESCRIPTION,
   openGraph: {

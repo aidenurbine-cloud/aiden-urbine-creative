@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  /* ── Palette: Light Neutral — cool greys, no warm ────────────────
+  /* ── Palette: Light Neutral - cool greys, no warm ────────────────
      Page chrome uses these. Photo scrims and text-over-photos stay
      dark/light on purpose and are NOT driven by these tokens. */
   --bg:      #E9E9E7;   /* cool neutral paper                  */
   --bg-2:    #F3F3F1;   /* lighter surface / panels            */
-  --card:    #DCDCD9;   /* grey — image placeholder / panel    */
-  --ink:     #1C1C1B;   /* near-black — primary text           */
-  --muted:   #6E6E6A;   /* neutral grey — secondary text       */
+  --card:    #DCDCD9;   /* grey - image placeholder / panel    */
+  --ink:     #1C1C1B;   /* near-black - primary text           */
+  --muted:   #6E6E6A;   /* neutral grey - secondary text       */
   --border:  rgba(20,20,18,0.12);   /* neutral hairline        */
-  --ember:   #C84B2A;   /* rust accent — a whisper of color    */
+  --ember:   #C84B2A;   /* rust accent - a whisper of color    */
 
   /* Light text that sits OVER photographs (hero, card captions,
      lightbox). Keep light regardless of page palette. */
@@ -37,13 +37,13 @@ html, body {
 }
 
 /* The custom cursor hides the pointer site-wide, but text fields need a
-   visible caret target — restore a real cursor over form inputs. */
+   visible caret target - restore a real cursor over form inputs. */
 input, textarea, select {
   cursor: text !important;
 }
 select { cursor: pointer !important; }
 
-/* Keyboard focus — visible ember ring (custom cursor can't help keyboard users). */
+/* Keyboard focus - visible ember ring (custom cursor can't help keyboard users). */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,

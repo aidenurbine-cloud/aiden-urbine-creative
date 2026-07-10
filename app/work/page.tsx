@@ -94,7 +94,7 @@ export default function WorkIndexPage() {
             margin: "0 0 16px",
           }}
         >
-          Portfolio — {String(PROJECTS.length).padStart(2, "0")} Projects
+          Portfolio · {String(PROJECTS.length).padStart(2, "0")} Projects
         </p>
         <h1
           className="wi-title"
@@ -121,7 +121,7 @@ export default function WorkIndexPage() {
             margin: "24px 0 0",
           }}
         >
-          Photo and video for outdoor, lifestyle, and gear brands — shot where the
+          Photo and video for outdoor, lifestyle, and gear brands. Shot where the
           work lives.
         </p>
       </div>
@@ -144,7 +144,7 @@ export default function WorkIndexPage() {
               href={`/work/${project.slug}`}
               ref={(el) => { cardRefs.current[i] = el; }}
               className="wc"
-              aria-label={`${project.name} — ${project.tag}`}
+              aria-label={`${project.name} · ${project.tag}`}
               style={{
                 position: "relative",
                 overflow: "hidden",

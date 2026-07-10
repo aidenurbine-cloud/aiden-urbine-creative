@@ -4,6 +4,14 @@ import Gallery, { GalleryItem } from "@/components/Gallery";
 import { BLUR } from "@/lib/blur";
 
 const IMAGES: GalleryItem[] = [
+  { type: "image", src: "/images/rough-country-gallery/AIDEN%20URBINE%20F250-6.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/AIDEN%20URBINE%20F250-29.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/AIDEN%20URBINE%20F250-38.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/2-102.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/AT%20THE%20ROCK-102.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/AT%20THE%20ROCK-104.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/AT%20THE%20ROCK-105.jpg", alt: "Rough Country" },
+  { type: "image", src: "/images/rough-country-gallery/AT%20THE%20ROCK-106.jpg", alt: "Rough Country" },
   { type: "image", src: "/images/rough-country-gallery/1.jpg", alt: "Rough Country" },
   { type: "image", src: "/images/rough-country-gallery/2.jpg", alt: "Rough Country" },
   { type: "image", src: "/images/rough-country-gallery/3.jpg", alt: "Rough Country" },
@@ -24,7 +32,7 @@ const IMAGES: GalleryItem[] = [
 
 export const metadata = {
   title: "Rough Country",
-  description: "Brand ambassador content for Rough Country — nationwide, shot from the truck.",
+  description: "Brand ambassador content for Rough Country, shot nationwide from the truck.",
   openGraph: {
     title: "Rough Country",
     images: [{ url: "/images/preview/rough-country-preview.jpg", alt: "Rough Country" }],
@@ -38,6 +46,26 @@ export const metadata = {
 export default function RoughCountryPage() {
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
+      {/* Home link (top-left, over hero) */}
+      <Link
+        href="/home"
+        className="rc-home"
+        style={{
+          position: "fixed",
+          top: 26,
+          left: 32,
+          zIndex: 50,
+          fontFamily: "var(--font-mono)",
+          fontSize: "13px",
+          color: "var(--bone)",
+          letterSpacing: "0.3em",
+          textDecoration: "none",
+          textShadow: "0 2px 12px rgba(0,0,0,0.6)",
+        }}
+      >
+        AU
+      </Link>
+
       {/* Hero */}
       <div
         style={{
@@ -138,7 +166,7 @@ export default function RoughCountryPage() {
         </div>
       </div>
 
-      {/* Gallery — full bleed */}
+      {/* Gallery: full bleed */}
       <div style={{ width: "100%", background: "var(--bg)" }}>
         <Gallery
           items={IMAGES}
@@ -179,6 +207,8 @@ export default function RoughCountryPage() {
         }
         .rc-back:hover { color: var(--ink); }
         .rc-next:hover { color: #C84B2A; }
+        .rc-home { transition: color 0.3s; }
+        .rc-home:hover { color: #C84B2A; }
         @media (max-width: 768px) {
           h1 { font-size: clamp(48px, 12vw, 80px) !important; }
         }
