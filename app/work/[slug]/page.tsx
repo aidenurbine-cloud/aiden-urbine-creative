@@ -23,32 +23,33 @@ const PROJECTS: ProjectData[] = [
     desc: "Two years and counting as a content creator for one of the fastest growing brands in the outdoor industry. Thousands of pieces of content and still going.",
     preview: "/images/preview/mkc%20preview.jpg",
     images: [
-      { type: "image", src: "/images/mkc-gallery/1.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/2.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/3.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/4.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/5.jpg", alt: "Montana Knife Co." },
+      // 6 and 13 pinned first (Aiden's picks), the rest shuffled out of sequence.
       { type: "image", src: "/images/mkc-gallery/6.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/7.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/8.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/9.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/10.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/11.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/12.jpg", alt: "Montana Knife Co." },
       { type: "image", src: "/images/mkc-gallery/13.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/14.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/15.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/16.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/17.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/18.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/19.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/20.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/21.jpg", alt: "Montana Knife Co." },
       { type: "image", src: "/images/mkc-gallery/22.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/23.jpg", alt: "Montana Knife Co." },
-      { type: "image", src: "/images/mkc-gallery/24.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/4.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/18.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/9.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/1.jpg", alt: "Montana Knife Co." },
       { type: "image", src: "/images/mkc-gallery/25.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/11.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/16.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/3.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/20.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/7.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/14.jpg", alt: "Montana Knife Co." },
       { type: "image", src: "/images/mkc-gallery/26.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/2.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/19.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/8.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/23.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/5.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/12.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/17.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/10.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/24.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/15.jpg", alt: "Montana Knife Co." },
+      { type: "image", src: "/images/mkc-gallery/21.jpg", alt: "Montana Knife Co." },
     ],
   },
   {
@@ -119,6 +120,12 @@ const PROJECTS: ProjectData[] = [
     desc: "My favorite frames from the past few years. The work I do for myself.",
     preview: "/images/preview/personal-preview.jpg",
     images: [
+      { type: "image", src: "/images/personal-gallery/AT%20THE%20ROCK-103.jpg", alt: "Personal" },
+      { type: "image", src: "/images/personal-gallery/AT%20THE%20ROCK-107.jpg", alt: "Personal" },
+      { type: "image", src: "/images/personal-gallery/AT%20THE%20ROCK-108.jpg", alt: "Personal" },
+      { type: "image", src: "/images/personal-gallery/AT%20THE%20ROCK-109.jpg", alt: "Personal" },
+      { type: "image", src: "/images/personal-gallery/AT%20THE%20ROCK-110.jpg", alt: "Personal" },
+      { type: "image", src: "/images/personal-gallery/AT%20THE%20ROCK-111.jpg", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/Full%20size-01.jpg", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/Full%20size-02.jpg", alt: "Personal" },
       { type: "image", src: "/images/personal-gallery/Full%20size-0.JPG", alt: "Personal" },
@@ -199,6 +206,26 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
+      {/* Home link (top-left, over hero) */}
+      <Link
+        href="/home"
+        className="proj-home"
+        style={{
+          position: "fixed",
+          top: 26,
+          left: 32,
+          zIndex: 50,
+          fontFamily: "var(--font-mono)",
+          fontSize: "13px",
+          color: "var(--bone)",
+          letterSpacing: "0.3em",
+          textDecoration: "none",
+          textShadow: "0 2px 12px rgba(0,0,0,0.6)",
+        }}
+      >
+        AU
+      </Link>
+
       {/* Hero */}
       <div
         style={{
@@ -299,7 +326,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       </div>
 
-      {/* Gallery — full bleed */}
+      {/* Gallery: full bleed */}
       <div
         style={{
           width: "100vw",
@@ -349,6 +376,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         }
         .proj-back:hover { color: var(--ink); }
         .proj-next:hover { color: var(--ember); }
+        .proj-home { transition: color 0.3s; }
+        .proj-home:hover { color: var(--ember); }
         @media (max-width: 768px) {
           h1 { font-size: clamp(48px, 12vw, 80px) !important; }
         }

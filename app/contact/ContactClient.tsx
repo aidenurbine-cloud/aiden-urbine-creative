@@ -70,7 +70,7 @@ export default function ContactClient() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Project Inquiry — ${projectType}`);
+    const subject = encodeURIComponent(`Project Inquiry: ${projectType}`);
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\nProject Type: ${projectType}\n\nMessage:\n${message}`
     );
@@ -127,7 +127,7 @@ export default function ContactClient() {
           alignItems: "flex-start",
         }}
       >
-        {/* Left — contact info */}
+        {/* Left: contact info */}
         <div
           ref={leftRef}
           style={{
@@ -252,7 +252,7 @@ export default function ContactClient() {
           </div>
         </div>
 
-        {/* Right — form card */}
+        {/* Right: form card */}
         <div
           ref={rightRef}
           style={{

@@ -155,7 +155,7 @@ function Hero() {
       <div style={{ position: "absolute", inset: 0, animation: "kenBurns 22s ease-out forwards" }}>
         <Image
           src="/homepage%20hero-1.jpg"
-          alt="Aiden Urbine — outdoor brand photography, Missoula, Montana"
+          alt="Aiden Urbine, outdoor brand photography in Missoula, Montana"
           fill
           priority
           sizes="100vw"
@@ -168,7 +168,7 @@ function Hero() {
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "rgba(14,11,8,0.42)", zIndex: 1 }} />
       <GrainOverlay />
 
-      {/* Center — name + one line */}
+      {/* Center: name + one line */}
       <div
         style={{
           position: "absolute",
@@ -206,7 +206,7 @@ function Hero() {
             margin: "20px 0 0",
           }}
         >
-          Outdoor Brand Content — Missoula, MT
+          Outdoor Brand Content · Missoula, MT
         </p>
       </div>
 
@@ -449,7 +449,7 @@ function About() {
             AIDEN URBINE
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontWeight: 300, fontSize: "17px", color: "var(--muted)", lineHeight: 1.85, maxWidth: 480, margin: "0 0 40px" }}>
-            Photographer and creative director based in Missoula, Montana — raised on the
+            Photographer and creative director based in Missoula, Montana. Raised on the
             Arkansas River in Buena Vista, Colorado. The outdoor life drives the work:
             whitewater, dirt roads, elk camps, and the brands that live out there. Two years
             and counting behind the content for Montana Knife Co., plus Badfish, Rough
