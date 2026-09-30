@@ -64,8 +64,7 @@ a:hover { color: var(--rust); }
 }
 .main {
   width: 100%;
-  max-width: 940px;
-  padding: 56px clamp(24px, 5vw, 80px) 96px 0;
+  padding: 40px 0 96px 0;
 }
 
 .side {
@@ -113,21 +112,15 @@ a:hover { color: var(--rust); }
 .photo { display: block; width: 100%; overflow: hidden; }
 .photo img { display: block; width: 100%; height: auto; }
 
-.main { max-width: 1080px; }
+.main { max-width: 1320px; padding-right: clamp(16px, 2.5vw, 40px); }
 
-/* Loose mixed-size gallery. Placement comes from Feed.tsx. */
-.table { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 56px); padding-top: 8px; }
-.table-row {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: clamp(14px, 2vw, 28px);
-  align-items: start;
-}
-.table-row > .snap { margin: 0; margin-top: var(--drop); }
-.snap-btn:hover .photo { opacity: 0.92; }
-.photo { transition: opacity 0.25s; }
-.snap-btn { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
-.snap-cap { margin: 6px 0 0; font-size: 0.8rem; font-style: italic; color: var(--muted); }
+/* Justified rows, tight gaps. Row grouping comes from Feed.tsx. */
+.grid { --g: 8px; display: flex; flex-direction: column; gap: var(--g); }
+.grid-row { display: flex; gap: var(--g); }
+.grid-row.is-last { max-width: 60%; }
+.grid-cell { display: block; min-width: 0; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.grid-cell .photo { transition: opacity 0.25s; }
+.grid-cell:hover .photo { opacity: 0.9; }
 
 /* Full-screen viewer */
 .viewer {
@@ -218,7 +211,7 @@ a:hover { color: var(--rust); }
 /* ── Phone / small tablet ──────────────────────────────────── */
 @media (max-width: 899px) {
   .shell { display: block; }
-  .main { padding: 20px 16px 72px; }
+  .main { padding: 12px 8px 72px; }
   .side {
     position: sticky; top: 0; z-index: 50;
     height: auto; padding: 14px 16px;
@@ -239,17 +232,8 @@ a:hover { color: var(--rust); }
   .side.is-open .side-nav { font-size: 1.15rem; gap: 4px; margin-top: 40px; }
   .side.is-open .side-nav > .caps { font-size: 0.85rem; padding: 10px 0; }
 
-  /* On phones: wides go full width, talls pair up two across. */
-  .table { gap: 22px; }
-  .table-row { column-gap: 12px; }
-  .table-row > .snap { grid-column: auto / span 12 !important; margin-top: 0; }
-  .table-row > .snap:nth-child(2) { margin-top: 10%; }
-  .table-row:has(> .snap:nth-child(2)) > .snap { grid-column: auto / span 6 !important; }
-  .table-row > .snap.is-tall:only-child { grid-column: 2 / span 9 !important; }
-  /* wide + tall row: stack them, wide on top, tall tucked to one side */
-  .table-row:has(> .snap:not(.is-tall)) > .snap { grid-row: auto; }
-  .table-row:has(> .snap:not(.is-tall)):has(> .snap.is-tall) > .snap:not(.is-tall) { grid-column: 1 / span 12 !important; }
-  .table-row:has(> .snap:not(.is-tall)):has(> .snap.is-tall) > .snap.is-tall { grid-column: 5 / span 8 !important; margin-top: 18px; }
+  .grid { --g: 5px; }
+  .page-head, .about, .contact, .page-end, .next { padding-left: 8px; padding-right: 8px; }
 
   .about-top { grid-template-columns: 1fr; }
   .about-portrait { width: 78%; margin: 0; }

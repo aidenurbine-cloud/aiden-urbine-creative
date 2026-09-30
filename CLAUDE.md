@@ -10,7 +10,7 @@ The site should feel personal and handmade. Photos lead, in full color, at their
 
 ## Rules
 - Background is kraft / cardboard (`--paper` #D9C6A5) with a fiber texture painted on the page. Aiden wants it warm and homey, "shoebox of prints".
-- Photos sit straight on the paper: loose mixed sizes, NO borders, frames, tilts, tape, shadows or scrapbook touches (Aiden hated that).
+- Photos sit straight on the paper in tight justified rows (8px gaps, rows of 2 to 4, equal height per row), NO borders, frames, tilts, tape, shadows or scrapbook touches (Aiden hated that).
 - Never add grain, filters, or overlays on top of photos. Aiden's exports already have film grain.
 - Never crop gallery photos, never dim them, never make them black and white.
 - Fonts: EB Garamond (everything), Caveat Brush (wordmark), Caveat (handwritten captions). A custom font from Aiden is coming.
@@ -25,5 +25,5 @@ The site should feel personal and handmade. Photos lead, in full color, at their
 - `components/Sidebar.tsx`: nav (collapses to a top bar + menu on phones).
 - `components/Feed.tsx`: the photo column and full-screen viewer.
 - `app/(site)/`: every page, with the sidebar. `page.tsx` = home (favorites gallery), `work/[slug]` project pages, `about`, `contact` (mailto form). `/work` redirects home.
-- Loose print placement is hand-tuned in the `WIDE`/`PAIR`/`WIDE_TALL`/`TALL` lists in `components/Feed.tsx`.
+- Row sizes are the `DESKTOP`/`PHONE` target lists in `components/Feed.tsx` (bigger number = more photos per row).
 - `/home` redirects to `/` (old links).

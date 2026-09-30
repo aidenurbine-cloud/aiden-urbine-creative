@@ -8,58 +8,48 @@ import type { Photo as PhotoType } from "@/lib/projects";
 
 export type FeedItem = PhotoType & { alt: string; caption?: string; href?: string };
 
-const isTall = (p: PhotoType) => p.w / p.h < 1.15;
+const ratio = (p: PhotoType) => p.w / p.h;
 
-// Placement on a 12-column grid: column start, span, and how far to push it down (% of width).
-type Spot = { col: number; span: number; drop: number };
-type Row = { idx: number[]; spots: Spot[] };
+// Justified rows: photos are grouped until their combined width/height ratio
+// reaches the row's target, then the row is stretched edge to edge at one shared
+// height. Targets cycle so some rows hold two frames and others four, which
+// keeps it from looking like a grid. Nothing is cropped.
+const DESKTOP = [2.3, 3.1, 2.0, 2.7];
+const PHONE = [1.4, 1.9, 1.2];
 
-// Hand-tuned so the layout feels loose, not gridded.
-// Each list cycles; the row's shape (wide, tall pair, wide + tall...) picks the list.
-const WIDE: Spot[][] = [
-  [{ col: 1, span: 9, drop: 0 }],
-  [{ col: 4, span: 9, drop: 0 }],
-  [{ col: 2, span: 10, drop: 0 }],
-];
-const PAIR: Spot[][] = [
-  [{ col: 1, span: 5, drop: 0 }, { col: 7, span: 5, drop: 14 }],
-  [{ col: 2, span: 5, drop: 10 }, { col: 8, span: 5, drop: 0 }],
-  [{ col: 1, span: 6, drop: 0 }, { col: 8, span: 4, drop: 22 }],
-];
-const WIDE_TALL: Spot[][] = [
-  [{ col: 1, span: 8, drop: 0 }, { col: 9, span: 4, drop: 18 }],
-  [{ col: 5, span: 8, drop: 8 }, { col: 1, span: 4, drop: 0 }],
-];
-const TALL: Spot[][] = [
-  [{ col: 4, span: 5, drop: 0 }],
-  [{ col: 7, span: 5, drop: 0 }],
-  [{ col: 2, span: 5, drop: 0 }],
-];
+function rows(items: FeedItem[], targets: number[]) {
+  const out: number[][] = [];
+  let row: number[] = [];
+  let sum = 0;
+  items.forEach((it, i) => {
+    row.push(i);
+    sum += ratio(it);
+    if (sum >= targets[out.length % targets.length]) {
+      out.push(row);
+      row = [];
+      sum = 0;
+    }
+  });
+  if (row.length) out.push(row);
+  return out;
+}
 
-function layout(items: FeedItem[]): Row[] {
-  const rows: Row[] = [];
-  const seen = { wide: 0, pair: 0, mixed: 0, tall: 0 };
-  const pick = (list: Spot[][], key: keyof typeof seen) => list[seen[key]++ % list.length];
-  for (let i = 0; i < items.length; i++) {
-    const a = items[i];
-    const b = items[i + 1];
-    if (!isTall(a)) {
-      if (b && isTall(b) && seen.wide % 2 === 0) {
-        rows.push({ idx: [i, i + 1], spots: pick(WIDE_TALL, "mixed") });
-        i++;
-      } else rows.push({ idx: [i], spots: pick(WIDE, "wide") });
-      seen.wide++;
-    } else if (b && isTall(b)) {
-      rows.push({ idx: [i, i + 1], spots: pick(PAIR, "pair") });
-      i++;
-    } else rows.push({ idx: [i], spots: pick(TALL, "tall") });
-  }
-  return rows;
+function usePhone() {
+  const [phone, setPhone] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 699px)");
+    const on = () => setPhone(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  return phone;
 }
 
 export default function Feed({ items, priority = 1 }: { items: FeedItem[]; priority?: number }) {
   const [open, setOpen] = useState<number | null>(null);
   const touchX = useRef<number | null>(null);
+  const phone = usePhone();
   const n = items.length;
 
   const go = useCallback((d: number) => setOpen((o) => (o === null ? o : (o + d + n) % n)), [n]);
@@ -80,40 +70,41 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
   }, [open, go]);
 
   const cur = open === null ? null : items[open];
+  const grouped = rows(items, phone ? PHONE : DESKTOP);
 
   return (
     <>
-      <div className="table">
-        {layout(items).map((r) => (
-          <div key={r.idx[0]} className="table-row">
-            {r.idx.map((i, k) => {
-              const it = items[i];
-              const s = r.spots[k];
-              return (
-                <figure
-                  key={i}
-                  className={`snap${isTall(it) ? " is-tall" : ""}`}
-                  style={
-                    {
-                      gridColumn: `${s.col} / span ${s.span}`,
-                      "--drop": `${s.drop}%`,
-                    } as React.CSSProperties
-                  }
-                >
-                  <button type="button" className="snap-btn" onClick={() => setOpen(i)} aria-label={`View ${it.alt} full screen`}>
+      <div className="grid">
+        {grouped.map((r, k) => {
+          const total = r.reduce((a, i) => a + ratio(items[i]), 0);
+          // A short last row shouldn't blow up to full width.
+          const last = k === grouped.length - 1 && total < (phone ? 1 : 1.8);
+          return (
+            <div key={r[0]} className={`grid-row${last ? " is-last" : ""}`}>
+              {r.map((i) => {
+                const it = items[i];
+                const share = ratio(it) / total;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    className="grid-cell"
+                    style={{ flex: `${ratio(it)} 1 0` }}
+                    onClick={() => setOpen(i)}
+                    aria-label={`View ${it.alt} full screen`}
+                  >
                     <Photo
                       photo={it}
                       alt={it.alt}
-                      sizes={`(min-width: 900px) ${Math.round((s.span / 12) * 66)}vw, ${isTall(it) ? 50 : 100}vw`}
+                      sizes={`(min-width: 900px) ${Math.ceil(share * 75)}vw, ${Math.ceil(share * 100)}vw`}
                       priority={i < priority}
                     />
                   </button>
-                  {it.caption && <figcaption className="snap-cap">{it.caption}</figcaption>}
-                </figure>
-              );
-            })}
-          </div>
-        ))}
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
       {cur && open !== null && (
