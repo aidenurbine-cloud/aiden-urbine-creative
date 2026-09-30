@@ -95,7 +95,11 @@ a:hover { color: var(--rust); }
   .side-list:hover .side-row { opacity: 0.35; }
   .side-list:hover .side-row:hover { opacity: 1; }
 }
+.side-home { font-size: 1.7rem; line-height: 1; }
+.side-clients { padding-left: 12px; border-left: 1px solid var(--rule); }
+.side-clients .side-row { font-size: 1.05rem; }
 .side-info { padding-top: 14px; border-top: 1px solid var(--rule); }
+.side-info .side-row { font-family: var(--sans); font-size: 0.95rem; letter-spacing: 0; }
 .side-reach {
   display: flex; flex-direction: column; gap: 2px;
   margin: 6px 0 0;
@@ -241,7 +245,9 @@ a:hover { color: var(--rust); }
   .side-body { display: none; }
   .side.is-open { height: 100svh; }
   .side.is-open .side-body { display: block; }
-  .side.is-open .side-row { font-size: 1.5rem; padding: 6px 0; }
+  .side.is-open .side-row { font-size: 1.4rem; padding: 6px 0; }
+  .side.is-open .side-home { font-size: 2rem; }
+  .side.is-open .side-info .side-row { font-size: 1.1rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
   .page-head, .about, .contact, .page-end, .next { padding-left: 8px; padding-right: 8px; }

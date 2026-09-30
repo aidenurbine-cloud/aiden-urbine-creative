@@ -49,13 +49,13 @@ export default function Sidebar() {
         <nav aria-label="Main">
           <ul className="side-list">
             <li>
-              <Link href="/" className={`side-row${here("/")}`}>
+              <Link href="/" className={`side-row side-home${here("/")}`}>
                 Selected work
               </Link>
             </li>
           </ul>
 
-          <ul className="side-list">
+          <ul className="side-list side-clients">
             {commercial.map((p) => (
               <li key={p.slug}>
                 <Link href={`/work/${p.slug}`} className={`side-row${here(`/work/${p.slug}`)}`}>
@@ -63,6 +63,9 @@ export default function Sidebar() {
                 </Link>
               </li>
             ))}
+          </ul>
+
+          <ul className="side-list">
             <li>
               <Link href="/work/personal" className={`side-row${here("/work/personal")}`}>
                 Personal
