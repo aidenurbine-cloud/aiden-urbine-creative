@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Caveat_Brush, Caveat } from "next/font/google";
-import Sidebar from "@/components/Sidebar";
 import "./globals.css";
 
 const serif = EB_Garamond({
@@ -39,14 +38,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${serif.variable} ${brush.variable} ${hand.variable}`}>
-      <body>
-        <div className="shell">
-          <Sidebar />
-          <main className="main" id="top">
-            {children}
-          </main>
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

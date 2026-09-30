@@ -1,0 +1,12 @@
+import Sidebar from "@/components/Sidebar";
+
+export default function SiteLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="shell">
+      <Sidebar />
+      <main className="main" id="top">
+        {children}
+      </main>
+    </div>
+  );
+}

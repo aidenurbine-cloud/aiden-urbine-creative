@@ -26,7 +26,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="side-nav" aria-label="Main">
-        <Link href="/" className={`caps ${cls("/") ?? ""}`}>
+        <Link href="/work" className={`caps ${cls("/work") ?? ""}`}>
           Favorites
         </Link>
         <span className="caps caps-label">Commercial</span>

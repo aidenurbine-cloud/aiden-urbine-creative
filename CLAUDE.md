@@ -22,5 +22,7 @@ The site should feel personal and handmade. Photos lead, in full color, at their
   (see the generator approach: `ImageOps.exif_transpose(Image.open(p)).size`, and a 1x1 resize for color).
 - `components/Sidebar.tsx`: nav (collapses to a top bar + menu on phones).
 - `components/Feed.tsx`: the photo column and full-screen viewer.
-- `app/page.tsx` favorites, `app/work/[slug]` project pages, `app/about`, `app/contact` (mailto form).
-- `/home` redirects to `/` (old links). `/work` redirects to `/`.
+- `app/page.tsx` + `components/Landing.tsx`: full-screen landing slideshow (no sidebar). Photos = `LANDING` in lib/projects.ts.
+- `app/(site)/`: everything with the sidebar. `work` = favorites feed, `work/[slug]` project pages, `about`, `contact` (mailto form).
+- Landing name font is `--display` in globals.css (placeholder until Aiden picks a font).
+- `/home` redirects to `/` (old links).
