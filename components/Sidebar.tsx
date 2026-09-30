@@ -70,7 +70,7 @@ export default function Sidebar() {
             </li>
           </ul>
 
-          <ul className="side-list">
+          <ul className="side-list side-info">
             <li>
               <Link href="/about" className={`side-row${here("/about")}`}>
                 About

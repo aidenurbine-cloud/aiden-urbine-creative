@@ -96,6 +96,7 @@ a:hover { color: var(--rust); }
   .side-list:hover .side-row { opacity: 0.35; }
   .side-list:hover .side-row:hover { opacity: 1; font-style: italic; color: var(--ink); }
 }
+.side-info { padding-top: 14px; border-top: 1px solid var(--rule); }
 .side-reach {
   display: flex; flex-direction: column; gap: 2px;
   margin: 6px 0 0;
