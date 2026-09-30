@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { projects, EMAIL, INSTAGRAM } from "@/lib/projects";
 
@@ -25,10 +24,6 @@ export default function Sidebar() {
   useEffect(() => setOpen(false), [path]);
 
   const here = (href: string) => (path === href ? " is-here" : "");
-  // Which project's lead photo shows at the bottom of the sidebar.
-  const current = projects.find((p) => path === `/work/${p.slug}`)?.slug ?? null;
-  const [hover, setHover] = useState<string | null>(null);
-  const preview = hover ?? current;
   const commercial = projects.filter((p) => p.slug !== "personal");
 
   return (
@@ -54,20 +49,25 @@ export default function Sidebar() {
         <nav aria-label="Main">
           <ul className="side-list">
             <li>
-              <Link href="/" className={`side-row side-proj${here("/")}`}>
+              <Link href="/" className={`side-row${here("/")}`}>
                 Selected work
               </Link>
             </li>
           </ul>
 
           <ul className="side-list">
-            {[...commercial, { ...projects.find((p) => p.slug === "personal")!, name: "Personal" }].map((p) => (
-              <li key={p.slug} onMouseEnter={() => setHover(p.slug)} onMouseLeave={() => setHover(null)}>
-                <Link href={`/work/${p.slug}`} className={`side-row side-proj${here(`/work/${p.slug}`)}`}>
+            {commercial.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/work/${p.slug}`} className={`side-row${here(`/work/${p.slug}`)}`}>
                   {p.name}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/work/personal" className={`side-row${here("/work/personal")}`}>
+                Personal
+              </Link>
+            </li>
           </ul>
 
           <ul className="side-links">
@@ -91,20 +91,6 @@ export default function Sidebar() {
             </li>
           </ul>
         </nav>
-      </div>
-
-      <div className="side-peek" aria-hidden="true">
-        {projects.map((p) => (
-          <div key={p.slug} className={`side-peek-img${preview === p.slug ? " is-on" : ""}`}>
-            <Image
-              src={p.feature[0].src}
-              alt=""
-              fill
-              sizes="260px"
-              style={{ objectFit: "cover", background: p.feature[0].c }}
-            />
-          </div>
-        ))}
       </div>
     </aside>
   );
