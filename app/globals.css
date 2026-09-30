@@ -12,8 +12,7 @@
   --rust: #8e2f1c;       /* one accent: hover + "you are here" */
 
   --serif: var(--f-serif), "Garamond", Georgia, serif;
-  --brush: var(--f-brush), var(--f-hand), cursive;
-  --hand: var(--f-hand), cursive;
+  --display: var(--serif);
 
   --gap: 12px;
   --side: clamp(220px, 24vw, 340px);
@@ -54,7 +53,7 @@ a:hover { color: var(--rust); }
   text-transform: uppercase;
   font-weight: 500;
 }
-.hand-note { font-family: var(--hand); font-size: 1.35rem; line-height: 1; color: var(--muted); }
+.note { font-style: italic; color: var(--muted); }
 
 /* ── Shell: sidebar + one column of photos ─────────────────── */
 .shell {
@@ -71,42 +70,70 @@ a:hover { color: var(--rust); }
   position: sticky;
   top: 0;
   height: 100vh;
-  padding: 56px 24px 32px;
+  padding: 40px 28px 32px clamp(20px, 3vw, 44px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   overflow-y: auto;
 }
-.side-top { display: flex; align-items: center; justify-content: center; }
+.side-top { display: flex; align-items: flex-start; justify-content: space-between; }
+/* --display: name font. Placeholder until Aiden's font lands. */
 .wordmark {
-  font-family: var(--brush);
-  font-size: clamp(2rem, 2.6vw, 2.6rem);
-  line-height: 1;
-  letter-spacing: 0.01em;
-  display: inline-block;
-  transform: rotate(-2deg);
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 3.4vw, 3.4rem);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  font-weight: 500;
 }
+.wordmark span { display: block; }
 .menu-btn { display: none; }
 
-.side-nav { display: flex; flex-direction: column; align-items: center; margin-top: 36px; }
-.side-nav > .caps { padding: 7px 0; }
-.caps-label { color: var(--muted); }
-.side-nav .is-here { color: var(--rust); }
-.sub {
-  list-style: none; margin: 0 0 6px; padding: 0;
-  font-style: italic; font-size: 0.92rem; line-height: 1.75;
+.side-role {
+  margin: 18px 0 34px;
+  font-size: 0.82rem; line-height: 1.5; color: var(--muted);
 }
-.small-links {
-  list-style: none; margin: 28px 0 0; padding: 0;
-  font-size: 0.85rem; line-height: 1.7; letter-spacing: 0.04em;
+.side-time { font-variant-numeric: tabular-nums; }
+
+.side-row {
+  display: grid;
+  grid-template-columns: 2.1em 1fr auto;
+  align-items: baseline;
+  gap: 4px;
+  padding: 3px 0;
+  font-size: 0.95rem;
 }
-.icons { display: flex; gap: 14px; margin-top: 16px; }
-.icons a { display: inline-flex; }
-.side-place {
-  margin-top: 28px;
-  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+.side-row .idx, .side-row .ct { font-size: 0.7rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.side-row:hover .idx, .side-row.is-here .idx { color: var(--rust); }
+.side-row.is-here { color: var(--rust); font-style: italic; }
+.side-all { margin-bottom: 6px; }
+.side-h {
+  margin: 20px 0 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted);
 }
+.side-list { list-style: none; margin: 0; padding: 0; }
+.side-links {
+  list-style: none; margin: 26px 0 0; padding: 12px 0 0;
+  border-top: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  font-size: 0.85rem;
+}
+.side-links .is-here { color: var(--rust); }
+
+/* Client filter above the home gallery */
+.filters {
+  display: flex; flex-wrap: wrap; gap: 6px 18px;
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+}
+.filters button {
+  background: none; border: 0; padding: 2px 0; cursor: pointer;
+  font: inherit; color: var(--muted);
+  border-bottom: 1px solid transparent;
+}
+.filters button:hover { color: var(--ink); }
+.filters button.is-on { color: var(--ink); border-bottom-color: var(--ink); }
+.filters .ct { font-size: 0.68rem; vertical-align: 0.3em; }
 
 /* ── Photos ─────────────────────────────────────────────────── */
 .photo { display: block; width: 100%; overflow: hidden; }
@@ -118,9 +145,20 @@ a:hover { color: var(--rust); }
 .grid { --g: 8px; display: flex; flex-direction: column; gap: var(--g); }
 .grid-row { display: flex; gap: var(--g); }
 .grid-row.is-last { max-width: 60%; }
-.grid-cell { display: block; min-width: 0; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.grid-cell { position: relative; display: block; min-width: 0; padding: 0; border: 0; background: none; cursor: zoom-in; }
 .grid-cell .photo { transition: opacity 0.25s; }
-.grid-cell:hover .photo { opacity: 0.9; }
+.grid-cell:hover .photo { opacity: 0.94; }
+.grid-tag {
+  position: absolute; left: 8px; bottom: 7px;
+  padding: 2px 6px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.72rem; font-style: italic;
+  opacity: 0; transform: translateY(3px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+.grid-cell:hover .grid-tag, .grid-cell:focus-visible .grid-tag { opacity: 1; transform: none; }
 
 /* Full-screen viewer */
 .viewer {
@@ -214,24 +252,23 @@ a:hover { color: var(--rust); }
   .main { padding: 12px 8px 72px; }
   .side {
     position: sticky; top: 0; z-index: 50;
-    height: auto; padding: 14px 16px;
+    height: auto; padding: 12px 16px;
     background: var(--paper);
     border-bottom: 1px solid var(--rule);
-    align-items: stretch; text-align: left;
   }
-  .side-top { justify-content: space-between; }
-  .wordmark { font-size: 1.9rem; }
+  .side-top { align-items: center; }
+  .wordmark { font-size: 1.7rem; }
+  .wordmark span { display: inline; }
   .menu-btn {
     display: block; background: none; border: 0; padding: 6px 0;
-    font: inherit; font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
+    font: inherit; font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase;
     color: var(--ink); cursor: pointer;
   }
-  .side-nav { display: none; margin-top: 18px; padding-bottom: 12px; }
-  .side.is-open .side-nav { display: flex; }
+  .side-body { display: none; }
   .side.is-open { height: 100svh; }
-  .side.is-open .side-nav { font-size: 1.15rem; gap: 4px; margin-top: 40px; }
-  .side.is-open .side-nav > .caps { font-size: 0.85rem; padding: 10px 0; }
-
+  .side.is-open .side-body { display: block; }
+  .side.is-open .side-row { font-size: 1.15rem; padding: 6px 0; }
+  .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
   .page-head, .about, .contact, .page-end, .next { padding-left: 8px; padding-right: 8px; }
 

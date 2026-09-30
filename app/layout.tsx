@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Caveat_Brush, Caveat } from "next/font/google";
+import { EB_Garamond } from "next/font/google";
 import "./globals.css";
 
 const serif = EB_Garamond({
@@ -7,8 +7,6 @@ const serif = EB_Garamond({
   style: ["normal", "italic"],
   variable: "--f-serif",
 });
-const brush = Caveat_Brush({ subsets: ["latin"], weight: "400", variable: "--f-brush" });
-const hand = Caveat({ subsets: ["latin"], weight: "500", variable: "--f-hand" });
 
 const DESCRIPTION =
   "Photo & video for outdoor, lifestyle, and gear brands. Based in Missoula, Montana.";
@@ -37,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${brush.variable} ${hand.variable}`}>
+    <html lang="en" className={serif.variable}>
       <body>{children}</body>
     </html>
   );

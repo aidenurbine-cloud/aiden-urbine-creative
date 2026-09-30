@@ -39,7 +39,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </header>
       <Feed items={items} />
       <nav className="next" aria-label="Next project">
-        <span className="hand-note">keep going</span>
+        <span className="note">Next up</span>
         <Link href={`/work/${next.slug}`} className="caps">
           {next.name} →
         </Link>

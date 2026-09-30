@@ -99,6 +99,10 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
                       sizes={`(min-width: 900px) ${Math.ceil(share * 75)}vw, ${Math.ceil(share * 100)}vw`}
                       priority={i < priority}
                     />
+                    <span className="grid-tag" aria-hidden="true">
+                      {it.caption ? `${it.caption} · ` : ""}
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </button>
                 );
               })}

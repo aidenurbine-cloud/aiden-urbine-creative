@@ -57,7 +57,7 @@ export default function ContactClient() {
         <button type="submit" className="caps btn">
           Send it
         </button>
-        {sent && <p className="hand-note">your mail app should be open. talk soon.</p>}
+        {sent && <p className="note">Your mail app should be open. Talk soon.</p>}
       </form>
     </div>
   );
