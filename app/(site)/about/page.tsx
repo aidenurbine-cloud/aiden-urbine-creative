@@ -11,9 +11,8 @@ export default function About() {
   return (
     <article className="about">
       <div className="about-top">
-        <figure className="print about-portrait">
+        <figure className="about-portrait">
           <Photo photo={portrait} alt="Aiden Urbine standing in front of his truck" sizes="(min-width: 900px) 26vw, 70vw" priority />
-          <figcaption className="hand-note">that&apos;s me</figcaption>
         </figure>
 
         <div className="about-text">
@@ -39,9 +38,8 @@ export default function About() {
       <h2 className="caps prints-title">From the camera roll</h2>
       <div className="prints">
         {prints.map((p) => (
-          <figure key={p.src} className="print">
+          <figure key={p.src} className="roll">
             <Photo photo={p} alt={p.note} sizes="(min-width: 900px) 20vw, 42vw" />
-            <figcaption className="hand-note">{p.note}</figcaption>
           </figure>
         ))}
       </div>

@@ -10,7 +10,7 @@ The site should feel personal and handmade. Photos lead, in full color, at their
 
 ## Rules
 - Background is kraft / cardboard (`--paper` #D9C6A5) with a fiber texture painted on the page. Aiden wants it warm and homey, "shoebox of prints".
-- Photos sit in cream print borders, loosely placed and slightly tilted, like prints on a table (both the home gallery and project pages).
+- Photos sit straight on the paper: loose mixed sizes, NO borders, frames, tilts, tape, shadows or scrapbook touches (Aiden hated that).
 - Never add grain, filters, or overlays on top of photos. Aiden's exports already have film grain.
 - Never crop gallery photos, never dim them, never make them black and white.
 - Fonts: EB Garamond (everything), Caveat Brush (wordmark), Caveat (handwritten captions). A custom font from Aiden is coming.

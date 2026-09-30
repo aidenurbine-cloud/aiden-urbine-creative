@@ -10,30 +10,30 @@ export type FeedItem = PhotoType & { alt: string; caption?: string; href?: strin
 
 const isTall = (p: PhotoType) => p.w / p.h < 1.15;
 
-// Placement on a 12-column table: [column start, span, push down (% of width), tilt (deg)].
-type Spot = { col: number; span: number; drop: number; tilt: number };
+// Placement on a 12-column grid: column start, span, and how far to push it down (% of width).
+type Spot = { col: number; span: number; drop: number };
 type Row = { idx: number[]; spots: Spot[] };
 
-// Hand-tuned so the prints look dropped on the table, not gridded.
+// Hand-tuned so the layout feels loose, not gridded.
 // Each list cycles; the row's shape (wide, tall pair, wide + tall...) picks the list.
 const WIDE: Spot[][] = [
-  [{ col: 1, span: 9, drop: 0, tilt: -0.6 }],
-  [{ col: 4, span: 9, drop: 0, tilt: 0.5 }],
-  [{ col: 2, span: 10, drop: 0, tilt: -0.3 }],
+  [{ col: 1, span: 9, drop: 0 }],
+  [{ col: 4, span: 9, drop: 0 }],
+  [{ col: 2, span: 10, drop: 0 }],
 ];
 const PAIR: Spot[][] = [
-  [{ col: 1, span: 5, drop: 0, tilt: -1 }, { col: 7, span: 5, drop: 14, tilt: 0.8 }],
-  [{ col: 2, span: 5, drop: 10, tilt: 0.7 }, { col: 8, span: 5, drop: 0, tilt: -0.9 }],
-  [{ col: 1, span: 6, drop: 0, tilt: 0.4 }, { col: 8, span: 4, drop: 22, tilt: -1.2 }],
+  [{ col: 1, span: 5, drop: 0 }, { col: 7, span: 5, drop: 14 }],
+  [{ col: 2, span: 5, drop: 10 }, { col: 8, span: 5, drop: 0 }],
+  [{ col: 1, span: 6, drop: 0 }, { col: 8, span: 4, drop: 22 }],
 ];
 const WIDE_TALL: Spot[][] = [
-  [{ col: 1, span: 8, drop: 0, tilt: -0.5 }, { col: 9, span: 4, drop: 18, tilt: 1.1 }],
-  [{ col: 5, span: 8, drop: 8, tilt: 0.5 }, { col: 1, span: 4, drop: 0, tilt: -1 }],
+  [{ col: 1, span: 8, drop: 0 }, { col: 9, span: 4, drop: 18 }],
+  [{ col: 5, span: 8, drop: 8 }, { col: 1, span: 4, drop: 0 }],
 ];
 const TALL: Spot[][] = [
-  [{ col: 4, span: 5, drop: 0, tilt: 0.9 }],
-  [{ col: 7, span: 5, drop: 0, tilt: -0.8 }],
-  [{ col: 2, span: 5, drop: 0, tilt: -0.5 }],
+  [{ col: 4, span: 5, drop: 0 }],
+  [{ col: 7, span: 5, drop: 0 }],
+  [{ col: 2, span: 5, drop: 0 }],
 ];
 
 function layout(items: FeedItem[]): Row[] {
@@ -97,7 +97,6 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
                     {
                       gridColumn: `${s.col} / span ${s.span}`,
                       "--drop": `${s.drop}%`,
-                      "--tilt": `${s.tilt}deg`,
                     } as React.CSSProperties
                   }
                 >
@@ -109,7 +108,7 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
                       priority={i < priority}
                     />
                   </button>
-                  {it.caption && <figcaption className="snap-cap hand-note">{it.caption}</figcaption>}
+                  {it.caption && <figcaption className="snap-cap">{it.caption}</figcaption>}
                 </figure>
               );
             })}

@@ -5,7 +5,7 @@
 :root {
   --paper: #d9c6a5;      /* kraft / cardboard */
   --paper-2: #cdb891;
-  --print: #f1e8d6;      /* cream border of a printed photo */
+  --print: #f1e8d6;      /* light cream for text on dark */
   --ink: #231a12;
   --muted: #6b5640;
   --rule: rgba(35, 26, 18, 0.22);
@@ -115,7 +115,7 @@ a:hover { color: var(--rust); }
 
 .main { max-width: 1080px; }
 
-/* Loose "prints on a table" gallery. Placement comes from Feed.tsx. */
+/* Loose mixed-size gallery. Placement comes from Feed.tsx. */
 .table { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 56px); padding-top: 8px; }
 .table-row {
   display: grid;
@@ -123,22 +123,11 @@ a:hover { color: var(--rust); }
   column-gap: clamp(14px, 2vw, 28px);
   align-items: start;
 }
-.table-row > .snap { grid-row: 1; }
-.snap {
-  margin: 0;
-  margin-top: var(--drop);
-  transform: rotate(var(--tilt));
-  background: var(--print);
-  padding: clamp(6px, 0.7vw, 10px);
-  box-shadow: 0 1px 1px rgba(35, 26, 18, 0.18), 0 10px 22px -10px rgba(35, 26, 18, 0.45);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-.snap:hover {
-  transform: rotate(0deg) translateY(-3px);
-  box-shadow: 0 1px 1px rgba(35, 26, 18, 0.18), 0 18px 30px -12px rgba(35, 26, 18, 0.5);
-}
+.table-row > .snap { margin: 0; margin-top: var(--drop); }
+.snap-btn:hover .photo { opacity: 0.92; }
+.photo { transition: opacity 0.25s; }
 .snap-btn { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
-.snap-cap { margin: 6px 2px 0; font-size: 1.15rem; color: var(--ink); }
+.snap-cap { margin: 6px 0 0; font-size: 0.8rem; font-style: italic; color: var(--muted); }
 
 /* Full-screen viewer */
 .viewer {
@@ -194,42 +183,13 @@ a:hover { color: var(--rust); }
   font-style: italic; font-size: 1.3rem; line-height: 1.4;
 }
 
-.print {
-  position: relative;
-  margin: 0;
-  background: var(--print);
-  padding: 10px 10px 40px;
-  box-shadow: 0 1px 2px rgba(42, 37, 33, 0.12), 0 8px 24px -12px rgba(42, 37, 33, 0.35);
-}
-.print figcaption { position: absolute; left: 14px; bottom: 9px; color: var(--ink); }
-/* strip of tape */
-.print::before {
-  content: "";
-  position: absolute; top: -12px; left: 50%;
-  width: 84px; height: 24px;
-  transform: translateX(-50%) rotate(-3deg);
-  background: rgba(214, 200, 170, 0.7);
-  box-shadow: 0 1px 1px rgba(42, 37, 33, 0.08);
-  z-index: 1;
-}
-.about-portrait { transform: rotate(-1.5deg); }
-
 .prints-title { margin: 88px 0 36px; text-align: center; }
 .prints {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 44px 32px;
-  padding: 0 8px;
+  gap: 12px;
 }
-.prints .print:nth-child(6n + 1) { transform: rotate(-3deg); }
-.prints .print:nth-child(6n + 2) { transform: rotate(2deg) translateY(18px); }
-.prints .print:nth-child(6n + 3) { transform: rotate(-1deg); }
-.prints .print:nth-child(6n + 4) { transform: rotate(2.5deg); }
-.prints .print:nth-child(6n + 5) { transform: rotate(-2deg) translateY(22px); }
-.prints .print:nth-child(6n + 6) { transform: rotate(1.5deg); }
-.prints .print { transition: transform 0.35s ease; }
-.prints .print:hover { transform: rotate(0) scale(1.03); z-index: 2; }
-/* Wide prints don't fit the tall grid, crop them square-ish. */
+/* Camera-roll grid: same shape for every frame. */
 .prints .photo { aspect-ratio: 4 / 5 !important; }
 .prints .photo img { height: 100%; object-fit: cover; }
 
@@ -279,10 +239,10 @@ a:hover { color: var(--rust); }
   .side.is-open .side-nav { font-size: 1.15rem; gap: 4px; margin-top: 40px; }
   .side.is-open .side-nav > .caps { font-size: 0.85rem; padding: 10px 0; }
 
-  /* On phones: wides go full width, talls pair up two across, tilts get gentler. */
+  /* On phones: wides go full width, talls pair up two across. */
   .table { gap: 22px; }
   .table-row { column-gap: 12px; }
-  .table-row > .snap { grid-column: auto / span 12 !important; margin-top: 0; transform: rotate(calc(var(--tilt) * 0.6)); }
+  .table-row > .snap { grid-column: auto / span 12 !important; margin-top: 0; }
   .table-row > .snap:nth-child(2) { margin-top: 10%; }
   .table-row:has(> .snap:nth-child(2)) > .snap { grid-column: auto / span 6 !important; }
   .table-row > .snap.is-tall:only-child { grid-column: 2 / span 9 !important; }
@@ -290,11 +250,10 @@ a:hover { color: var(--rust); }
   .table-row:has(> .snap:not(.is-tall)) > .snap { grid-row: auto; }
   .table-row:has(> .snap:not(.is-tall)):has(> .snap.is-tall) > .snap:not(.is-tall) { grid-column: 1 / span 12 !important; }
   .table-row:has(> .snap:not(.is-tall)):has(> .snap.is-tall) > .snap.is-tall { grid-column: 5 / span 8 !important; margin-top: 18px; }
-  .snap-cap { font-size: 1rem; }
 
   .about-top { grid-template-columns: 1fr; }
-  .about-portrait { width: 78%; margin: 12px auto 0; }
-  .prints { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 20px; padding: 0; }
+  .about-portrait { width: 78%; margin: 0; }
+  .prints { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .prints-title { margin-top: 64px; }
 }
 
