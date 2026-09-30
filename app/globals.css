@@ -89,12 +89,45 @@ a:hover { color: var(--rust); }
 .side-row { display: block; padding: 3px 0; font-size: 0.95rem; }
 .side-row.is-here { color: var(--rust); font-style: italic; }
 .side-list { list-style: none; margin: 0 0 18px; padding: 0; }
-.side-links {
-  list-style: none; margin: 26px 0 0; padding: 12px 0 0;
-  border-top: 1px solid var(--rule);
-  display: flex; flex-wrap: wrap; gap: 4px 16px;
-  font-size: 0.85rem;
+
+/* Project names: bigger, with a line that draws in on hover and stays on the current page. */
+.side-proj {
+  position: relative;
+  font-size: clamp(1.25rem, 1.6vw, 1.6rem);
+  line-height: 1.15;
+  padding: 4px 0;
+  letter-spacing: -0.01em;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
 }
+.side-proj::before {
+  content: "";
+  position: absolute; left: -2px; top: 50%;
+  width: 0; height: 1px;
+  background: currentColor;
+  transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.side-proj:hover, .side-proj.is-here { transform: translateX(22px); }
+.side-proj:hover::before, .side-proj.is-here::before { width: 14px; left: -22px; }
+.side-proj.is-here { font-style: italic; }
+
+/* Small lead-photo preview at the foot of the sidebar. */
+.side-peek {
+  position: relative;
+  margin-top: auto;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 4 / 5;
+  pointer-events: none;
+}
+.side-peek-img { position: absolute; inset: 0; opacity: 0; transition: opacity 0.45s ease; }
+.side-peek-img.is-on { opacity: 1; }
+@media (max-height: 760px) { .side-peek { display: none; } }
+.side-links {
+  list-style: none; margin: 10px 0 24px; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 4px 14px;
+  font-size: 0.78rem; letter-spacing: 0.04em; color: var(--muted);
+}
+.side-links a:hover { color: var(--ink); }
 .side-links .is-here { color: var(--rust); }
 
 /* Client filter above the home gallery */
@@ -231,6 +264,7 @@ a:hover { color: var(--rust); }
     color: var(--ink); cursor: pointer;
   }
   .side-body { display: none; }
+  .side-peek { display: none; }
   .side.is-open { height: 100svh; }
   .side.is-open .side-body { display: block; }
   .side.is-open .side-row { font-size: 1.2rem; padding: 6px 0; }
