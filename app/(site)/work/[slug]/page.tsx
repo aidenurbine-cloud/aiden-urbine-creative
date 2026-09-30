@@ -30,7 +30,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <header className="page-head">
+      <header className="page-head is-centered">
         <h1 className="page-title">{p.name}</h1>
         <p className="page-desc">{p.desc}</p>
         <p className="page-meta">

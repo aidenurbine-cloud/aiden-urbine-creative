@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Gallery from "@/components/Gallery";
 import { favorites, projects } from "@/lib/projects";
 
@@ -10,14 +9,24 @@ export default function Home() {
     caption: f.project.name,
     href: `/work/${f.project.slug}`,
   }));
+  // Filtering by a client shows every photo from that client, not just the favorites.
+  const byClient = Object.fromEntries(
+    projects.map((p) => [
+      p.slug,
+      p.images.map((img, k) => ({
+        ...img,
+        slug: p.slug,
+        alt: `${p.name}, photo ${k + 1}`,
+        caption: p.name,
+        href: `/work/${p.slug}`,
+      })),
+    ])
+  );
   const filters = projects.map((p) => ({ slug: p.slug, name: p.name }));
   return (
     <>
       <h1 className="sr-only">Aiden Urbine, photo and video. Selected work.</h1>
-      <Gallery items={items} filters={filters} />
-      <p className="page-end">
-        That&apos;s the short list. <Link href="/work/personal">More from the road →</Link>
-      </p>
+      <Gallery items={items} byClient={byClient} filters={filters} />
     </>
   );
 }

@@ -6,9 +6,17 @@ import Feed, { type FeedItem } from "./Feed";
 type Item = FeedItem & { slug: string };
 
 // Home gallery with a client filter on top.
-export default function Gallery({ items, filters }: { items: Item[]; filters: { slug: string; name: string }[] }) {
+export default function Gallery({
+  items,
+  byClient,
+  filters,
+}: {
+  items: Item[];
+  byClient: Record<string, Item[]>;
+  filters: { slug: string; name: string }[];
+}) {
   const [only, setOnly] = useState<string | null>(null);
-  const shown = only ? items.filter((i) => i.slug === only) : items;
+  const shown = only ? byClient[only] : items;
 
   return (
     <>
@@ -16,15 +24,11 @@ export default function Gallery({ items, filters }: { items: Item[]; filters: { 
         <button type="button" className={only === null ? "is-on" : ""} onClick={() => setOnly(null)}>
           All
         </button>
-        {filters.map((f) => {
-          const count = items.filter((i) => i.slug === f.slug).length;
-          if (!count) return null;
-          return (
-            <button key={f.slug} type="button" className={only === f.slug ? "is-on" : ""} onClick={() => setOnly(f.slug)}>
-              {f.name}
-            </button>
-          );
-        })}
+        {filters.map((f) => (
+          <button key={f.slug} type="button" className={only === f.slug ? "is-on" : ""} onClick={() => setOnly(f.slug)}>
+            {f.name}
+          </button>
+        ))}
       </div>
       <Feed key={only ?? "all"} items={shown} priority={3} />
     </>

@@ -162,14 +162,12 @@ a:hover { color: var(--rust); }
 
 /* ── Page text ─────────────────────────────────────────────── */
 .page-head { margin-bottom: 36px; max-width: 34em; }
+.page-head.is-centered { margin-left: auto; margin-right: auto; text-align: center; }
 .page-title { margin: 0 0 12px; font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1; }
 .page-desc { margin: 0; font-size: 1.05rem; line-height: 1.55; }
 .page-desc a, .about-text a, .contact-direct a { border-bottom: 1px solid var(--rule); }
 .page-meta { margin: 14px 0 0; font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
 
-.page-end { margin-top: 48px; text-align: center; }
-.page-end a { color: var(--ink); }
-.page-end a:hover { color: var(--rust); }
 
 .next-link { font-family: var(--display); font-size: 1.4rem; }
 .next {
@@ -250,7 +248,7 @@ a:hover { color: var(--rust); }
   .side.is-open .side-info .side-row { font-size: 1.1rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
-  .page-head, .about, .contact, .page-end, .next { padding-left: 8px; padding-right: 8px; }
+  .page-head, .about, .contact, .next { padding-left: 8px; padding-right: 8px; }
 
   .about-top { grid-template-columns: 1fr; }
   .about-portrait { width: 78%; margin: 0; }
