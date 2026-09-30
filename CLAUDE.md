@@ -9,12 +9,13 @@ small tracked serif caps down a left sidebar, and one quiet column of photos.
 The site should feel personal and handmade. Photos lead, in full color, at their real shape.
 
 ## Rules
-- Background is kraft / cardboard (`--paper` #D9C6A5) with a fiber texture painted on the page. Aiden wants it warm and homey, "shoebox of prints".
+- Background is bone (`--paper` #F2EFE9), plain, no texture. Aiden rejected grey, cream and kraft.
 - Photos sit straight on the paper in tight justified rows (8px gaps, rows of 2 to 4, equal height per row), NO borders, frames, tilts, tape, shadows or scrapbook touches (Aiden hated that).
 - Never add grain, filters, or overlays on top of photos. Aiden's exports already have film grain.
 - Never crop gallery photos, never dim them, never make them black and white.
 - Fonts: EB Garamond for now. The name uses `--display` (swap when Aiden sends their font). No handwriting/brush fonts, that read as a copy of makaylacrist.com.
-- Make it distinct from Mak: left-aligned numbered index sidebar with photo counts and a live Missoula clock, client filter on the home gallery, hover tags on photos.
+- Make it distinct from Mak: left-aligned sidebar with a live Missoula clock, client filter on the home gallery.
+- No numbering, counts, frame numbers, section labels or hover tags anywhere (Aiden hated them). Names only.
 - No scroll-triggered fade-ins (they caused blank gaps on the old site). Photos show their average color while loading.
 - No em dashes in site copy. Copy is first person, in Aiden's voice.
 - No custom cursor.

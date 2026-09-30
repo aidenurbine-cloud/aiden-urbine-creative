@@ -14,14 +14,14 @@ export default function Gallery({ items, filters }: { items: Item[]; filters: { 
     <>
       <div className="filters" role="toolbar" aria-label="Filter by client">
         <button type="button" className={only === null ? "is-on" : ""} onClick={() => setOnly(null)}>
-          All <span className="ct">{items.length}</span>
+          All
         </button>
         {filters.map((f) => {
           const count = items.filter((i) => i.slug === f.slug).length;
           if (!count) return null;
           return (
             <button key={f.slug} type="button" className={only === f.slug ? "is-on" : ""} onClick={() => setOnly(f.slug)}>
-              {f.name} <span className="ct">{count}</span>
+              {f.name}
             </button>
           );
         })}

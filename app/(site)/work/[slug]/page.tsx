@@ -26,7 +26,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   const i = projects.indexOf(p);
   const next = projects[(i + 1) % projects.length];
-  const items = p.images.map((img, k) => ({ ...img, alt: `${p.name}, frame ${k + 1}` }));
+  const items = p.images.map((img, k) => ({ ...img, alt: `${p.name}, photo ${k + 1}` }));
 
   return (
     <>
@@ -34,12 +34,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <h1 className="caps page-title">{p.name}</h1>
         <p className="page-desc">{p.desc}</p>
         <p className="page-meta">
-          {p.tag} · {p.location} · {p.images.length} frames
+          {p.tag} · {p.location}
         </p>
       </header>
       <Feed items={items} />
       <nav className="next" aria-label="Next project">
-        <span className="note">Next up</span>
         <Link href={`/work/${next.slug}`} className="caps">
           {next.name} →
         </Link>

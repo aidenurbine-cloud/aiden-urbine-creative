@@ -5,8 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { projects, EMAIL, INSTAGRAM } from "@/lib/projects";
 
-const no = (i: number) => String(i + 1).padStart(2, "0");
-
 // Missoula time, so the page feels like somebody's actually out there.
 function LocalTime() {
   const [t, setT] = useState("");
@@ -27,7 +25,6 @@ export default function Sidebar() {
 
   const here = (href: string) => (path === href ? " is-here" : "");
   const commercial = projects.filter((p) => p.slug !== "personal");
-  const personal = projects.find((p) => p.slug === "personal")!;
 
   return (
     <aside className={`side${open ? " is-open" : ""}`}>
@@ -36,7 +33,7 @@ export default function Sidebar() {
           <span>Aiden</span> <span>Urbine</span>
         </Link>
         <button type="button" className="menu-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
-          {open ? "close" : "index"}
+          {open ? "close" : "menu"}
         </button>
       </div>
 
@@ -50,34 +47,28 @@ export default function Sidebar() {
         </p>
 
         <nav aria-label="Main">
-          <Link href="/" className={`side-row side-all${here("/")}`}>
-            <span className="idx">00</span>
-            <span>Selected work</span>
-          </Link>
+          <ul className="side-list">
+            <li>
+              <Link href="/" className={`side-row${here("/")}`}>
+                Selected work
+              </Link>
+            </li>
+          </ul>
 
-          <p className="side-h">Commercial</p>
-          <ol className="side-list">
-            {commercial.map((p, i) => (
+          <ul className="side-list">
+            {commercial.map((p) => (
               <li key={p.slug}>
                 <Link href={`/work/${p.slug}`} className={`side-row${here(`/work/${p.slug}`)}`}>
-                  <span className="idx">{no(i)}</span>
-                  <span>{p.name}</span>
-                  <span className="ct">{p.images.length}</span>
+                  {p.name}
                 </Link>
               </li>
             ))}
-          </ol>
-
-          <p className="side-h">Personal</p>
-          <ol className="side-list">
             <li>
               <Link href="/work/personal" className={`side-row${here("/work/personal")}`}>
-                <span className="idx">{no(commercial.length)}</span>
-                <span>The West</span>
-                <span className="ct">{personal.images.length}</span>
+                Personal
               </Link>
             </li>
-          </ol>
+          </ul>
 
           <ul className="side-links">
             <li>

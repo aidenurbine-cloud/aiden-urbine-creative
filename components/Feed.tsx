@@ -99,10 +99,6 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
                       sizes={`(min-width: 900px) ${Math.ceil(share * 75)}vw, ${Math.ceil(share * 100)}vw`}
                       priority={i < priority}
                     />
-                    <span className="grid-tag" aria-hidden="true">
-                      {it.caption ? `${it.caption} · ` : ""}
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                   </button>
                 );
               })}
@@ -131,13 +127,7 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
           </div>
           <div className="viewer-bar" onClick={(e) => e.stopPropagation()}>
             <span>
-              {open + 1} / {n}
-              {cur.caption && cur.href && (
-                <>
-                  {" · "}
-                  <Link href={cur.href}>{cur.caption} →</Link>
-                </>
-              )}
+              {cur.caption && cur.href && <Link href={cur.href}>{cur.caption} →</Link>}
             </span>
             <span className="viewer-ctrls">
               <button type="button" onClick={() => go(-1)} aria-label="Previous photo">
