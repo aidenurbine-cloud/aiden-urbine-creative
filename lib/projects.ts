@@ -224,8 +224,8 @@ export function getProject(slug: string) {
 
 // The home page "Favorites" feed: [project slug, file name]. Reorder freely.
 const FAVORITES: [string, string][] = [
-  ["rough-country", "9.jpg"],
   ["personal", "not%20images.jpg"],
+  ["rough-country", "9.jpg"],
   ["mkc", "18.jpg"],
   ["mkc", "22.jpg"],
   ["badfish", "lunchcounterreverse.emh%20(36%20of%2061).jpg"],
@@ -253,20 +253,3 @@ export const favorites = FAVORITES.map(([slug, file]) => {
   return { ...photo, project };
 });
 
-// The landing page slideshow, in order. `pos` = which part of the photo to keep
-// when it's cropped to fill the screen (CSS object-position).
-const LANDING: [string, string, string?][] = [
-  ["personal", "not%20images.jpg", "34% 50%"],
-  ["rough-country", "9.jpg", "50% 62%"],
-  ["personal", "honest%20story.JPG", "68% 50%"],
-  ["badfish", "lunchcounterreverse.emh%20(36%20of%2061).jpg"],
-  ["personal", "FLAG%20NOR%20FAIL%20-%20DAY%201%20-%20EXPORT4-31.JPG", "50% 45%"],
-  ["personal", "DSC00372.JPG", "46% 70%"],
-];
-
-export const landing = LANDING.map(([slug, file, pos]) => {
-  const project = getProject(slug)!;
-  const photo = project.images.find((p) => decodeURIComponent(p.src).endsWith("/" + decodeURIComponent(file)));
-  if (!photo) throw new Error(`Landing photo not found: ${slug}/${file}`);
-  return { ...photo, pos: pos ?? "50% 50%", project: { name: project.name, slug: project.slug } };
-});

@@ -9,9 +9,11 @@ small tracked serif caps down a left sidebar, and one quiet column of photos.
 The site should feel personal and handmade. Photos lead, in full color, at their real shape.
 
 ## Rules
-- Background is warm cream (`--paper`), never grey or pure white. One accent, rust (`--rust`), for hover and "you are here".
-- Fonts: EB Garamond (everything), Caveat Brush (wordmark only), Caveat (small handwritten notes, sparingly).
-- Never crop gallery photos, never dim them, never make them black and white. Portrait pairs sit side by side.
+- Background is kraft / cardboard (`--paper` #D9C6A5) with a fiber texture painted on the page. Aiden wants it warm and homey, "shoebox of prints".
+- Photos sit in cream print borders, loosely placed and slightly tilted, like prints on a table (both the home gallery and project pages).
+- Never add grain, filters, or overlays on top of photos. Aiden's exports already have film grain.
+- Never crop gallery photos, never dim them, never make them black and white.
+- Fonts: EB Garamond (everything), Caveat Brush (wordmark), Caveat (handwritten captions). A custom font from Aiden is coming.
 - No scroll-triggered fade-ins (they caused blank gaps on the old site). Photos show their average color while loading.
 - No em dashes in site copy. Copy is first person, in Aiden's voice.
 - No custom cursor.
@@ -22,7 +24,6 @@ The site should feel personal and handmade. Photos lead, in full color, at their
   (see the generator approach: `ImageOps.exif_transpose(Image.open(p)).size`, and a 1x1 resize for color).
 - `components/Sidebar.tsx`: nav (collapses to a top bar + menu on phones).
 - `components/Feed.tsx`: the photo column and full-screen viewer.
-- `app/page.tsx` + `components/Landing.tsx`: full-screen landing slideshow (no sidebar). Photos = `LANDING` in lib/projects.ts.
-- `app/(site)/`: everything with the sidebar. `work` = favorites feed, `work/[slug]` project pages, `about`, `contact` (mailto form).
-- Landing name font is `--display` in globals.css (placeholder until Aiden picks a font).
+- `app/(site)/`: every page, with the sidebar. `page.tsx` = home (favorites gallery), `work/[slug]` project pages, `about`, `contact` (mailto form). `/work` redirects home.
+- Loose print placement is hand-tuned in the `WIDE`/`PAIR`/`WIDE_TALL`/`TALL` lists in `components/Feed.tsx`.
 - `/home` redirects to `/` (old links).

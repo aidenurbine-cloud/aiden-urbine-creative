@@ -10,17 +10,49 @@ export type FeedItem = PhotoType & { alt: string; caption?: string; href?: strin
 
 const isTall = (p: PhotoType) => p.w / p.h < 1.15;
 
-// Stack photos in one column. Two tall frames in a row sit side by side,
-// a lone tall frame gets its own row, pushed left or right.
-function group(items: FeedItem[]) {
-  const rows: { idx: number[]; kind: "wide" | "pair" | "solo"; right: boolean }[] = [];
-  let solos = 0;
+// Placement on a 12-column table: [column start, span, push down (% of width), tilt (deg)].
+type Spot = { col: number; span: number; drop: number; tilt: number };
+type Row = { idx: number[]; spots: Spot[] };
+
+// Hand-tuned so the prints look dropped on the table, not gridded.
+// Each list cycles; the row's shape (wide, tall pair, wide + tall...) picks the list.
+const WIDE: Spot[][] = [
+  [{ col: 1, span: 9, drop: 0, tilt: -0.6 }],
+  [{ col: 4, span: 9, drop: 0, tilt: 0.5 }],
+  [{ col: 2, span: 10, drop: 0, tilt: -0.3 }],
+];
+const PAIR: Spot[][] = [
+  [{ col: 1, span: 5, drop: 0, tilt: -1 }, { col: 7, span: 5, drop: 14, tilt: 0.8 }],
+  [{ col: 2, span: 5, drop: 10, tilt: 0.7 }, { col: 8, span: 5, drop: 0, tilt: -0.9 }],
+  [{ col: 1, span: 6, drop: 0, tilt: 0.4 }, { col: 8, span: 4, drop: 22, tilt: -1.2 }],
+];
+const WIDE_TALL: Spot[][] = [
+  [{ col: 1, span: 8, drop: 0, tilt: -0.5 }, { col: 9, span: 4, drop: 18, tilt: 1.1 }],
+  [{ col: 5, span: 8, drop: 8, tilt: 0.5 }, { col: 1, span: 4, drop: 0, tilt: -1 }],
+];
+const TALL: Spot[][] = [
+  [{ col: 4, span: 5, drop: 0, tilt: 0.9 }],
+  [{ col: 7, span: 5, drop: 0, tilt: -0.8 }],
+  [{ col: 2, span: 5, drop: 0, tilt: -0.5 }],
+];
+
+function layout(items: FeedItem[]): Row[] {
+  const rows: Row[] = [];
+  const seen = { wide: 0, pair: 0, mixed: 0, tall: 0 };
+  const pick = (list: Spot[][], key: keyof typeof seen) => list[seen[key]++ % list.length];
   for (let i = 0; i < items.length; i++) {
-    if (!isTall(items[i])) rows.push({ idx: [i], kind: "wide", right: false });
-    else if (items[i + 1] && isTall(items[i + 1])) {
-      rows.push({ idx: [i, i + 1], kind: "pair", right: false });
+    const a = items[i];
+    const b = items[i + 1];
+    if (!isTall(a)) {
+      if (b && isTall(b) && seen.wide % 2 === 0) {
+        rows.push({ idx: [i, i + 1], spots: pick(WIDE_TALL, "mixed") });
+        i++;
+      } else rows.push({ idx: [i], spots: pick(WIDE, "wide") });
+      seen.wide++;
+    } else if (b && isTall(b)) {
+      rows.push({ idx: [i, i + 1], spots: pick(PAIR, "pair") });
       i++;
-    } else rows.push({ idx: [i], kind: "solo", right: solos++ % 2 === 1 });
+    } else rows.push({ idx: [i], spots: pick(TALL, "tall") });
   }
   return rows;
 }
@@ -47,32 +79,40 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
     };
   }, [open, go]);
 
-  const cell = (i: number, sizes: string) => {
-    const it = items[i];
-    return (
-      <figure key={i} className="cell">
-        <button type="button" className="cell-btn" onClick={() => setOpen(i)} aria-label={`View ${it.alt} full screen`}>
-          <Photo photo={it} alt={it.alt} sizes={sizes} priority={i < priority} />
-        </button>
-        {it.caption && (
-          <figcaption className="cell-cap">
-            {it.href ? <Link href={it.href}>{it.caption}</Link> : it.caption}
-          </figcaption>
-        )}
-      </figure>
-    );
-  };
-
   const cur = open === null ? null : items[open];
 
   return (
     <>
-      <div className="feed">
-        {group(items).map((r) => (
-          <div key={r.idx[0]} className={`feed-row is-${r.kind}${r.right ? " is-right" : ""}`}>
-            {r.kind === "wide" && cell(r.idx[0], "(min-width: 900px) 62vw, 100vw")}
-            {r.kind === "pair" && r.idx.map((i) => cell(i, "(min-width: 900px) 31vw, 50vw"))}
-            {r.kind === "solo" && cell(r.idx[0], "(min-width: 900px) 42vw, 80vw")}
+      <div className="table">
+        {layout(items).map((r) => (
+          <div key={r.idx[0]} className="table-row">
+            {r.idx.map((i, k) => {
+              const it = items[i];
+              const s = r.spots[k];
+              return (
+                <figure
+                  key={i}
+                  className={`snap${isTall(it) ? " is-tall" : ""}`}
+                  style={
+                    {
+                      gridColumn: `${s.col} / span ${s.span}`,
+                      "--drop": `${s.drop}%`,
+                      "--tilt": `${s.tilt}deg`,
+                    } as React.CSSProperties
+                  }
+                >
+                  <button type="button" className="snap-btn" onClick={() => setOpen(i)} aria-label={`View ${it.alt} full screen`}>
+                    <Photo
+                      photo={it}
+                      alt={it.alt}
+                      sizes={`(min-width: 900px) ${Math.round((s.span / 12) * 66)}vw, ${isTall(it) ? 50 : 100}vw`}
+                      priority={i < priority}
+                    />
+                  </button>
+                  {it.caption && <figcaption className="snap-cap hand-note">{it.caption}</figcaption>}
+                </figure>
+              );
+            })}
           </div>
         ))}
       </div>
@@ -98,7 +138,12 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
           <div className="viewer-bar" onClick={(e) => e.stopPropagation()}>
             <span>
               {open + 1} / {n}
-              {cur.caption ? ` · ${cur.caption}` : ""}
+              {cur.caption && cur.href && (
+                <>
+                  {" · "}
+                  <Link href={cur.href}>{cur.caption} →</Link>
+                </>
+              )}
             </span>
             <span className="viewer-ctrls">
               <button type="button" onClick={() => go(-1)} aria-label="Previous photo">
