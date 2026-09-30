@@ -96,13 +96,13 @@ a:hover { color: var(--rust); }
   .side-list:hover .side-row { opacity: 0.35; }
   .side-list:hover .side-row:hover { opacity: 1; font-style: italic; color: var(--ink); }
 }
-.side-links {
-  list-style: none; margin: 26px 0 0; padding: 12px 0 0;
-  border-top: 1px solid var(--rule);
-  display: flex; flex-wrap: wrap; gap: 4px 16px;
-  font-size: 0.85rem;
+.side-reach {
+  display: flex; flex-direction: column; gap: 2px;
+  margin: 6px 0 0;
+  font-size: 0.8rem; font-style: italic; color: var(--muted);
 }
-.side-links .is-here { color: var(--rust); }
+.side-reach a { width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: color 0.2s, background-size 0.3s ease; }
+.side-reach a:hover { color: var(--ink); background-size: 100% 1px; }
 
 /* Client filter above the home gallery */
 .filters {

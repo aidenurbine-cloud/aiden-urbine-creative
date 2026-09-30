@@ -70,26 +70,25 @@ export default function Sidebar() {
             </li>
           </ul>
 
-          <ul className="side-links">
+          <ul className="side-list">
             <li>
-              <Link href="/about" className={here("/about")}>
+              <Link href="/about" className={`side-row${here("/about")}`}>
                 About
               </Link>
             </li>
             <li>
-              <Link href="/contact" className={here("/contact")}>
+              <Link href="/contact" className={`side-row${here("/contact")}`}>
                 Contact
               </Link>
             </li>
-            <li>
-              <a href={`https://instagram.com/${INSTAGRAM}`} target="_blank" rel="noopener noreferrer">
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${EMAIL}`}>Email</a>
-            </li>
           </ul>
+
+          <p className="side-reach">
+            <a href={`https://instagram.com/${INSTAGRAM}`} target="_blank" rel="noopener noreferrer">
+              @{INSTAGRAM}
+            </a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          </p>
         </nav>
       </div>
     </aside>
