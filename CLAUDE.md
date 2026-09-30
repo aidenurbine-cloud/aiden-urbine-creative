@@ -15,6 +15,7 @@ The site should feel personal and handmade. Photos lead, in full color, at their
 - Never crop gallery photos, never dim them, never make them black and white.
 - Fonts: EB Garamond for now. The name uses `--display` (swap when Aiden sends their font). No handwriting/brush fonts, that read as a copy of makaylacrist.com.
 - Make it distinct from Mak: left-aligned sidebar with a live Missoula clock, client filter on the home gallery.
+- Nav stays small and quiet. Only hover effect: hovered name italic, siblings fade. Aiden rejected big names, slide-in lines and a photo preview.
 - No numbering, counts, frame numbers, section labels or hover tags anywhere (Aiden hated them). Names only.
 - No scroll-triggered fade-ins (they caused blank gaps on the old site). Photos show their average color while loading.
 - No em dashes in site copy. Copy is first person, in Aiden's voice.
