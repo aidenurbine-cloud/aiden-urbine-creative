@@ -16,7 +16,7 @@ export default function About() {
         </figure>
 
         <div className="about-text">
-          <h1 className="caps page-title">Hey, I&apos;m Aiden</h1>
+          <h1 className="page-title">Hey, I&apos;m Aiden</h1>
           <p>
             I&apos;m a photographer and creative director based in Missoula, Montana. I was raised on the Arkansas River
             in Buena Vista, Colorado, and the outdoor life still drives the work: whitewater, dirt roads, elk camps, and

@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { EB_Garamond } from "next/font/google";
+import localFont from "next/font/local";
+import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
-const serif = EB_Garamond({
+// Aiden's name, nav and page titles.
+const display = localFont({
+  src: "./fonts/TAYSlowpokeRegular.woff2",
+  variable: "--f-display",
+  display: "swap",
+});
+// Everything else.
+const sans = Instrument_Sans({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  variable: "--f-serif",
+  variable: "--f-sans",
 });
 
 const DESCRIPTION =
@@ -35,7 +43,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={serif.variable}>
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body>{children}</body>
     </html>
   );

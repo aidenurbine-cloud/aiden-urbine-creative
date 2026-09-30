@@ -20,7 +20,7 @@ export default function ContactClient() {
 
   return (
     <div className="contact">
-      <h1 className="caps page-title">Contact</h1>
+      <h1 className="page-title">Contact</h1>
       <p className="page-desc">
         Brand campaigns, product launches, and editorial shoots across the West. Tell me what you&apos;re making.
       </p>

@@ -31,7 +31,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <header className="page-head">
-        <h1 className="caps page-title">{p.name}</h1>
+        <h1 className="page-title">{p.name}</h1>
         <p className="page-desc">{p.desc}</p>
         <p className="page-meta">
           {p.tag} · {p.location}
@@ -39,7 +39,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </header>
       <Feed items={items} />
       <nav className="next" aria-label="Next project">
-        <Link href={`/work/${next.slug}`} className="caps">
+        <Link href={`/work/${next.slug}`} className="next-link">
           {next.name} →
         </Link>
       </nav>
