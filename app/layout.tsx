@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
+import { EB_Garamond, Caveat_Brush, Caveat } from "next/font/google";
+import Sidebar from "@/components/Sidebar";
 import "./globals.css";
-import CustomCursor from "@/components/CustomCursor";
+
+const serif = EB_Garamond({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--f-serif",
+});
+const brush = Caveat_Brush({ subsets: ["latin"], weight: "400", variable: "--f-brush" });
+const hand = Caveat({ subsets: ["latin"], weight: "500", variable: "--f-hand" });
 
 const DESCRIPTION =
   "Photo & video for outdoor, lifestyle, and gear brands. Based in Missoula, Montana.";
@@ -8,43 +17,35 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL("https://aidenurbine.com"),
   title: {
-    default: "Aiden Urbine Creative",
-    template: "%s · Aiden Urbine Creative",
+    default: "Aiden Urbine · Photo & Video",
+    template: "%s · Aiden Urbine",
   },
   description: DESCRIPTION,
   openGraph: {
     type: "website",
-    siteName: "Aiden Urbine Creative",
-    title: "Aiden Urbine Creative",
+    siteName: "Aiden Urbine",
+    title: "Aiden Urbine · Photo & Video",
     description: DESCRIPTION,
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Aiden Urbine Creative" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Aiden Urbine" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aiden Urbine Creative",
+    title: "Aiden Urbine · Photo & Video",
     description: DESCRIPTION,
     images: ["/og.jpg"],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body style={{ background: "var(--bg)", color: "var(--ink)" }}>
-        <CustomCursor />
-        {children}
+    <html lang="en" className={`${serif.variable} ${brush.variable} ${hand.variable}`}>
+      <body>
+        <div className="shell">
+          <Sidebar />
+          <main className="main" id="top">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );

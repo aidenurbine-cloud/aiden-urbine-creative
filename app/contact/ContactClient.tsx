@@ -1,450 +1,64 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import { useState } from "react";
+import { EMAIL, INSTAGRAM } from "@/lib/projects";
 
-const FIELD_BASE: React.CSSProperties = {
-  background: "transparent",
-  border: "none",
-  borderBottom: "1px solid rgba(20,20,18,0.12)",
-  color: "var(--ink)",
-  fontFamily: "var(--font-body)",
-  fontSize: "14px",
-  padding: "12px 0",
-  width: "100%",
-  outline: "none",
-  transition: "border-color 0.3s",
-};
-
-const LABEL_STYLE: React.CSSProperties = {
-  display: "block",
-  fontFamily: "var(--font-mono)",
-  fontSize: "9px",
-  color: "#C84B2A",
-  letterSpacing: "0.2em",
-  textTransform: "uppercase",
-  marginBottom: "8px",
-};
-
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div style={{ marginBottom: "32px" }}>
-      <label style={LABEL_STYLE}>{label}</label>
-      {children}
-    </div>
-  );
-}
-
+// No backend: the form opens the visitor's mail app with everything filled in.
 export default function ContactClient() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [projectType, setProjectType] = useState("Photo + Video");
-  const [message, setMessage] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [btnHover, setBtnHover] = useState(false);
-  const [backHover, setBackHover] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const leftRef = useRef<HTMLDivElement>(null);
-  const rightRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const left = leftRef.current;
-    const right = rightRef.current;
-    if (!left || !right) return;
-
-    const timer = setTimeout(() => {
-      left.style.opacity = "1";
-      left.style.transform = "translateY(0)";
-      right.style.opacity = "1";
-      right.style.transform = "translateY(0)";
-    }, 60);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Project Inquiry: ${projectType}`);
+    const f = new FormData(e.currentTarget);
+    const subject = encodeURIComponent(`Project inquiry: ${f.get("type")}`);
     const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nProject Type: ${projectType}\n\nMessage:\n${message}`
+      `Name: ${f.get("name")}\nEmail: ${f.get("email")}\n\nProject type: ${f.get("type")}\n\n${f.get("message")}`
     );
-    window.location.href = `mailto:aiden@aidenurbine.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    setSent(true);
   };
 
-  const focusStyle = (focused: boolean): React.CSSProperties => ({
-    ...FIELD_BASE,
-    borderBottom: focused
-      ? "1px solid #C84B2A"
-      : "1px solid rgba(20,20,18,0.12)",
-  });
-
   return (
-    <main
-      style={{
-        background: "var(--bg)",
-        minHeight: "100vh",
-        position: "relative",
-      }}
-    >
-      {/* Back link */}
-      <Link
-        href="/home"
-        style={{
-          position: "fixed",
-          top: 32,
-          left: 56,
-          zIndex: 100,
-          fontFamily: "var(--font-mono)",
-          fontSize: "9px",
-          color: backHover ? "var(--ink)" : "var(--muted)",
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          textDecoration: "none",
-          transition: "color 0.3s",
-        }}
-        onMouseEnter={() => setBackHover(true)}
-        onMouseLeave={() => setBackHover(false)}
-      >
-        ← Work
-      </Link>
+    <div className="contact">
+      <h1 className="caps page-title">Contact</h1>
+      <p className="page-desc">
+        Brand campaigns, product launches, and editorial shoots across the West. Tell me what you&apos;re making.
+      </p>
+      <p className="contact-direct">
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <br />
+        <a href={`https://instagram.com/${INSTAGRAM}`} target="_blank" rel="noopener noreferrer">
+          @{INSTAGRAM}
+        </a>
+      </p>
 
-      {/* Page body */}
-      <div
-        className="contact-layout"
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "140px 56px 80px",
-          display: "flex",
-          gap: 80,
-          alignItems: "flex-start",
-        }}
-      >
-        {/* Left: contact info */}
-        <div
-          ref={leftRef}
-          style={{
-            flex: 1,
-            opacity: 0,
-            transform: "translateY(20px)",
-            transition: "opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "9px",
-              color: "#C84B2A",
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              margin: "0 0 16px",
-            }}
-          >
-            Contact
-          </p>
-
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "clamp(48px, 6vw, 80px)",
-              color: "var(--ink)",
-              lineHeight: 0.9,
-              letterSpacing: "-0.02em",
-              margin: 0,
-            }}
-          >
-            LET'S WORK
-            <br />
-            TOGETHER
-          </h1>
-
-          <div
-            style={{
-              width: 48,
-              height: 1,
-              background: "#C84B2A",
-              opacity: 0.4,
-              margin: "32px 0",
-            }}
-          />
-
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              fontSize: "16px",
-              color: "var(--muted)",
-              lineHeight: 1.8,
-              maxWidth: 360,
-              margin: "0 0 48px",
-            }}
-          >
-            Based in Missoula, Montana. Available for brand campaigns, product
-            launches, ambassador content, and editorial shoots across the West.
-          </p>
-
-          {/* Contact items */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            {[
-              {
-                label: "Email",
-                value: "aiden@aidenurbine.com",
-                href: "mailto:aiden@aidenurbine.com",
-              },
-              {
-                label: "Instagram",
-                value: "@urbineaiden",
-                href: "https://instagram.com/urbineaiden",
-              },
-              { label: "Location", value: "Missoula, Montana", href: null },
-            ].map(({ label, value, href }) => (
-              <div key={label} style={{ display: "flex", alignItems: "baseline", gap: 16 }}>
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "9px",
-                    color: "var(--muted)",
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    minWidth: 72,
-                  }}
-                >
-                  {label}
-                </span>
-                {href ? (
-                  <a
-                    href={href}
-                    target={href.startsWith("http") ? "_blank" : undefined}
-                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "14px",
-                      color: "var(--ink)",
-                      textDecoration: "none",
-                      transition: "color 0.3s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#C84B2A")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink)")}
-                  >
-                    {value}
-                  </a>
-                ) : (
-                  <span
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "14px",
-                      color: "var(--ink)",
-                    }}
-                  >
-                    {value}
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right: form card */}
-        <div
-          ref={rightRef}
-          style={{
-            flex: 1.2,
-            opacity: 0,
-            transform: "translateY(20px)",
-            transition: "opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(20,20,18,0.03)",
-              border: "1px solid rgba(20,20,18,0.07)",
-              padding: 48,
-            }}
-          >
-            {submitted ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  minHeight: 320,
-                }}
-              >
-                <h2
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: 48,
-                    color: "var(--ink)",
-                    letterSpacing: "-0.02em",
-                    margin: "0 0 16px",
-                  }}
-                >
-                  SENT.
-                </h2>
-                <p
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 300,
-                    fontSize: 16,
-                    color: "var(--muted)",
-                    margin: 0,
-                  }}
-                >
-                  I'll be in touch soon.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} noValidate>
-                <FocusField label="Name">
-                  {(focused, handlers) => (
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
-                      required
-                      style={focusStyle(focused)}
-                      {...handlers}
-                    />
-                  )}
-                </FocusField>
-
-                <FocusField label="Email">
-                  {(focused, handlers) => (
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      required
-                      style={focusStyle(focused)}
-                      {...handlers}
-                    />
-                  )}
-                </FocusField>
-
-                <FocusField label="Project Type">
-                  {(focused, handlers) => (
-                    <select
-                      value={projectType}
-                      onChange={(e) => setProjectType(e.target.value)}
-                      style={{
-                        ...focusStyle(focused),
-                        appearance: "none",
-                        WebkitAppearance: "none",
-                        backgroundImage:
-                          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238C7B65'/%3E%3C/svg%3E\")",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "right 4px center",
-                        cursor: "pointer",
-                      }}
-                      {...handlers}
-                    >
-                      <option value="Photo">Photo</option>
-                      <option value="Video">Video</option>
-                      <option value="Photo + Video">Photo + Video</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  )}
-                </FocusField>
-
-                <FocusField label="Message">
-                  {(focused, handlers) => (
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Tell me about your project..."
-                      rows={5}
-                      required
-                      style={{
-                        ...focusStyle(focused),
-                        resize: "none",
-                        lineHeight: 1.7,
-                      }}
-                      {...handlers}
-                    />
-                  )}
-                </FocusField>
-
-                <button
-                  type="submit"
-                  style={{
-                    marginTop: 8,
-                    width: "100%",
-                    padding: "16px",
-                    background: btnHover ? "#C84B2A" : "transparent",
-                    border: btnHover
-                      ? "1px solid #C84B2A"
-                      : "1px solid rgba(20,20,18,0.2)",
-                    color: btnHover ? "#F5F2EA" : "var(--ink)",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "12px",
-                    letterSpacing: "0.2em",
-                    textTransform: "uppercase",
-                    cursor: "pointer",
-                    transition: "background 0.3s, border-color 0.3s, color 0.3s",
-                  }}
-                  onMouseEnter={() => setBtnHover(true)}
-                  onMouseLeave={() => setBtnHover(false)}
-                >
-                  Send Message
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .contact-layout {
-            flex-direction: column !important;
-            gap: 60px !important;
-            padding: 100px 24px 60px !important;
-          }
-        }
-        select option {
-          background: var(--bg);
-          color: var(--ink);
-        }
-        ::placeholder {
-          color: rgba(20,20,18,0.25);
-        }
-      `}</style>
-    </main>
-  );
-}
-
-function FocusField({
-  label,
-  children,
-}: {
-  label: string;
-  children: (
-    focused: boolean,
-    handlers: {
-      onFocus: () => void;
-      onBlur: () => void;
-    }
-  ) => React.ReactNode;
-}) {
-  const [focused, setFocused] = useState(false);
-  return (
-    <div style={{ marginBottom: "32px" }}>
-      <label style={LABEL_STYLE}>{label}</label>
-      {children(focused, {
-        onFocus: () => setFocused(true),
-        onBlur: () => setFocused(false),
-      })}
+      <form className="form" onSubmit={onSubmit}>
+        <label>
+          <span className="caps">Name</span>
+          <input name="name" required autoComplete="name" />
+        </label>
+        <label>
+          <span className="caps">Email</span>
+          <input name="email" type="email" required autoComplete="email" />
+        </label>
+        <label>
+          <span className="caps">What kind of work</span>
+          <select name="type" defaultValue="Photo + Video">
+            <option>Photo + Video</option>
+            <option>Photo</option>
+            <option>Video</option>
+            <option>Something else</option>
+          </select>
+        </label>
+        <label>
+          <span className="caps">The project</span>
+          <textarea name="message" rows={6} required />
+        </label>
+        <button type="submit" className="caps btn">
+          Send it
+        </button>
+        {sent && <p className="hand-note">your mail app should be open. talk soon.</p>}
+      </form>
     </div>
   );
 }
