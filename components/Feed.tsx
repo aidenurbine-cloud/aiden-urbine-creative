@@ -4,9 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Photo from "./Photo";
-import type { Photo as PhotoType } from "@/lib/projects";
+import VideoTile from "./VideoTile";
+import type { Photo as PhotoType, Media } from "@/lib/projects";
 
-export type FeedItem = PhotoType & { alt: string; caption?: string; href?: string };
+export type FeedItem = Media & { alt: string; caption?: string; href?: string };
 
 const ratio = (p: PhotoType) => p.w / p.h;
 
@@ -93,12 +94,16 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
                     onClick={() => setOpen(i)}
                     aria-label={`View ${it.alt} full screen`}
                   >
-                    <Photo
-                      photo={it}
-                      alt={it.alt}
-                      sizes={`(min-width: 900px) ${Math.ceil(share * 75)}vw, ${Math.ceil(share * 100)}vw`}
-                      priority={i < priority}
-                    />
+                    {it.type === "video" ? (
+                      <VideoTile video={it} />
+                    ) : (
+                      <Photo
+                        photo={it}
+                        alt={it.alt}
+                        sizes={`(min-width: 900px) ${Math.ceil(share * 75)}vw, ${Math.ceil(share * 100)}vw`}
+                        priority={i < priority}
+                      />
+                    )}
                   </button>
                 );
               })}
@@ -123,7 +128,20 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
           }}
         >
           <div className="viewer-img">
-            <Image key={cur.src} src={cur.src} alt={cur.alt} fill sizes="100vw" style={{ objectFit: "contain" }} />
+            {cur.type === "video" ? (
+              <video
+                key={cur.src}
+                className="viewer-video"
+                src={cur.src}
+                poster={cur.poster}
+                controls
+                autoPlay
+                playsInline
+                onClick={(e) => e.stopPropagation()}
+              />
+            ) : (
+              <Image key={cur.src} src={cur.src} alt={cur.alt} fill sizes="100vw" style={{ objectFit: "contain" }} />
+            )}
           </div>
           <div className="viewer-bar" onClick={(e) => e.stopPropagation()}>
             <span>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Feed from "@/components/Feed";
+import Photo from "@/components/Photo";
 import { projects, getProject } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -37,7 +38,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {p.tag} · {p.location}
         </p>
       </header>
-      <Feed items={items} />
+      {p.collections ? (
+        <ul className="collections">
+          {p.collections.map((c) => (
+            <li key={c.slug}>
+              <Link href={`/work/${p.slug}/${c.slug}`} className="collection">
+                <span className="collection-cover">
+                  <Photo photo={c.cover} alt={c.name} sizes="(min-width: 900px) 26vw, 50vw" />
+                </span>
+                <span className="collection-name">{c.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <Feed items={items} />
+      )}
       <nav className="next" aria-label="Next project">
         <Link href={`/work/${next.slug}`} className="next-link">
           {next.name} →

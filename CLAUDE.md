@@ -29,4 +29,10 @@ The site should feel personal and handmade. Photos lead, in full color, at their
 - `components/Feed.tsx`: the photo column and full-screen viewer.
 - `app/(site)/`: every page, with the sidebar. `page.tsx` = home (favorites gallery), `work/[slug]` project pages, `about`, `contact` (mailto form). `/work` redirects home.
 - Row sizes are the `DESKTOP`/`PHONE` target lists in `components/Feed.tsx` (bigger number = more photos per row).
+- Collections (sub-projects, e.g. MKC's 001s, unboxings): `lib/collections/<client>.json`, built by
+  `python3 scripts/import-collections.py <client> "/path/to/folder"` (one subfolder per collection; leading
+  number = order; optional notes.txt and cover.jpg; photos and .mp4/.mov). A client with collections gets a
+  cover grid at /work/<client> and a page per collection at /work/<client>/<collection>; its collections show
+  in the sidebar only while you're inside that client. MKC's current five collections are PLACEHOLDERS
+  grouped from the old 26 photos until Aiden sends real folders.
 - `/home` redirects to `/` (old links).

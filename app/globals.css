@@ -98,6 +98,15 @@ a:hover { color: var(--rust); }
 .side-home { font-size: 1.7rem; line-height: 1; }
 .side-clients { padding-left: 12px; border-left: 1px solid var(--rule); }
 .side-clients .side-row { font-size: 1.05rem; }
+.side-sub {
+  list-style: none; margin: 2px 0 8px; padding: 0 0 0 10px;
+  font-size: 0.85rem; line-height: 1.65;
+  animation: side-sub-in 0.3s ease;
+}
+.side-sub a { color: var(--muted); }
+.side-sub a:hover, .side-sub .is-here { color: var(--ink); }
+.side-sub .is-here::before { content: "· "; color: var(--rust); }
+@keyframes side-sub-in { from { opacity: 0; transform: translateY(-3px); } }
 .side-info { padding-top: 14px; border-top: 1px solid var(--rule); }
 .side-info .side-row { font-family: var(--sans); font-size: 0.95rem; letter-spacing: 0; }
 .side-reach {
@@ -125,6 +134,8 @@ a:hover { color: var(--rust); }
 /* ── Photos ─────────────────────────────────────────────────── */
 .photo { display: block; width: 100%; overflow: hidden; }
 .photo img { display: block; width: 100%; height: auto; }
+.photo video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.viewer-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; cursor: default; }
 
 .main { max-width: 1320px; padding-right: clamp(16px, 2.5vw, 40px); }
 
@@ -169,6 +180,20 @@ a:hover { color: var(--rust); }
 .page-meta { margin: 14px 0 0; font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
 
 
+.page-up { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; color: var(--muted); }
+.page-up:hover { color: var(--ink); }
+
+/* Collections: one cover per sub-project, click in. */
+.collections {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 8px;
+}
+.collection { display: block; }
+.collection-cover { display: block; overflow: hidden; }
+.collection-cover .photo { aspect-ratio: 4 / 5 !important; }
+.collection-cover .photo img { height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.collection:hover .collection-cover img { transform: scale(1.03); }
+.collection-name { display: block; margin-top: 10px; font-family: var(--display); font-size: 1.35rem; line-height: 1.1; }
 .next-link { font-family: var(--display); font-size: 1.4rem; }
 .next {
   margin-top: 64px; padding-top: 28px;
@@ -248,6 +273,8 @@ a:hover { color: var(--rust); }
   .side.is-open .side-info .side-row { font-size: 1.1rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
+  .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
+  .collection-name { padding: 0 4px; font-size: 1.1rem; }
   .page-head, .about, .contact, .next { padding-left: 8px; padding-right: 8px; }
 
   .about-top { grid-template-columns: 1fr; }

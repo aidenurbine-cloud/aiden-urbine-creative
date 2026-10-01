@@ -56,13 +56,29 @@ export default function Sidebar() {
           </ul>
 
           <ul className="side-list side-clients">
-            {commercial.map((p) => (
-              <li key={p.slug}>
-                <Link href={`/work/${p.slug}`} className={`side-row${here(`/work/${p.slug}`)}`}>
-                  {p.name}
-                </Link>
-              </li>
-            ))}
+            {commercial.map((p) => {
+              const base = `/work/${p.slug}`;
+              const inside = path === base || path.startsWith(base + "/");
+              return (
+                <li key={p.slug}>
+                  <Link href={base} className={`side-row${inside ? " is-here" : ""}`}>
+                    {p.name}
+                  </Link>
+                  {/* A client's collections open up only while you're in that client. */}
+                  {inside && p.collections && (
+                    <ul className="side-sub">
+                      {p.collections.map((c) => (
+                        <li key={c.slug}>
+                          <Link href={`${base}/${c.slug}`} className={here(`${base}/${c.slug}`).trim() || undefined}>
+                            {c.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
           <ul className="side-list">
