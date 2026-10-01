@@ -29,12 +29,11 @@ The site should feel personal and handmade. Photos lead, in full color, at their
 - `components/Feed.tsx`: the photo column and full-screen viewer.
 - `app/(site)/`: every page, with the sidebar. `page.tsx` = home (favorites gallery), `work/[slug]` project pages, `about`, `contact` (mailto form). `/work` redirects home.
 - Row sizes are the `DESKTOP`/`PHONE` target lists in `components/Feed.tsx` (bigger number = more photos per row).
-- Collections (sub-projects, e.g. MKC's 001s, unboxings): `lib/collections/<client>.json`, built by
-  `python3 scripts/import-collections.py <client> "/path/to/folder"` (one subfolder per collection; leading
-  number = order; optional notes.txt and cover.jpg; photos and .mp4/.mov). A client with collections gets a
-  cover grid at /work/<client> and a page per collection at /work/<client>/<collection>; its collections show
-  in the sidebar only while you're inside that client. MKC collections (Aiden's picks): Field Work, Apparel,
-  Unboxing Videos (hidden until it has files), Studio Work, Culinary. Source of truth is
-  ~/Desktop/MKC Collections; after re-importing from it, delete public/images/mkc-gallery and
-  point FAVORITES at the new public/images/mkc/... paths.
+- MKC is organized as categories > shoots. Source of truth: ~/Desktop/MKC Collections
+  (top folders = categories: Field Work, Apparel, Unboxing Videos, Studio Work, Culinary; a category
+  holds shoot folders, e.g. Field Work/02 MKC Hellgate Hatchet, or photos directly). Import with
+  `python3 scripts/import-collections.py mkc ~/Desktop/"MKC Collections"` -> public/images/mkc/... and
+  lib/collections/mkc.json. Pages: /work/mkc (category row + a cover per shoot), /work/mkc/<category>,
+  /work/mkc/<category>/<shoot>. Empty folders are skipped. After an import, check FAVORITES in
+  lib/projects.ts still resolve (the build fails loudly if one doesn't).
 - `/home` redirects to `/` (old links).

@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
 """
-Import a client's collections from a folder of folders.
+Import a client's collections from a folder.
 
-    python3 scripts/import-collections.py mkc "/path/to/MKC"
+    python3 scripts/import-collections.py mkc ~/Desktop/"MKC Collections"
 
-Source layout (one folder per collection; a leading number only sets the order):
+Layout. Top-level folders are categories (they become the filter on the client page).
+A category holds either photos/videos directly, or one folder per shoot:
 
-    MKC/
-      01 001s/          <- collection "001s"
-        notes.txt       <- optional: one-line description
-        cover.jpg       <- optional: the cover; otherwise the first photo
-        a.jpg  b.jpg  unboxing.mp4 ...
-      02 Unboxings/
-      ...
+    MKC Collections/
+      01 Field Work/                 <- category with shoots
+        01 MKC x Maria Lovely/       <- a shoot (its own page)
+        02 MKC Hellgate Hatchet/
+      02 Apparel/                    <- category with photos directly (one page)
+        a.jpg  b.jpg ...
+      03 Unboxing Videos/            <- empty folders are skipped
 
-Photos are resized to 3000px on the long edge (JPEG q82). Videos are converted to
-H.264 MP4 (max 1920px on the long edge, audio kept) with a poster frame. Output goes to
-public/images/<client>/<collection>/ and lib/collections/<client>.json.
+A leading number only sets the order. Any folder may hold notes.txt (one-line
+description) and cover.jpg (its cover; otherwise the first photo).
+
+Photos: resized to 3000px long edge (JPEG q82); JPEGs already that size are copied
+as is. Videos: H.264 MP4 (max 1920px long edge, audio kept) plus a poster frame.
+Output: public/images/<client>/... and lib/collections/<client>.json.
 Re-running skips files that were already converted.
 """
-import json, os, re, subprocess, sys, urllib.parse
+import json, os, re, shutil, subprocess, sys, urllib.parse
 from pathlib import Path
 from PIL import Image, ImageOps
 
@@ -45,9 +49,14 @@ def url(p):
 def photo(src, out_dir, i):
     dst = out_dir / f"{i:03d}-{slugify(src.stem)}.jpg"
     if not dst.exists():
-        im = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
-        im.thumbnail((LONG_EDGE, LONG_EDGE), Image.LANCZOS)
-        im.save(dst, "JPEG", quality=82, optimize=True, progressive=True)
+        raw = Image.open(src)
+        oriented = (raw.getexif().get(0x0112, 1) or 1) == 1
+        if src.suffix.lower() in {".jpg", ".jpeg"} and max(raw.size) <= LONG_EDGE and oriented:
+            shutil.copy2(src, dst)  # already web-sized, don't re-compress
+        else:
+            im = ImageOps.exif_transpose(raw).convert("RGB")
+            im.thumbnail((LONG_EDGE, LONG_EDGE), Image.LANCZOS)
+            im.save(dst, "JPEG", quality=82, optimize=True, progressive=True)
     im = Image.open(dst)
     return {"src": url(dst), "w": im.width, "h": im.height, "c": avg_color(im)}
 
@@ -70,42 +79,67 @@ def video(src, out_dir, i):
     return {"type": "video", "src": url(dst), "poster": url(poster), "w": im.width, "h": im.height, "c": avg_color(im)}
 
 
+def clean(name):
+    return re.sub(r"^\d+[\s._-]+", "", name).strip()
+
+
+def subdirs(folder):
+    return sorted(p for p in folder.iterdir() if p.is_dir() and not p.name.startswith("."))
+
+
+def collection(folder, out_dir, slug_path):
+    """One folder of photos/videos -> {slug, name, desc, cover, items}, or None if empty."""
+    name = clean(folder.name)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    files = sorted(f for f in folder.iterdir() if f.suffix.lower() in PHOTO | VIDEO and not f.name.startswith("."))
+    notes = next((folder / n for n in ("notes.txt", "description.txt") if (folder / n).exists()), None)
+    items, cover = [], None
+    for i, f in enumerate(files, 1):
+        print(f"  {slug_path}: {f.name}")
+        item = video(f, out_dir, i) if f.suffix.lower() in VIDEO else photo(f, out_dir, i)
+        if f.stem.lower() == "cover" and item.get("type") != "video":
+            cover = item
+        else:
+            items.append(item)
+    if not items:
+        return None
+    if cover is None:
+        stills = [m for m in items if m.get("type") != "video"]
+        first = stills[0] if stills else {**items[0], "src": items[0]["poster"]}
+        cover = {k: first[k] for k in ("src", "w", "h", "c")}
+    return {"slug": slugify(name), "name": name, "desc": notes.read_text().strip() if notes else "", "cover": cover, "items": items}
+
+
 def main(client, source):
     source = Path(source).expanduser()
-    folders = sorted(p for p in source.iterdir() if p.is_dir() and not p.name.startswith("."))
-    if not folders:
-        sys.exit(f"No collection folders in {source}")
     out = []
-    for folder in folders:
-        name = re.sub(r"^\d+[\s._-]+", "", folder.name).strip()
-        slug = slugify(name)
-        out_dir = ROOT / "public" / "images" / client / slug
-        out_dir.mkdir(parents=True, exist_ok=True)
-        files = sorted(f for f in folder.iterdir() if f.suffix.lower() in PHOTO | VIDEO and not f.name.startswith("."))
-        notes = next((folder / n for n in ("notes.txt", "description.txt") if (folder / n).exists()), None)
-        desc = notes.read_text().strip() if notes else ""
-        items, cover = [], None
-        for i, f in enumerate(files, 1):
-            print(f"  {name}: {f.name}")
-            item = video(f, out_dir, i) if f.suffix.lower() in VIDEO else photo(f, out_dir, i)
-            if f.stem.lower() == "cover" and item.get("type") != "video":
-                cover = item
-            else:
-                items.append(item)
-        if not items and not cover:
-            print(f"  (skipping empty folder {folder.name})")
-            continue
-        if cover is None:
-            stills = [m for m in items if m.get("type") != "video"]
-            first = stills[0] if stills else items[0]
-            cover = first if first.get("type") != "video" else {**first, "src": first["poster"]}
-            cover = {k: cover[k] for k in ("src", "w", "h", "c")}
-        out.append({"slug": slug, "name": name, "desc": desc, "cover": cover, "items": items})
-        print(f"{name}: {len(items)} items")
+    for cat in subdirs(source):
+        cslug = slugify(clean(cat.name))
+        base = ROOT / "public" / "images" / client / cslug
+        shoots = subdirs(cat)
+        if shoots:
+            found = [s for s in (collection(sh, base / slugify(clean(sh.name)), f"{cslug}/{slugify(clean(sh.name))}") for sh in shoots) if s]
+            loose = [f for f in cat.iterdir() if f.suffix.lower() in PHOTO | VIDEO]
+            if loose:
+                print(f"  ! {cat.name}: {len(loose)} loose files ignored (this category uses shoot folders)")
+            if not found:
+                print(f"  (skipping {cat.name}: no shoots with files yet)")
+                continue
+            notes = cat / "notes.txt"
+            out.append({"slug": cslug, "name": clean(cat.name), "desc": notes.read_text().strip() if notes.exists() else "",
+                        "cover": found[0]["cover"], "items": [], "shoots": found})
+            print(f"{clean(cat.name)}: {len(found)} shoots")
+        else:
+            c = collection(cat, base, cslug)
+            if not c:
+                print(f"  (skipping {cat.name}: empty)")
+                continue
+            out.append({**c, "shoots": []})
+            print(f"{c['name']}: {len(c['items'])} items")
     dst = ROOT / "lib" / "collections" / f"{client}.json"
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(json.dumps(out, indent=1))
-    print(f"Wrote {dst.relative_to(ROOT)} ({len(out)} collections)")
+    print(f"Wrote {dst.relative_to(ROOT)} ({len(out)} categories)")
 
 
 if __name__ == "__main__":

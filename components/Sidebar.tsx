@@ -64,16 +64,32 @@ export default function Sidebar() {
                   <Link href={base} className={`side-row${inside ? " is-here" : ""}`}>
                     {p.name}
                   </Link>
-                  {/* A client's collections open up only while you're in that client. */}
-                  {inside && p.collections && (
+                  {/* A client's categories open up only while you're in that client,
+                      and a category's shoots only while you're in that category. */}
+                  {inside && p.categories && (
                     <ul className="side-sub">
-                      {p.collections.map((c) => (
-                        <li key={c.slug}>
-                          <Link href={`${base}/${c.slug}`} className={here(`${base}/${c.slug}`).trim() || undefined}>
-                            {c.name}
-                          </Link>
-                        </li>
-                      ))}
+                      {p.categories.map((c) => {
+                        const cat = `${base}/${c.slug}`;
+                        const inCat = path === cat || path.startsWith(cat + "/");
+                        return (
+                          <li key={c.slug}>
+                            <Link href={cat} className={inCat ? "is-here" : undefined}>
+                              {c.name}
+                            </Link>
+                            {inCat && c.shoots.length > 0 && (
+                              <ul className="side-sub side-shoots">
+                                {c.shoots.map((sh) => (
+                                  <li key={sh.slug}>
+                                    <Link href={`${cat}/${sh.slug}`} className={here(`${cat}/${sh.slug}`).trim() || undefined}>
+                                      {sh.name}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </li>

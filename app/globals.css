@@ -104,6 +104,8 @@ a:hover { color: var(--rust); }
   animation: side-sub-in 0.3s ease;
 }
 .side-sub a { color: var(--muted); }
+.side-shoots { margin: 0 0 4px; font-size: 0.8rem; line-height: 1.55; }
+.side-sub .is-here { color: var(--ink); }
 .side-sub a:hover, .side-sub .is-here { color: var(--ink); }
 .side-sub .is-here::before { content: "· "; color: var(--rust); }
 @keyframes side-sub-in { from { opacity: 0; transform: translateY(-3px); } }
@@ -173,6 +175,10 @@ a:hover { color: var(--rust); }
 
 /* ── Page text ─────────────────────────────────────────────── */
 .page-head { margin-bottom: 36px; max-width: 34em; }
+.filters.is-centered { justify-content: center; margin-bottom: 22px; }
+.filters a { color: var(--muted); padding: 2px 0; border-bottom: 1px solid transparent; }
+.filters a:hover { color: var(--ink); }
+.filters a.is-on { color: var(--ink); border-bottom-color: var(--ink); }
 .page-head.is-centered { margin-left: auto; margin-right: auto; text-align: center; }
 .page-title { margin: 0 0 12px; font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1; }
 .page-desc { margin: 0; font-size: 1.05rem; line-height: 1.55; }

@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Feed from "@/components/Feed";
-import { projects, getProject, getCollection } from "@/lib/projects";
+import Covers from "@/components/Covers";
+import CategoryNav from "@/components/CategoryNav";
+import { projects, getProject, getCategory, coversFor } from "@/lib/projects";
 
+// A client's category, e.g. /work/mkc/field-work. Shows its shoots, or its photos directly.
 export function generateStaticParams() {
-  return projects.flatMap((p) => (p.collections ?? []).map((c) => ({ slug: p.slug, collection: c.slug })));
+  return projects.flatMap((p) => (p.categories ?? []).map((c) => ({ slug: p.slug, collection: c.slug })));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; collection: string }> }) {
   const { slug, collection } = await params;
   const p = getProject(slug);
-  const c = getCollection(slug, collection);
+  const c = getCategory(slug, collection);
   if (!p || !c) return {};
   const title = `${c.name} · ${p.name}`;
   return {
@@ -21,13 +24,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function CollectionPage({ params }: { params: Promise<{ slug: string; collection: string }> }) {
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string; collection: string }> }) {
   const { slug, collection } = await params;
   const p = getProject(slug);
-  const c = getCollection(slug, collection);
-  if (!p || !c || !p.collections) notFound();
+  const c = getCategory(slug, collection);
+  if (!p || !c || !p.categories) notFound();
 
-  const all = p.collections;
+  const all = p.categories;
   const next = all[(all.indexOf(c) + 1) % all.length];
   const items = c.items.map((m, k) => ({ ...m, alt: `${p.name}, ${c.name}, ${k + 1}` }));
 
@@ -40,9 +43,10 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
         <h1 className="page-title">{c.name}</h1>
         {c.desc && <p className="page-desc">{c.desc}</p>}
       </header>
-      <Feed items={items} />
+      <CategoryNav p={p} active={c.slug} />
+      {c.shoots.length ? <Covers entries={coversFor(p, c)} /> : <Feed items={items} />}
       {all.length > 1 && (
-        <nav className="next" aria-label="Next collection">
+        <nav className="next" aria-label="Next category">
           <Link href={`/work/${p.slug}`} className="page-up">
             All {p.name}
           </Link>
