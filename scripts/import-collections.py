@@ -90,8 +90,9 @@ def subdirs(folder):
 def collection(folder, out_dir, slug_path):
     """One folder of photos/videos -> {slug, name, desc, cover, items}, or None if empty."""
     name = clean(folder.name)
-    out_dir.mkdir(parents=True, exist_ok=True)
     files = sorted(f for f in folder.iterdir() if f.suffix.lower() in PHOTO | VIDEO and not f.name.startswith("."))
+    if files:
+        out_dir.mkdir(parents=True, exist_ok=True)
     notes = next((folder / n for n in ("notes.txt", "description.txt") if (folder / n).exists()), None)
     items, cover = [], None
     for i, f in enumerate(files, 1):
