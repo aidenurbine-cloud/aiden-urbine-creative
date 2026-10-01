@@ -16,7 +16,8 @@ A category holds either photos/videos directly, or one folder per shoot:
       03 Unboxing Videos/            <- empty folders are skipped
 
 A leading number only sets the order. Any folder may hold notes.txt (one-line
-description) and cover.jpg (its cover; otherwise the first photo).
+description) and a photo with "cover" in its name (its cover, also shown in the
+gallery; otherwise the first photo is the cover).
 
 Photos: resized to 3000px long edge (JPEG q82); JPEGs already that size are copied
 as is. Videos: H.264 MP4 (max 1920px long edge, audio kept) plus a poster frame.
@@ -98,10 +99,9 @@ def collection(folder, out_dir, slug_path):
     for i, f in enumerate(files, 1):
         print(f"  {slug_path}: {f.name}")
         item = video(f, out_dir, i) if f.suffix.lower() in VIDEO else photo(f, out_dir, i)
-        if f.stem.lower() == "cover" and item.get("type") != "video":
-            cover = item
-        else:
-            items.append(item)
+        if "cover" in f.stem.lower() and item.get("type") != "video":
+            cover = item  # also stays in the gallery
+        items.append(item)
     if not items:
         return None
     if cover is None:

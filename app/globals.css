@@ -69,7 +69,7 @@ a:hover { color: var(--rust); }
   overflow-y: auto;
 }
 .side-top { display: flex; align-items: flex-start; justify-content: space-between; }
-/* Name, nav and page titles are set in TAY Slowpoke (--display). */
+/* Only Aiden's name is set in TAY Slowpoke (--display). Everything else is Instrument Sans. */
 .wordmark {
   font-family: var(--display);
   font-size: clamp(2.3rem, 3.2vw, 3.2rem);
@@ -85,7 +85,7 @@ a:hover { color: var(--rust); }
 }
 .side-time { font-variant-numeric: tabular-nums; }
 
-.side-row { display: block; padding: 4px 0; font-family: var(--display); font-size: 1.22rem; line-height: 1.15; letter-spacing: 0.02em; }
+.side-row { display: block; padding: 3px 0; font-size: 1rem; line-height: 1.3; }
 .side-row.is-here { color: var(--rust); }
 .side-list { list-style: none; margin: 0 0 18px; padding: 0; }
 
@@ -95,9 +95,9 @@ a:hover { color: var(--rust); }
   .side-list:hover .side-row { opacity: 0.35; }
   .side-list:hover .side-row:hover { opacity: 1; }
 }
-.side-home { font-size: 1.7rem; line-height: 1; }
+.side-home { font-size: 1.3rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.1; }
 .side-clients { padding-left: 12px; border-left: 1px solid var(--rule); }
-.side-clients .side-row { font-size: 1.05rem; }
+.side-clients .side-row { font-size: 0.95rem; }
 .side-sub {
   list-style: none; margin: 2px 0 8px; padding: 0 0 0 10px;
   font-size: 0.85rem; line-height: 1.65;
@@ -110,7 +110,8 @@ a:hover { color: var(--rust); }
 .side-sub .is-here::before { content: "· "; color: var(--rust); }
 @keyframes side-sub-in { from { opacity: 0; transform: translateY(-3px); } }
 .side-info { padding-top: 14px; border-top: 1px solid var(--rule); }
-.side-info .side-row { font-family: var(--sans); font-size: 0.95rem; letter-spacing: 0; }
+.side-info .side-row { font-size: 0.9rem; color: var(--muted); }
+.side-info .side-row:hover, .side-info .side-row.is-here { color: var(--ink); }
 .side-reach {
   display: flex; flex-direction: column; gap: 2px;
   margin: 6px 0 0;
@@ -180,7 +181,7 @@ a:hover { color: var(--rust); }
 .filters a:hover { color: var(--ink); }
 .filters a.is-on { color: var(--ink); border-bottom-color: var(--ink); }
 .page-head.is-centered { margin-left: auto; margin-right: auto; text-align: center; }
-.page-title { margin: 0 0 12px; font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1; }
+.page-title { margin: 0 0 12px; font-weight: 500; font-size: clamp(1.6rem, 2.4vw, 2.2rem); letter-spacing: -0.015em; line-height: 1.1; }
 .page-desc { margin: 0; font-size: 1.05rem; line-height: 1.55; }
 .page-desc a, .about-text a, .contact-direct a { border-bottom: 1px solid var(--rule); }
 .page-meta { margin: 14px 0 0; font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
@@ -199,8 +200,8 @@ a:hover { color: var(--rust); }
 .collection-cover .photo { aspect-ratio: 4 / 5 !important; }
 .collection-cover .photo img { height: 100%; object-fit: cover; transition: transform 0.6s ease; }
 .collection:hover .collection-cover img { transform: scale(1.03); }
-.collection-name { display: block; margin-top: 10px; font-family: var(--display); font-size: 1.35rem; line-height: 1.1; }
-.next-link { font-family: var(--display); font-size: 1.4rem; }
+.collection-name { display: block; margin-top: 8px; font-size: 0.95rem; font-weight: 500; line-height: 1.3; }
+.next-link { font-size: 1.05rem; font-weight: 500; }
 .next {
   margin-top: 64px; padding-top: 28px;
   border-top: 1px solid var(--rule);
@@ -274,13 +275,13 @@ a:hover { color: var(--rust); }
   .side-body { display: none; }
   .side.is-open { height: 100svh; }
   .side.is-open .side-body { display: block; }
-  .side.is-open .side-row { font-size: 1.4rem; padding: 6px 0; }
-  .side.is-open .side-home { font-size: 2rem; }
+  .side.is-open .side-row { font-size: 1.3rem; padding: 6px 0; }
+  .side.is-open .side-home { font-size: 1.6rem; }
   .side.is-open .side-info .side-row { font-size: 1.1rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
-  .collection-name { padding: 0 4px; font-size: 1.1rem; }
+  .collection-name { padding: 0 4px; font-size: 0.9rem; }
   .page-head, .about, .contact, .next { padding-left: 8px; padding-right: 8px; }
 
   .about-top { grid-template-columns: 1fr; }
