@@ -1,5 +1,54 @@
 [
  {
+  "slug": "field-work",
+  "name": "Field Work",
+  "desc": "",
+  "cover": {
+   "src": "/images/mkc-gallery/6.jpg",
+   "w": 2000,
+   "h": 3000,
+   "c": "#352413"
+  },
+  "items": [
+   {
+    "src": "/images/mkc-gallery/6.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#352413"
+   },
+   {
+    "src": "/images/mkc-gallery/9.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#4a3d2f"
+   },
+   {
+    "src": "/images/mkc-gallery/10.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#635244"
+   },
+   {
+    "src": "/images/mkc-gallery/8.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#4a3d2f"
+   },
+   {
+    "src": "/images/mkc-gallery/7.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#38342e"
+   },
+   {
+    "src": "/images/mkc-gallery/11.jpg",
+    "w": 3000,
+    "h": 2000,
+    "c": "#39322b"
+   }
+  ]
+ },
+ {
   "slug": "apparel",
   "name": "Apparel",
   "desc": "",
@@ -55,131 +104,8 @@
   ]
  },
  {
-  "slug": "cookout",
-  "name": "Cookout",
-  "desc": "",
-  "cover": {
-   "src": "/images/mkc-gallery/22.jpg",
-   "w": 2000,
-   "h": 3000,
-   "c": "#887e7b"
-  },
-  "items": [
-   {
-    "src": "/images/mkc-gallery/22.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#887e7b"
-   },
-   {
-    "src": "/images/mkc-gallery/21.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#8b7a72"
-   },
-   {
-    "src": "/images/mkc-gallery/23.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#705b50"
-   },
-   {
-    "src": "/images/mkc-gallery/19.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#9d8e87"
-   },
-   {
-    "src": "/images/mkc-gallery/20.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#ab9b90"
-   },
-   {
-    "src": "/images/mkc-gallery/24.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#bab0ab"
-   }
-  ]
- },
- {
-  "slug": "field-kit",
-  "name": "Field Kit",
-  "desc": "",
-  "cover": {
-   "src": "/images/mkc-gallery/6.jpg",
-   "w": 2000,
-   "h": 3000,
-   "c": "#352413"
-  },
-  "items": [
-   {
-    "src": "/images/mkc-gallery/6.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#352413"
-   },
-   {
-    "src": "/images/mkc-gallery/9.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#4a3d2f"
-   },
-   {
-    "src": "/images/mkc-gallery/10.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#635244"
-   },
-   {
-    "src": "/images/mkc-gallery/8.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#4a3d2f"
-   },
-   {
-    "src": "/images/mkc-gallery/7.jpg",
-    "w": 2000,
-    "h": 3000,
-    "c": "#38342e"
-   },
-   {
-    "src": "/images/mkc-gallery/11.jpg",
-    "w": 3000,
-    "h": 2000,
-    "c": "#39322b"
-   }
-  ]
- },
- {
-  "slug": "kitchen",
-  "name": "Kitchen",
-  "desc": "",
-  "cover": {
-   "src": "/images/mkc-gallery/26.jpg",
-   "w": 3000,
-   "h": 2001,
-   "c": "#352c16"
-  },
-  "items": [
-   {
-    "src": "/images/mkc-gallery/26.jpg",
-    "w": 3000,
-    "h": 2001,
-    "c": "#352c16"
-   },
-   {
-    "src": "/images/mkc-gallery/25.jpg",
-    "w": 3000,
-    "h": 2001,
-    "c": "#382d19"
-   }
-  ]
- },
- {
-  "slug": "studio",
-  "name": "Studio",
+  "slug": "studio-work",
+  "name": "Studio Work",
   "desc": "",
   "cover": {
    "src": "/images/mkc-gallery/15.jpg",
@@ -217,6 +143,67 @@
     "w": 3000,
     "h": 3000,
     "c": "#8c8b8a"
+   }
+  ]
+ },
+ {
+  "slug": "culinary",
+  "name": "Culinary",
+  "desc": "",
+  "cover": {
+   "src": "/images/mkc-gallery/26.jpg",
+   "w": 3000,
+   "h": 2001,
+   "c": "#352c16"
+  },
+  "items": [
+   {
+    "src": "/images/mkc-gallery/26.jpg",
+    "w": 3000,
+    "h": 2001,
+    "c": "#352c16"
+   },
+   {
+    "src": "/images/mkc-gallery/25.jpg",
+    "w": 3000,
+    "h": 2001,
+    "c": "#382d19"
+   },
+   {
+    "src": "/images/mkc-gallery/22.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#887e7b"
+   },
+   {
+    "src": "/images/mkc-gallery/21.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#8b7a72"
+   },
+   {
+    "src": "/images/mkc-gallery/23.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#705b50"
+   },
+   {
+    "src": "/images/mkc-gallery/19.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#9d8e87"
+   },
+   {
+    "src": "/images/mkc-gallery/20.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#ab9b90"
+   },
+   {
+    "src": "/images/mkc-gallery/24.jpg",
+    "w": 2000,
+    "h": 3000,
+    "c": "#bab0ab"
    }
   ]
  }

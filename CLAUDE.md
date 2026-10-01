@@ -33,6 +33,8 @@ The site should feel personal and handmade. Photos lead, in full color, at their
   `python3 scripts/import-collections.py <client> "/path/to/folder"` (one subfolder per collection; leading
   number = order; optional notes.txt and cover.jpg; photos and .mp4/.mov). A client with collections gets a
   cover grid at /work/<client> and a page per collection at /work/<client>/<collection>; its collections show
-  in the sidebar only while you're inside that client. MKC's current five collections are PLACEHOLDERS
-  grouped from the old 26 photos until Aiden sends real folders.
+  in the sidebar only while you're inside that client. MKC collections (Aiden's picks): Field Work, Apparel,
+  Unboxing Videos (hidden until it has files), Studio Work, Culinary. Source of truth is
+  ~/Desktop/MKC Collections; after re-importing from it, delete public/images/mkc-gallery and
+  point FAVORITES at the new public/images/mkc/... paths.
 - `/home` redirects to `/` (old links).
