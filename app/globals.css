@@ -86,28 +86,44 @@ a:hover { color: var(--rust); }
 .side-time { font-variant-numeric: tabular-nums; }
 
 .side-row { display: block; padding: 3px 0; font-size: 1rem; line-height: 1.3; }
-.side-row.is-here { color: var(--rust); }
+.side-row.is-here { color: var(--ink); }
 .side-list { list-style: none; margin: 0 0 18px; padding: 0; }
 
-/* Hovering a name pulls it forward: the rest step back. */
-.side-row { transition: opacity 0.25s ease, color 0.25s ease; }
+/* Work list. Each level steps in 12px and drops a size; the rule runs down the left. */
+.work {
+  --step: 12px;
+  list-style: none; margin: 0 0 22px; padding: 0 0 0 14px;
+  border-left: 1px solid var(--rule);
+}
+.work ul { list-style: none; margin: 0; padding: 0 0 0 var(--step); }
+.work-sub { --d: 1; animation: side-sub-in 0.3s ease; }
+.work-sub .work-sub { --d: 2; }
+.w {
+  position: relative; display: block; width: fit-content;
+  padding: 2px 0;
+  font-size: 0.95rem; line-height: 1.3;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+.w-home { font-size: 1.15rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 6px; }
+.w-gap { margin-top: 8px; }
+.work-sub .w { font-size: 0.85rem; color: var(--muted); }
+.work-sub .work-sub .w { font-size: 0.8rem; }
+.w.is-open { color: var(--ink); }
+.w.is-here { color: var(--ink); font-weight: 500; }
+/* the tick: sits on the rule beside the current page, at any depth */
+.w.is-here::before {
+  content: "";
+  position: absolute; top: 50%;
+  left: calc(-14px - var(--d, 0) * var(--step) - 1px);
+  width: 3px; height: 1em;
+  transform: translateY(-50%);
+  background: var(--rust);
+}
 @media (hover: hover) {
-  .side-list:hover .side-row { opacity: 0.35; }
-  .side-list:hover .side-row:hover { opacity: 1; }
+  .work:hover .w { opacity: 0.4; }
+  .work .w:hover, .work .w.is-here { opacity: 1; }
+  .work .w:hover { color: var(--ink); }
 }
-.side-home { font-size: 1.3rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.1; }
-.side-clients { padding-left: 12px; border-left: 1px solid var(--rule); }
-.side-clients .side-row { font-size: 0.95rem; }
-.side-sub {
-  list-style: none; margin: 2px 0 8px; padding: 0 0 0 10px;
-  font-size: 0.85rem; line-height: 1.65;
-  animation: side-sub-in 0.3s ease;
-}
-.side-sub a { color: var(--muted); }
-.side-shoots { margin: 0 0 4px; font-size: 0.8rem; line-height: 1.55; }
-.side-sub .is-here { color: var(--ink); }
-.side-sub a:hover, .side-sub .is-here { color: var(--ink); }
-.side-sub .is-here::before { content: "· "; color: var(--rust); }
 @keyframes side-sub-in { from { opacity: 0; transform: translateY(-3px); } }
 .side-info { padding-top: 14px; border-top: 1px solid var(--rule); }
 .side-info .side-row { font-size: 0.9rem; color: var(--muted); }
@@ -275,8 +291,10 @@ a:hover { color: var(--rust); }
   .side-body { display: none; }
   .side.is-open { height: 100svh; }
   .side.is-open .side-body { display: block; }
-  .side.is-open .side-row { font-size: 1.3rem; padding: 6px 0; }
-  .side.is-open .side-home { font-size: 1.6rem; }
+  .side.is-open .w { font-size: 1.25rem; padding: 5px 0; }
+  .side.is-open .w-home { font-size: 1.5rem; }
+  .side.is-open .work-sub .w { font-size: 1.05rem; }
+  .side.is-open .side-row { font-size: 1.1rem; padding: 5px 0; }
   .side.is-open .side-info .side-row { font-size: 1.1rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }

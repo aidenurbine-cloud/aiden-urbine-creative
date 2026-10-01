@@ -47,40 +47,39 @@ export default function Sidebar() {
         </p>
 
         <nav aria-label="Main">
-          <ul className="side-list">
+          {/* The work list: one rule down the left, one indent step per level,
+              and a single rust tick for the page you're on. */}
+          <ul className="work">
             <li>
-              <Link href="/" className={`side-row side-home${here("/")}`}>
+              <Link href="/" className={`w w-home${here("/")}`}>
                 Selected work
               </Link>
             </li>
-          </ul>
-
-          <ul className="side-list side-clients">
-            {commercial.map((p) => {
+            {[...commercial, projects.find((p) => p.slug === "personal")!].map((p) => {
               const base = `/work/${p.slug}`;
               const inside = path === base || path.startsWith(base + "/");
               return (
-                <li key={p.slug}>
-                  <Link href={base} className={`side-row${inside ? " is-here" : ""}`}>
-                    {p.name}
+                <li key={p.slug} className={p.slug === "personal" ? "w-gap" : undefined}>
+                  <Link href={base} className={`w${here(base) || (inside ? " is-open" : "")}`}>
+                    {p.slug === "personal" ? "Personal" : p.name}
                   </Link>
-                  {/* A client's categories open up only while you're in that client,
+                  {/* A client's categories open only while you're in that client,
                       and a category's shoots only while you're in that category. */}
                   {inside && p.categories && (
-                    <ul className="side-sub">
+                    <ul className="work-sub">
                       {p.categories.map((c) => {
                         const cat = `${base}/${c.slug}`;
                         const inCat = path === cat || path.startsWith(cat + "/");
                         return (
                           <li key={c.slug}>
-                            <Link href={cat} className={inCat ? "is-here" : undefined}>
+                            <Link href={cat} className={`w${here(cat) || (inCat ? " is-open" : "")}`}>
                               {c.name}
                             </Link>
                             {inCat && c.shoots.length > 0 && (
-                              <ul className="side-sub side-shoots">
+                              <ul className="work-sub">
                                 {c.shoots.map((sh) => (
                                   <li key={sh.slug}>
-                                    <Link href={`${cat}/${sh.slug}`} className={here(`${cat}/${sh.slug}`).trim() || undefined}>
+                                    <Link href={`${cat}/${sh.slug}`} className={`w${here(`${cat}/${sh.slug}`)}`}>
                                       {sh.name}
                                     </Link>
                                   </li>
@@ -95,14 +94,6 @@ export default function Sidebar() {
                 </li>
               );
             })}
-          </ul>
-
-          <ul className="side-list">
-            <li>
-              <Link href="/work/personal" className={`side-row${here("/work/personal")}`}>
-                Personal
-              </Link>
-            </li>
           </ul>
 
           <ul className="side-list side-info">
