@@ -16,7 +16,7 @@ const ratio = (p: PhotoType) => p.w / p.h;
 // height. Targets cycle so some rows hold two frames and others four, which
 // keeps it from looking like a grid. Nothing is cropped.
 const DESKTOP = [2.3, 3.1, 2.0, 2.7];
-const PHONE = [1.4, 1.9, 1.2];
+const PHONE = [1.3]; // phones: two verticals, or one wide shot, per row
 
 function rows(items: FeedItem[], targets: number[]) {
   const out: number[][] = [];
