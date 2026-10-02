@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
 
-/** All / Field Work / Apparel ... row on a client with categories. */
 export default function CategoryNav({ p, active }: { p: Project; active?: string }) {
   if (!p.categories || p.categories.length < 2) return null;
   return (

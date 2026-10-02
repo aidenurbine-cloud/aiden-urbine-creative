@@ -5,7 +5,6 @@ import Covers from "@/components/Covers";
 import CategoryNav from "@/components/CategoryNav";
 import { projects, getProject, getCategory, coversFor } from "@/lib/projects";
 
-// A client's category, e.g. /work/mkc/field-work. Shows its shoots, or its photos directly.
 export function generateStaticParams() {
   return projects.flatMap((p) => (p.categories ?? []).map((c) => ({ slug: p.slug, collection: c.slug })));
 }
@@ -15,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProject(slug);
   const c = getCategory(slug, collection);
   if (!p || !c) return {};
-  const title = `${c.name} · ${p.name}`;
+  const title = `${p.name} ${c.name}`;
   return {
     title,
     description: c.desc || p.desc,

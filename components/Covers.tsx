@@ -2,7 +2,6 @@ import Link from "next/link";
 import Photo from "./Photo";
 import type { Photo as PhotoType } from "@/lib/projects";
 
-/** Grid of covers, one per shoot or collection. */
 export default function Covers({ entries }: { entries: { href: string; name: string; cover: PhotoType }[] }) {
   return (
     <ul className="collections">

@@ -5,7 +5,6 @@ import Feed, { type FeedItem } from "./Feed";
 
 type Item = FeedItem & { slug: string };
 
-// Home gallery with a client filter on top.
 export default function Gallery({
   items,
   byClient,

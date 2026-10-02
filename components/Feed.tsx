@@ -11,12 +11,9 @@ export type FeedItem = Media & { alt: string; caption?: string; href?: string };
 
 const ratio = (p: PhotoType) => p.w / p.h;
 
-// Justified rows: photos are grouped until their combined width/height ratio
-// reaches the row's target, then the row is stretched edge to edge at one shared
-// height. Targets cycle so some rows hold two frames and others four, which
-// keeps it from looking like a grid. Nothing is cropped.
+// justified rows: fill a row until the aspect ratios add up to the target
 const DESKTOP = [2.3, 3.1, 2.0, 2.7];
-const PHONE = [1.3]; // phones: two verticals, or one wide shot, per row
+const PHONE = [1.3];
 
 function rows(items: FeedItem[], targets: number[]) {
   const out: number[][] = [];
@@ -78,7 +75,7 @@ export default function Feed({ items, priority = 1 }: { items: FeedItem[]; prior
       <div className="grid">
         {grouped.map((r, k) => {
           const total = r.reduce((a, i) => a + ratio(items[i]), 0);
-          // A short last row shouldn't blow up to full width.
+          // don't stretch a short last row
           const last = k === grouped.length - 1 && total < (phone ? 1 : 1.8);
           return (
             <div key={r[0]} className={`grid-row${last ? " is-last" : ""}`}>

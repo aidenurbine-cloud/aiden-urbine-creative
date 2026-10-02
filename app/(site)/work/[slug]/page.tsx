@@ -36,7 +36,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <h1 className="page-title">{p.name}</h1>
         <p className="page-desc">{p.desc}</p>
         <p className="page-meta">
-          {p.tag} · {p.location}
+          {p.tag}, {p.location}
         </p>
       </header>
       {p.categories ? (

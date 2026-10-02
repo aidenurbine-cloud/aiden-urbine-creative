@@ -9,7 +9,7 @@ export default function Home() {
     caption: f.project.name,
     href: `/work/${f.project.slug}`,
   }));
-  // Filtering by a client shows every photo from that client, not just the favorites.
+  // filter shows all of a client's photos
   const byClient = Object.fromEntries(
     projects.map((p) => [
       p.slug,

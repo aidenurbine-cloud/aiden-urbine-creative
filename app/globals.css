@@ -1,15 +1,15 @@
 @tailwind base;
 @tailwind utilities;
 
-/* ── Tokens ────────────────────────────────────────────────── */
+/* tokens */
 :root {
   --paper: #f2efe9;      /* bone */
   --paper-2: #e8e4dc;
-  --print: #f7f5f0;      /* light text on dark */
+  --print: #f7f5f0;      
   --ink: #1d1b18;
   --muted: #75706a;
   --rule: rgba(29, 27, 24, 0.14);
-  --rust: #9a3b1e;       /* one accent: hover + "you are here" */
+  --rust: #9a3b1e;
 
   --sans: var(--f-sans), system-ui, sans-serif;
   --display: var(--f-display), var(--sans);
@@ -48,7 +48,7 @@ a:hover { color: var(--rust); }
 }
 .note { font-style: italic; color: var(--muted); }
 
-/* ── Shell: sidebar + one column of photos ─────────────────── */
+
 .shell {
   display: grid;
   grid-template-columns: var(--side) minmax(0, 1fr);
@@ -69,7 +69,6 @@ a:hover { color: var(--rust); }
   overflow-y: auto;
 }
 .side-top { display: flex; align-items: flex-start; justify-content: space-between; }
-/* Only Aiden's name is set in TAY Slowpoke (--display). Everything else is Instrument Sans. */
 .wordmark {
   font-family: var(--display);
   font-size: clamp(2.3rem, 3.2vw, 3.2rem);
@@ -89,7 +88,7 @@ a:hover { color: var(--rust); }
 .side-row.is-here { color: var(--ink); }
 .side-list { list-style: none; margin: 0 0 18px; padding: 0; }
 
-/* Work list. Each level steps in 12px and drops a size; the rule runs down the left. */
+/* work nav */
 .work {
   --step: 12px;
   list-style: none; margin: 0 0 22px; padding: 0 0 0 14px;
@@ -110,7 +109,6 @@ a:hover { color: var(--rust); }
 .work-sub .work-sub .w { font-size: 0.8rem; }
 .w.is-open { color: var(--ink); }
 .w.is-here { color: var(--ink); font-weight: 500; }
-/* the tick: sits on the rule beside the current page, at any depth */
 .w.is-here::before {
   content: "";
   position: absolute; top: 50%;
@@ -136,7 +134,7 @@ a:hover { color: var(--rust); }
 .side-reach a { width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: color 0.2s, background-size 0.3s ease; }
 .side-reach a:hover { color: var(--ink); background-size: 100% 1px; }
 
-/* Client filter above the home gallery */
+/* filter */
 .filters {
   display: flex; flex-wrap: wrap; gap: 6px 18px;
   margin: 0 0 14px;
@@ -150,7 +148,7 @@ a:hover { color: var(--rust); }
 .filters button:hover { color: var(--ink); }
 .filters button.is-on { color: var(--ink); border-bottom-color: var(--ink); }
 
-/* ── Photos ─────────────────────────────────────────────────── */
+/* photos */
 .photo { display: block; width: 100%; overflow: hidden; }
 .photo img { display: block; width: 100%; height: auto; }
 .photo video { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -158,7 +156,6 @@ a:hover { color: var(--rust); }
 
 .main { max-width: 1320px; padding-right: clamp(16px, 2.5vw, 40px); }
 
-/* Justified rows, tight gaps. Row grouping comes from Feed.tsx. */
 .grid { --g: 8px; display: flex; flex-direction: column; gap: var(--g); }
 .grid-row { display: flex; gap: var(--g); }
 .grid-row.is-last { max-width: 60%; }
@@ -167,7 +164,7 @@ a:hover { color: var(--rust); }
 .grid-cell:hover .photo { opacity: 0.94; }
 
 
-/* Full-screen viewer */
+/* viewer */
 .viewer {
   position: fixed; inset: 0; z-index: 200;
   background: #16130f;
@@ -190,7 +187,7 @@ a:hover { color: var(--rust); }
 .viewer-ctrls button:hover { color: #fff; }
 @keyframes fade { from { opacity: 0; } }
 
-/* ── Page text ─────────────────────────────────────────────── */
+/* page text */
 .page-head { margin-bottom: 36px; max-width: 34em; }
 .filters.is-centered { justify-content: center; margin-bottom: 22px; }
 .filters a { color: var(--muted); padding: 2px 0; border-bottom: 1px solid transparent; }
@@ -206,7 +203,7 @@ a:hover { color: var(--rust); }
 .page-up { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; color: var(--muted); }
 .page-up:hover { color: var(--ink); }
 
-/* Collections: one cover per sub-project, click in. */
+/* collection covers */
 .collections {
   list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 8px;
@@ -224,7 +221,7 @@ a:hover { color: var(--rust); }
   display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
 }
 
-/* ── About ─────────────────────────────────────────────────── */
+/* about */
 .about-top {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -244,11 +241,10 @@ a:hover { color: var(--rust); }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
-/* Camera-roll grid: same shape for every frame. */
 .prints .photo { aspect-ratio: 4 / 5 !important; }
 .prints .photo img { height: 100%; object-fit: cover; }
 
-/* ── Contact ───────────────────────────────────────────────── */
+/* contact */
 .contact { max-width: 34em; }
 .contact-direct { margin: 28px 0 44px; font-size: 1.15rem; line-height: 1.8; }
 .form { display: flex; flex-direction: column; gap: 22px; }
@@ -270,7 +266,7 @@ a:hover { color: var(--rust); }
 }
 .btn:hover { background: var(--rust); border-color: var(--rust); color: var(--print); }
 
-/* ── Phone / small tablet ──────────────────────────────────── */
+/* phone / small tablet */
 @media (max-width: 899px) {
   .shell { display: block; }
   .main { padding: 12px 8px 72px; }

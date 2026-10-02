@@ -1,7 +1,6 @@
 import Image from "next/image";
 import type { Photo as PhotoType } from "@/lib/projects";
 
-/** A photo at its true aspect ratio, sitting on its own average color while it loads. */
 export default function Photo({
   photo,
   alt,

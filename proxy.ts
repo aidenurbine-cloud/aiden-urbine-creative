@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export function proxy(request: NextRequest) {
-  // Gate disabled — site is public
+  // gate off, site is public
   // To re-enable: uncomment the block below and restore matcher
   //
   // const { pathname } = request.nextUrl;

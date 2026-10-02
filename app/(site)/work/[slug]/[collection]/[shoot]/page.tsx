@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Feed from "@/components/Feed";
 import { projects, getProject, getCategory, getShoot } from "@/lib/projects";
 
-// One shoot, e.g. /work/mkc/field-work/mkc-hellgate-hatchet.
 type Params = { slug: string; collection: string; shoot: string };
 
 export function generateStaticParams() {

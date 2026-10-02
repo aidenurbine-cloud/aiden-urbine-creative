@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { EMAIL, INSTAGRAM } from "@/lib/projects";
 
-// No backend: the form opens the visitor's mail app with everything filled in.
+// opens the mail app, no backend
 export default function ContactClient() {
   const [sent, setSent] = useState(false);
 

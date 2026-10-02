@@ -1,28 +1,10 @@
 #!/usr/bin/env python3
 """
-Import a client's collections from a folder.
+usage: python3 scripts/import-collections.py mkc ~/Desktop/"MKC Collections"
 
-    python3 scripts/import-collections.py mkc ~/Desktop/"MKC Collections"
-
-Layout. Top-level folders are categories (they become the filter on the client page).
-A category holds either photos/videos directly, or one folder per shoot:
-
-    MKC Collections/
-      01 Field Work/                 <- category with shoots
-        01 MKC x Maria Lovely/       <- a shoot (its own page)
-        02 MKC Hellgate Hatchet/
-      02 Apparel/                    <- category with photos directly (one page)
-        a.jpg  b.jpg ...
-      03 Unboxing Videos/            <- empty folders are skipped
-
-A leading number only sets the order. Any folder may hold notes.txt (one-line
-description) and a photo with "cover" in its name (its cover, also shown in the
-gallery; otherwise the first photo is the cover).
-
-Photos: resized to 3000px long edge (JPEG q82); JPEGs already that size are copied
-as is. Videos: H.264 MP4 (max 1920px long edge, audio kept) plus a poster frame.
-Output: public/images/<client>/... and lib/collections/<client>.json.
-Re-running skips files that were already converted.
+top folders = categories, subfolders = shoots (or photos straight in the category).
+leading numbers set the order. notes.txt = description, "cover" in a filename = cover.
+photos -> 3000px jpg, videos -> h264 mp4 + poster. writes lib/collections/<client>.json
 """
 import json, os, re, shutil, subprocess, sys, urllib.parse
 from pathlib import Path

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { projects, EMAIL, INSTAGRAM } from "@/lib/projects";
 
-// Missoula time, so the page feels like somebody's actually out there.
 function LocalTime() {
   const [t, setT] = useState("");
   useEffect(() => {
@@ -47,8 +46,6 @@ export default function Sidebar() {
         </p>
 
         <nav aria-label="Main">
-          {/* The work list: one rule down the left, one indent step per level,
-              and a single rust tick for the page you're on. */}
           <ul className="work">
             <li>
               <Link href="/" className={`w w-home${here("/")}`}>
@@ -63,8 +60,6 @@ export default function Sidebar() {
                   <Link href={base} className={`w${here(base) || (inside ? " is-open" : "")}`}>
                     {p.slug === "personal" ? "Personal" : p.name}
                   </Link>
-                  {/* A client's categories open only while you're in that client,
-                      and a category's shoots only while you're in that category. */}
                   {inside && p.categories && (
                     <ul className="work-sub">
                       {p.categories.map((c) => {
