@@ -110,6 +110,11 @@ export default function Sidebar() {
             </a>
             <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
           </p>
+          <p className="side-legal">
+            © {new Date().getFullYear()} Aiden Urbine. All rights reserved.
+            <br />
+            <Link href="/privacy">Privacy</Link>
+          </p>
         </nav>
       </div>
     </aside>

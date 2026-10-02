@@ -131,6 +131,8 @@ a:hover { color: var(--rust); }
   margin: 6px 0 0;
   font-size: 0.78rem; color: var(--muted);
 }
+.side-legal { margin: 18px 0 0; font-size: 0.7rem; line-height: 1.6; color: var(--muted); }
+.side-legal a:hover { color: var(--ink); }
 .side-reach a { width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: color 0.2s, background-size 0.3s ease; }
 .side-reach a:hover { color: var(--ink); background-size: 100% 1px; }
 
@@ -244,6 +246,13 @@ a:hover { color: var(--rust); }
 .prints .photo { aspect-ratio: 4 / 5 !important; }
 .prints .photo img { height: 100%; object-fit: cover; }
 
+/* legal */
+.legal { max-width: 36em; line-height: 1.6; }
+.legal h2 { margin: 28px 0 6px; font-size: 1rem; font-weight: 500; }
+.legal p { margin: 0 0 12px; }
+.legal .page-meta { margin-bottom: 22px; }
+.legal a { border-bottom: 1px solid var(--rule); }
+
 /* contact */
 .contact { max-width: 34em; }
 .contact-direct { margin: 28px 0 44px; font-size: 1.15rem; line-height: 1.8; }
@@ -296,7 +305,7 @@ a:hover { color: var(--rust); }
   .grid { --g: 5px; }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
   .collection-name { padding: 0 4px; font-size: 0.9rem; }
-  .page-head, .about, .contact, .next { padding-left: 8px; padding-right: 8px; }
+  .page-head, .about, .contact, .legal, .next { padding-left: 8px; padding-right: 8px; }
 
   .about-top { grid-template-columns: 1fr; }
   .about-portrait { width: 78%; margin: 0; }
