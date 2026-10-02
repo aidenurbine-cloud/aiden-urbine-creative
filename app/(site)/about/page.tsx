@@ -4,7 +4,7 @@ import { prints, portrait, EMAIL } from "@/lib/projects";
 
 export const metadata = {
   title: "About",
-  description: "Photographer and creative director based in Missoula, Montana.",
+  description: "Photographer and videographer based out of Missoula, MT.",
 };
 
 export default function About() {
@@ -16,19 +16,18 @@ export default function About() {
         </figure>
 
         <div className="about-text">
-          <h1 className="page-title">Hey, I&apos;m Aiden</h1>
+          <h1 className="page-title">Hey, I&apos;m Aiden.</h1>
           <p>
-            I&apos;m a photographer and creative director based in Missoula, Montana. I was raised on the Arkansas River
-            in Buena Vista, Colorado, and the outdoor life still drives the work: whitewater, dirt roads, elk camps, and
-            the brands that live out there.
+            I am a photographer and videographer based out of Missoula, MT, but I call the entire West my home. I was
+            raised on the Arkansas River in Buena Vista, CO, where I learned how to capture content and seek adventure.
+            The outdoor lifestyle has always aligned with my work, whether it&apos;s chasing whitewater, skiing new lines,
+            elk camp, or just following the next dirt road.
           </p>
           <p>
-            Two years and counting behind the content for Montana Knife Co., plus Badfish, Rough Country, Marin Moto
-            Ranch and more. Photo and video, start to finish.
+            I&apos;ve spent the last three years in Missoula, MT as a full time content creator for Montana Knife
+            Company, as well as a freelance creative working for brands like Rough Country, LaCrosse Footwear,
+            Turtlebox Audio, and more.
           </p>
-          <blockquote className="quote">
-            The good frames don&apos;t come easy. They show up cold, early, and a long way from the truck.
-          </blockquote>
           <p>
             Got a project? <a href={`mailto:${EMAIL}`}>{EMAIL}</a> or <Link href="/contact">send a note</Link>.
           </p>
