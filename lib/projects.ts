@@ -27,7 +27,7 @@ const RAW: Project[] = [
     client: "Montana Knife Co.",
     tag: "Photo + Video",
     location: "Missoula, MT",
-    desc: "Two years and counting as a content creator for one of the fastest growing brands in the outdoor industry. Thousands of pieces of content and still going.",
+    desc: "Three years and counting as a content creator for one of the fastest growing brands in the outdoor industry. Thousands of pieces of content and still going.",
     feature: [
       { src: "/images/mkc/apparel/001-01-18.jpg", w: 2000, h: 3000, c: "#313533" },
       { src: "/images/mkc/culinary/003-03-22.jpg", w: 2000, h: 3000, c: "#887e7b" },
