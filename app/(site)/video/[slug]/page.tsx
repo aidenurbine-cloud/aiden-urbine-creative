@@ -12,7 +12,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const g = getVideoGroup(slug);
-  return g ? { title: `${g.name} Video` } : {};
+  return g
+    ? { title: `${g.name} Video`, description: `Video work for ${g.name}: ${g.cats.map((c) => c.name.toLowerCase()).join(", ")}.` }
+    : {};
 }
 
 export default async function VideoGroupPage({ params }: { params: Promise<{ slug: string }> }) {
