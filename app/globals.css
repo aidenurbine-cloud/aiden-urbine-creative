@@ -174,6 +174,10 @@ a:hover { color: var(--rust); }
 .page-up { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; color: var(--muted); }
 .page-up:hover { color: var(--ink); }
 
+/* banner */
+.banner { position: relative; height: min(78vh, 57.7vw); overflow: hidden; background: #1e1a15; }
+.banner video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
 /* video embed */
 .embed { position: relative; aspect-ratio: 16 / 9; background: #1e1a15; }
 .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -278,7 +282,7 @@ a:hover { color: var(--rust); }
   .side.is-open .work-sub .w { font-size: 1.05rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
-  .banner { height: auto; aspect-ratio: 1920 / 1108; }
+  .banner { height: min(82svh, 177.78vw); }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
   .collection-name { padding: 0 4px; font-size: 0.9rem; }
   .page-head, .about, .contact, .legal, .next, .video-title { padding-left: 8px; padding-right: 8px; }
