@@ -5,7 +5,7 @@ export const metadata = {
   description: "Privacy policy for aidenurbine.com.",
 };
 
-const UPDATED = "October 1, 2026";
+const UPDATED = "October 21, 2026";
 
 export default function Privacy() {
   return (
@@ -14,7 +14,7 @@ export default function Privacy() {
       <p className="page-meta">Last updated {UPDATED}</p>
 
       <p>
-        This is my portfolio site. I don&apos;t run ads, I don&apos;t use cookies, and I don&apos;t use analytics or
+        This is my portfolio site. I don&apos;t run ads, I don&apos;t set cookies, and I don&apos;t use analytics or
         tracking tools of any kind.
       </p>
 
@@ -35,6 +35,12 @@ export default function Privacy() {
         and nothing is saved until you hit send. When you email me, I get your name, email address and whatever you
         write. I only use that to reply to you and to work with you on a project. I don&apos;t sell it, share it, or add
         you to a mailing list.
+      </p>
+
+      <h2>Video</h2>
+      <p>
+        Some videos are embedded from YouTube in their privacy-enhanced mode, so YouTube doesn&apos;t set cookies
+        until you press play. Once you play one, YouTube&apos;s own privacy policy applies to it.
       </p>
 
       <h2>Links</h2>

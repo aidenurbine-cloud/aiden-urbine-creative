@@ -174,6 +174,10 @@ a:hover { color: var(--rust); }
 .page-up { display: inline-block; margin-bottom: 10px; font-size: 0.82rem; color: var(--muted); }
 .page-up:hover { color: var(--ink); }
 
+/* video embed */
+.embed { position: relative; aspect-ratio: 16 / 9; background: #1e1a15; }
+.embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
 /* collection covers */
 .collections {
   list-style: none; margin: 0; padding: 0;

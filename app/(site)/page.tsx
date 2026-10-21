@@ -22,7 +22,7 @@ export default function Home() {
       })),
     ])
   );
-  const filters = projects.map((p) => ({ slug: p.slug, name: p.name }));
+  const filters = projects.filter((p) => p.images.length).map((p) => ({ slug: p.slug, name: p.name }));
   return (
     <>
       <h1 className="sr-only">Aiden Urbine, photo and video. Selected work.</h1>

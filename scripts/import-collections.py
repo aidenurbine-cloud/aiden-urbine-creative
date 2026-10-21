@@ -4,7 +4,7 @@ usage: python3 scripts/import-collections.py mkc ~/Desktop/"MKC Collections"
 
 top folders = categories, subfolders = shoots (or photos straight in the category).
 leading numbers set the order. notes.txt = description, "cover" in a filename = cover.
-photos -> 3000px jpg, videos -> h264 mp4 + poster. writes lib/collections/<client>.json
+photos -> 3000px jpg, videos -> h264 mp4 (1600px max) + poster. writes lib/collections/<client>.json
 """
 import json, os, re, shutil, subprocess, sys, urllib.parse
 from pathlib import Path
@@ -50,9 +50,9 @@ def video(src, out_dir, i):
     if not dst.exists():
         subprocess.run(
             ["ffmpeg", "-y", "-loglevel", "error", "-i", str(src),
-             "-vf", "scale='if(gt(iw,ih),min(1920,iw),-2)':'if(gt(iw,ih),-2,min(1920,ih))'",
-             "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-pix_fmt", "yuv420p",
-             "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(dst)],
+             "-vf", "scale='if(gt(iw,ih),min(1600,iw),-2)':'if(gt(iw,ih),-2,min(1600,ih))'",
+             "-c:v", "libx264", "-preset", "slow", "-crf", "26", "-pix_fmt", "yuv420p",
+             "-c:a", "aac", "-b:a", "96k", "-movflags", "+faststart", str(dst)],
             check=True,
         )
     if not poster.exists():

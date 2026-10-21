@@ -39,7 +39,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {p.tag}, {p.location}
         </p>
       </header>
-      {p.categories ? (
+      {p.youtube ? (
+        <div className="embed">
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${p.youtube}?rel=0`}
+            title={p.desc || p.name}
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+        </div>
+      ) : p.categories ? (
         <>
           <CategoryNav p={p} />
           <Covers entries={coversFor(p)} />

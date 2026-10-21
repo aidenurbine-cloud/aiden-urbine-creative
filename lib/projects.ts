@@ -18,6 +18,7 @@ export type Project = {
   feature: Photo[];
   images: Photo[];
   categories?: Category[];
+  youtube?: string; // video id, shown as an embed instead of a gallery
 };
 
 const RAW: Project[] = [
@@ -133,6 +134,17 @@ const RAW: Project[] = [
       { src: "/images/marin-gallery/ROUTEEMH-61.jpg", w: 2001, h: 3000, c: "#aa9f81" },
       { src: "/images/marin-gallery/ROUTEEMH-67.jpg", w: 2001, h: 3000, c: "#849198" },
     ],
+  },
+  {
+    slug: "immersion-research",
+    name: "Immersion Research",
+    client: "Immersion Research",
+    tag: "Video",
+    location: "Elk River",
+    desc: "Huck sesh at the Elk River.",
+    youtube: "M1gJ6HImOgE",
+    feature: [{ src: "/images/immersion-research/cover.jpg", w: 1280, h: 720, c: "#595849" }],
+    images: [],
   },
   {
     slug: "personal",
