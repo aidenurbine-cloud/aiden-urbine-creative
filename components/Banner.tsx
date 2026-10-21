@@ -3,6 +3,9 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
+// bump when the banner file changes so browsers grab the new one
+const V = "2";
+
 export default function Banner() {
   const path = usePathname();
   const ref = useRef<HTMLVideoElement>(null);
@@ -12,14 +15,14 @@ export default function Banner() {
     if (!v) return;
     v.muted = true;
     // smaller file on phones
-    if (window.matchMedia("(max-width: 699px)").matches) v.src = "/video/banner-small.mp4";
+    if (window.matchMedia("(max-width: 699px)").matches) v.src = `/video/banner-small.mp4?v=${V}`;
     v.play().catch(() => {});
   }, [path]);
 
   if (path !== "/") return null;
   return (
     <div className="banner">
-      <video ref={ref} src="/video/banner.mp4" poster="/video/banner.jpg" autoPlay muted loop playsInline preload="auto" aria-label="Aiden Urbine Creative reel" />
+      <video ref={ref} src={`/video/banner.mp4?v=${V}`} poster={`/video/banner.jpg?v=${V}`} autoPlay muted loop playsInline preload="auto" aria-label="Aiden Urbine Creative reel" />
     </div>
   );
 }
