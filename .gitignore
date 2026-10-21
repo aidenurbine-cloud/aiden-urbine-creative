@@ -39,3 +39,6 @@ next-env.d.ts
 # local notes and tool settings
 CLAUDE.md
 .claude/
+
+# raw footage drop folder (too big for git; web versions go in public/video)
+public/clips/

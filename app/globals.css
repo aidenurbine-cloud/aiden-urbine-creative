@@ -269,6 +269,7 @@ a:hover { color: var(--rust); }
   .side.is-open .work-sub .w { font-size: 1.05rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
+  .banner { height: auto; aspect-ratio: 1920 / 1108; }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
   .collection-name { padding: 0 4px; font-size: 0.9rem; }
   .page-head, .about, .contact, .legal, .next { padding-left: 8px; padding-right: 8px; }
