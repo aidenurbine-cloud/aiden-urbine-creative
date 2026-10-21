@@ -1,32 +1,17 @@
-import Gallery from "@/components/Gallery";
-import { favorites, projects } from "@/lib/projects";
+import Feed from "@/components/Feed";
+import { favorites } from "@/lib/projects";
 
 export default function Home() {
   const items = favorites.map((f) => ({
     ...f,
-    slug: f.project.slug,
     alt: f.project.name,
     caption: f.project.name,
     href: `/work/${f.project.slug}`,
   }));
-  // filter shows all of a client's photos
-  const byClient = Object.fromEntries(
-    projects.map((p) => [
-      p.slug,
-      p.images.map((img, k) => ({
-        ...img,
-        slug: p.slug,
-        alt: `${p.name}, photo ${k + 1}`,
-        caption: p.name,
-        href: `/work/${p.slug}`,
-      })),
-    ])
-  );
-  const filters = projects.filter((p) => p.images.length).map((p) => ({ slug: p.slug, name: p.name }));
   return (
     <>
-      <h1 className="sr-only">Aiden Urbine, photo and video. Selected work.</h1>
-      <Gallery items={items} byClient={byClient} filters={filters} />
+      <h1 className="sr-only">Aiden Urbine, photo and video.</h1>
+      <Feed items={items} priority={3} />
     </>
   );
 }
