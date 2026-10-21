@@ -28,7 +28,27 @@ function rows(items: FeedItem[], targets: number[]) {
       sum = 0;
     }
   });
-  if (row.length) out.push(row);
+  if (row.length) {
+    const target = targets[out.length % targets.length];
+    if (!out.length || sum >= target * 0.75) out.push(row);
+    else {
+      // short last row: share the photos of the last two rows out evenly
+      const prevTarget = targets[(out.length - 1) % targets.length];
+      const both = [...out.pop()!, ...row];
+      const r = both.map((i) => ratio(items[i]));
+      const total = r.reduce((a, b) => a + b, 0);
+      if (total <= prevTarget * 1.3) out.push(both);
+      else {
+        let best = 1;
+        let bestDiff = Infinity;
+        for (let k = 1, acc = r[0]; k < both.length; acc += r[k], k++) {
+          const diff = Math.abs(acc - (total - acc));
+          if (diff < bestDiff) [best, bestDiff] = [k, diff];
+        }
+        out.push(both.slice(0, best), both.slice(best));
+      }
+    }
+  }
   return out;
 }
 

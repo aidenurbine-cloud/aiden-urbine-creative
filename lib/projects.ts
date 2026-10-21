@@ -282,13 +282,13 @@ const FAVORITES: [string, string][] = [
   ["personal", "not%20images.jpg"],
   ["mkc", "field-work/mkc-x-maria-lovely/001-00-cover-maria-lovely-467.jpg"],
   ["personal", "AIDEN%20URBINE%20TRUCK-25.jpg"],
-  ["mkc", "field-work/mkc-x-maria-lovely/014-13-maria-lovely-450.jpg"],
   ["personal", "de.JPG"],
   ["personal", "AIDEN%20URBINE%20TRUCK-12.jpg"],
   ["personal", "half%20dome%20scenic.JPG"],
   ["personal", "ocean%20surf%20emh-2.jpg"],
-  ["personal", "hometown.jpg"],
+  ["mkc", "field-work/mkc-x-maria-lovely/014-13-maria-lovely-450.jpg"],
   ["personal", "Full%20size-2.JPG"],
+  ["personal", "hometown.jpg"],
 ];
 
 export const favorites = FAVORITES.map(([slug, file]) => {
