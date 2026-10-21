@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import Feed from "@/components/Feed";
 import Covers from "@/components/Covers";
 import CategoryNav from "@/components/CategoryNav";
-import { projects, getProject, getCategory, coversFor, isVideoCategory, photoCategories } from "@/lib/projects";
+import { projects, getProject, getCategory, coversFor, isVideoCategory, photoCategories, getVideoGroup, type Project } from "@/lib/projects";
+
+const VIDEO_NAME = (p: Project) => getVideoGroup(p.slug)?.name ?? p.name;
 
 export function generateStaticParams() {
   return projects.flatMap((p) => (p.categories ?? []).map((c) => ({ slug: p.slug, collection: c.slug })));
@@ -37,10 +39,10 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   return (
     <>
       <header className="page-head is-centered">
-        <Link href={video ? "/video" : `/work/${p.slug}`} className="page-up">
-          ← {video ? "Video" : p.name}
+        <Link href={video ? `/video/${p.slug}` : `/work/${p.slug}`} className="page-up">
+          ← {video ? VIDEO_NAME(p) : p.name}
         </Link>
-        <h1 className="page-title">{video ? `${p.name} ${c.name}` : c.name}</h1>
+        <h1 className="page-title">{c.name}</h1>
         {c.desc && <p className="page-desc">{c.desc}</p>}
       </header>
       {!video && <CategoryNav p={p} active={c.slug} />}

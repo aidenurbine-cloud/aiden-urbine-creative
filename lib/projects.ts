@@ -219,19 +219,30 @@ export const isVideoCategory = (c: Category) =>
 
 export const photoCategories = (p: Project) => (p.categories ?? []).filter((c) => !isVideoCategory(c));
 
-export type VideoEntry = { name: string; href: string; youtube?: string; items?: Media[]; desc?: string };
+// video side of the site: one group per client
+export type VideoCat = { name: string; href: string; items: Media[]; desc: string };
+export type VideoGroup = { slug: string; name: string; href: string; youtube?: string; desc?: string; cats: VideoCat[] };
 
-export function videoEntries(): VideoEntry[] {
-  const out: VideoEntry[] = [];
+const VIDEO_NAMES: Record<string, string> = { mkc: "Montana Knife Company" };
+
+export function videoGroups(): VideoGroup[] {
+  const out: VideoGroup[] = [];
   for (const p of projects) {
-    if (p.youtube) out.push({ name: p.name, href: `/work/${p.slug}`, youtube: p.youtube, desc: p.desc });
-    for (const c of p.categories ?? [])
-      if (isVideoCategory(c))
-        out.push({ name: `${p.client === "Montana Knife Co." ? "MKC" : p.name} ${c.name.replace(/ videos?$/i, "s")}`, href: `/work/${p.slug}/${c.slug}`, items: c.items, desc: c.desc });
+    const cats = (p.categories ?? []).filter(isVideoCategory).map((c) => ({
+      name: c.name,
+      href: `/work/${p.slug}/${c.slug}`,
+      items: c.items,
+      desc: c.desc,
+    }));
+    if (p.youtube) out.push({ slug: p.slug, name: p.name, href: `/work/${p.slug}`, youtube: p.youtube, desc: p.desc, cats });
+    else if (cats.length) out.push({ slug: p.slug, name: VIDEO_NAMES[p.slug] ?? p.name, href: `/video/${p.slug}`, cats });
   }
-  // full edits first, clip grids after
-  return [...out.filter((e) => e.youtube), ...out.filter((e) => !e.youtube)];
+  // full edits first
+  return [...out.filter((g) => g.youtube), ...out.filter((g) => !g.youtube)];
 }
+
+export const getVideoGroup = (slug: string) => videoGroups().find((g) => g.slug === slug && !g.youtube);
+
 export function getCategory(slug: string, category: string) {
   return getProject(slug)?.categories?.find((c) => c.slug === category);
 }

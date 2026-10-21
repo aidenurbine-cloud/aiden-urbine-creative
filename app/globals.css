@@ -185,7 +185,10 @@ a:hover { color: var(--rust); }
 /* video page */
 .video-block { margin-bottom: 56px; }
 .video-title { margin: 0 0 12px; font-size: 1.15rem; font-weight: 600; }
-.video-title a:hover { color: var(--rust); }
+.video-title a:hover, .video-sub a:hover { color: var(--rust); }
+.video-cat { margin-top: 14px; }
+.video-cat + .video-cat { margin-top: 36px; }
+.video-sub { margin: 0 0 10px; font-size: 0.95rem; font-weight: 500; color: var(--muted); }
 
 /* collection covers */
 .collections {
@@ -285,7 +288,7 @@ a:hover { color: var(--rust); }
   .banner { height: min(82svh, 177.78vw); }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
   .collection-name { padding: 0 4px; font-size: 0.9rem; }
-  .page-head, .about, .contact, .legal, .next, .video-title { padding-left: 8px; padding-right: 8px; }
+  .page-head, .about, .contact, .legal, .next, .video-title, .video-sub { padding-left: 8px; padding-right: 8px; }
 
   .about-top { grid-template-columns: 1fr; }
   .about-portrait { width: 78%; margin: 0; }

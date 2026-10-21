@@ -360,11 +360,11 @@
   "shoots": []
  },
  {
-  "slug": "unboxing-videos",
-  "name": "Unboxing Videos",
+  "slug": "unboxings",
+  "name": "Unboxings",
   "desc": "",
   "cover": {
-   "src": "/images/mkc/unboxing-videos/001-01-castlerock-unbox-wide.jpg",
+   "src": "/images/mkc/unboxings/001-01-castlerock-unbox-wide.jpg",
    "w": 1600,
    "h": 900,
    "c": "#1e2420"
@@ -372,40 +372,40 @@
   "items": [
    {
     "type": "video",
-    "src": "/images/mkc/unboxing-videos/001-01-castlerock-unbox-wide.mp4",
-    "poster": "/images/mkc/unboxing-videos/001-01-castlerock-unbox-wide.jpg",
+    "src": "/images/mkc/unboxings/001-01-castlerock-unbox-wide.mp4",
+    "poster": "/images/mkc/unboxings/001-01-castlerock-unbox-wide.jpg",
     "w": 1600,
     "h": 900,
     "c": "#1e2420"
    },
    {
     "type": "video",
-    "src": "/images/mkc/unboxing-videos/002-02-elk-unbox-wide.mp4",
-    "poster": "/images/mkc/unboxing-videos/002-02-elk-unbox-wide.jpg",
+    "src": "/images/mkc/unboxings/002-02-elk-unbox-wide.mp4",
+    "poster": "/images/mkc/unboxings/002-02-elk-unbox-wide.jpg",
     "w": 1600,
     "h": 900,
     "c": "#261f18"
    },
    {
     "type": "video",
-    "src": "/images/mkc/unboxing-videos/003-03-folding-unbox.mp4",
-    "poster": "/images/mkc/unboxing-videos/003-03-folding-unbox.jpg",
+    "src": "/images/mkc/unboxings/003-03-folding-unbox.mp4",
+    "poster": "/images/mkc/unboxings/003-03-folding-unbox.jpg",
     "w": 1600,
     "h": 900,
     "c": "#0f1512"
    },
    {
     "type": "video",
-    "src": "/images/mkc/unboxing-videos/004-04-mule-deer-unbox.mp4",
-    "poster": "/images/mkc/unboxing-videos/004-04-mule-deer-unbox.jpg",
+    "src": "/images/mkc/unboxings/004-04-mule-deer-unbox.mp4",
+    "poster": "/images/mkc/unboxings/004-04-mule-deer-unbox.jpg",
     "w": 900,
     "h": 1600,
     "c": "#6e726a"
    },
    {
     "type": "video",
-    "src": "/images/mkc/unboxing-videos/005-05-meat-church-unbox.mp4",
-    "poster": "/images/mkc/unboxing-videos/005-05-meat-church-unbox.jpg",
+    "src": "/images/mkc/unboxings/005-05-meat-church-unbox.mp4",
+    "poster": "/images/mkc/unboxings/005-05-meat-church-unbox.jpg",
     "w": 900,
     "h": 1600,
     "c": "#936848"

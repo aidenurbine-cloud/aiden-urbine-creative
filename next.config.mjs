@@ -5,7 +5,10 @@ const nextConfig = {
   },
   async redirects() {
     // The old site lived at /home. Keep any shared links working.
-    return [{ source: "/home", destination: "/", permanent: true }];
+    return [
+      { source: "/home", destination: "/", permanent: true },
+      { source: "/work/mkc/unboxing-videos", destination: "/work/mkc/unboxings", permanent: true },
+    ];
   },
 };
 

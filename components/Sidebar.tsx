@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { projects, photoCategories, videoEntries, EMAIL, INSTAGRAM } from "@/lib/projects";
+import { projects, photoCategories, videoGroups, EMAIL, INSTAGRAM } from "@/lib/projects";
 
 
 export default function Sidebar() {
@@ -17,8 +17,10 @@ export default function Sidebar() {
     ...projects.filter((p) => p.slug !== "personal" && p.images.length && !p.youtube),
     projects.find((p) => p.slug === "personal")!,
   ];
-  const videos = videoEntries();
-  const isVideoPath = videos.some((v) => path === v.href || path.startsWith(v.href + "/"));
+  const videos = videoGroups();
+  const inGroup = (g: (typeof videos)[number]) =>
+    path === g.href || path.startsWith(g.href + "/") || g.cats.some((c) => path === c.href || path.startsWith(c.href + "/"));
+  const isVideoPath = videos.some((g) => !g.youtube && inGroup(g));
 
   return (
     <aside className={`side${open ? " is-open" : ""}`}>
@@ -85,11 +87,22 @@ export default function Sidebar() {
               Video
             </Link>
             <ul className="nav-list">
-              {videos.map((v) => (
-                <li key={v.href}>
-                  <Link href={v.href} className={`w${here(v.href)}`}>
-                    {v.name}
+              {videos.map((g) => (
+                <li key={g.href}>
+                  <Link href={g.href} className={`w${here(g.href) || (inGroup(g) ? " is-open" : "")}`}>
+                    {g.name}
                   </Link>
+                  {inGroup(g) && g.cats.length > 0 && (
+                    <ul className="work-sub">
+                      {g.cats.map((c) => (
+                        <li key={c.href}>
+                          <Link href={c.href} className={`w${here(c.href)}`}>
+                            {c.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
