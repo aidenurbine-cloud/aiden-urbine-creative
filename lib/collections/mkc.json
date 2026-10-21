@@ -401,6 +401,14 @@
     "w": 900,
     "h": 1600,
     "c": "#6e726a"
+   },
+   {
+    "type": "video",
+    "src": "/images/mkc/unboxing-videos/005-05-meat-church-unbox.mp4",
+    "poster": "/images/mkc/unboxing-videos/005-05-meat-church-unbox.jpg",
+    "w": 900,
+    "h": 1600,
+    "c": "#936848"
    }
   ],
   "shoots": []
