@@ -178,6 +178,11 @@ a:hover { color: var(--rust); }
 .embed { position: relative; aspect-ratio: 16 / 9; background: #1e1a15; }
 .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
+/* video page */
+.video-block { margin-bottom: 56px; }
+.video-title { margin: 0 0 12px; font-size: 1.15rem; font-weight: 600; }
+.video-title a:hover { color: var(--rust); }
+
 /* collection covers */
 .collections {
   list-style: none; margin: 0; padding: 0;
@@ -276,7 +281,7 @@ a:hover { color: var(--rust); }
   .banner { height: auto; aspect-ratio: 1920 / 1108; }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
   .collection-name { padding: 0 4px; font-size: 0.9rem; }
-  .page-head, .about, .contact, .legal, .next { padding-left: 8px; padding-right: 8px; }
+  .page-head, .about, .contact, .legal, .next, .video-title { padding-left: 8px; padding-right: 8px; }
 
   .about-top { grid-template-columns: 1fr; }
   .about-portrait { width: 78%; margin: 0; }

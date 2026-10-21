@@ -211,6 +211,24 @@ export const projects: Project[] = RAW.map((p) => {
   return { ...p, categories, images: media.filter((m) => m.type !== "video") };
 });
 
+// a category made only of videos lives in the Video section, not with the photos
+export const isVideoCategory = (c: Category) =>
+  c.shoots.length === 0 && c.items.length > 0 && c.items.every((m) => m.type === "video");
+
+export const photoCategories = (p: Project) => (p.categories ?? []).filter((c) => !isVideoCategory(c));
+
+export type VideoEntry = { name: string; href: string; youtube?: string; items?: Media[]; desc?: string };
+
+export function videoEntries(): VideoEntry[] {
+  const out: VideoEntry[] = [];
+  for (const p of projects) {
+    if (p.youtube) out.push({ name: p.name, href: `/work/${p.slug}`, youtube: p.youtube, desc: p.desc });
+    for (const c of p.categories ?? [])
+      if (isVideoCategory(c))
+        out.push({ name: `${p.client === "Montana Knife Co." ? "MKC" : p.name} ${c.name.replace(/ videos?$/i, "s")}`, href: `/work/${p.slug}/${c.slug}`, items: c.items, desc: c.desc });
+  }
+  return out;
+}
 export function getCategory(slug: string, category: string) {
   return getProject(slug)?.categories?.find((c) => c.slug === category);
 }
@@ -220,7 +238,7 @@ export function getShoot(slug: string, category: string, shoot: string) {
 }
 
 export function coversFor(p: Project, only?: Category) {
-  return (only ? [only] : p.categories ?? []).flatMap((c) =>
+  return (only ? [only] : photoCategories(p)).flatMap((c) =>
     c.shoots.length
       ? c.shoots.map((s) => ({ href: `/work/${p.slug}/${c.slug}/${s.slug}`, name: s.name, cover: s.cover }))
       : [{ href: `/work/${p.slug}/${c.slug}`, name: c.name, cover: c.cover }]

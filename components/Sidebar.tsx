@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { projects, EMAIL, INSTAGRAM } from "@/lib/projects";
+import { projects, photoCategories, videoEntries, EMAIL, INSTAGRAM } from "@/lib/projects";
 
 
 export default function Sidebar() {
@@ -12,7 +12,13 @@ export default function Sidebar() {
   useEffect(() => setOpen(false), [path]);
 
   const here = (href: string) => (path === href ? " is-here" : "");
-  const commercial = projects.filter((p) => p.slug !== "personal");
+  // personal goes last in the photo list; youtube-only projects live under video
+  const photo = [
+    ...projects.filter((p) => p.slug !== "personal" && p.images.length && !p.youtube),
+    projects.find((p) => p.slug === "personal")!,
+  ];
+  const videos = videoEntries();
+  const isVideoPath = videos.some((v) => path === v.href || path.startsWith(v.href + "/"));
 
   return (
     <aside className={`side${open ? " is-open" : ""}`}>
@@ -31,20 +37,20 @@ export default function Sidebar() {
         <nav aria-label="Main">
           <section className="nav-sec">
             <Link href="/" className={`nav-h${here("/")}`}>
-              Work
+              Photo
             </Link>
             <ul className="nav-list">
-              {commercial.map((p) => {
+              {photo.map((p) => {
                 const base = `/work/${p.slug}`;
-                const inside = path === base || path.startsWith(base + "/");
+                const inside = !isVideoPath && (path === base || path.startsWith(base + "/"));
                 return (
                   <li key={p.slug}>
                     <Link href={base} className={`w${here(base) || (inside ? " is-open" : "")}`}>
-                      {p.name}
+                      {p.slug === "personal" ? "Personal" : p.name}
                     </Link>
-                    {inside && p.categories && (
+                    {inside && photoCategories(p).length > 0 && (
                       <ul className="work-sub">
-                        {p.categories.map((c) => {
+                        {photoCategories(p).map((c) => {
                           const cat = `${base}/${c.slug}`;
                           const inCat = path === cat || path.startsWith(cat + "/");
                           return (
@@ -75,9 +81,18 @@ export default function Sidebar() {
           </section>
 
           <section className="nav-sec">
-            <Link href="/work/personal" className={`nav-h${here("/work/personal")}`}>
-              Personal
+            <Link href="/video" className={`nav-h${here("/video")}`}>
+              Video
             </Link>
+            <ul className="nav-list">
+              {videos.map((v) => (
+                <li key={v.href}>
+                  <Link href={v.href} className={`w${here(v.href)}`}>
+                    {v.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
 
           <section className="nav-sec">

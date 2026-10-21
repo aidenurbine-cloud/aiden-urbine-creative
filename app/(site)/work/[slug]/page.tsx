@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Feed from "@/components/Feed";
 import Covers from "@/components/Covers";
 import CategoryNav from "@/components/CategoryNav";
+import YouTube from "@/components/YouTube";
 import { projects, getProject, coversFor } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -40,15 +41,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </p>
       </header>
       {p.youtube ? (
-        <div className="embed">
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${p.youtube}?rel=0`}
-            title={p.desc || p.name}
-            loading="lazy"
-            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-            allowFullScreen
-          />
-        </div>
+        <YouTube id={p.youtube} title={p.desc || p.name} />
       ) : p.categories ? (
         <>
           <CategoryNav p={p} />
