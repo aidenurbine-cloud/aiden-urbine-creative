@@ -159,6 +159,8 @@ const RAW: Project[] = [
       { src: "/images/personal-gallery/DSC00372.JPG", w: 3000, h: 2000, c: "#a4886f" },
     ],
     images: [
+      { src: "/images/personal-gallery/AIDEN%20URBINE%20TRUCK-12.jpg", w: 2000, h: 3000, c: "#332f23" },
+      { src: "/images/personal-gallery/AIDEN%20URBINE%20TRUCK-3.jpg", w: 2000, h: 3000, c: "#4c3d2c" },
       { src: "/images/personal-gallery/not%20images.jpg", w: 3000, h: 2000, c: "#595859" },
       { src: "/images/personal-gallery/honest%20story.JPG", w: 3000, h: 2001, c: "#959da1" },
       { src: "/images/personal-gallery/DSC00372.JPG", w: 3000, h: 2000, c: "#a4886f" },
@@ -173,7 +175,6 @@ const RAW: Project[] = [
       { src: "/images/personal-gallery/John%20parc-0%202.JPG", w: 2000, h: 3000, c: "#736a63" },
       { src: "/images/personal-gallery/Full%20size-0.JPG", w: 2000, h: 3000, c: "#6c432b" },
       { src: "/images/personal-gallery/AT%20THE%20ROCK-109.jpg", w: 2000, h: 3000, c: "#a7a39c" },
-      { src: "/images/personal-gallery/FLAG%20NOR%20FAIL%20-%20DAY%201%20-%20EXPORT4-34.JPG", w: 2000, h: 3000, c: "#9b9791" },
       { src: "/images/personal-gallery/IMG_5092.JPG", w: 2026, h: 3000, c: "#82b2c3" },
       { src: "/images/personal-gallery/winnebago%20hero.JPG", w: 3000, h: 2001, c: "#827d73" },
       { src: "/images/personal-gallery/IMG_0267.JPG", w: 2000, h: 3000, c: "#675d58" },
@@ -188,7 +189,6 @@ const RAW: Project[] = [
       { src: "/images/personal-gallery/Full%20size-4.JPG", w: 2000, h: 3000, c: "#5d4338" },
       { src: "/images/personal-gallery/nicole%20senior-34.jpg", w: 3000, h: 2000, c: "#7d6e5c" },
       { src: "/images/personal-gallery/AT%20THE%20ROCK-107.jpg", w: 2000, h: 3000, c: "#9b968a" },
-      { src: "/images/personal-gallery/FLAG%20NOR%20FAIL%20-%20DAY%201%20-%20EXPORT%203-28.JPG", w: 2000, h: 3000, c: "#a7a294" },
       { src: "/images/personal-gallery/IMG_0260.JPG", w: 2000, h: 3000, c: "#3f3632" },
       { src: "/images/personal-gallery/John%20parc-0.JPG", w: 2000, h: 3000, c: "#918f8a" },
       { src: "/images/personal-gallery/FLAG%20NOR%20FAIL%20-%20DAY%201%20-%20EXPORT4-28.JPG", w: 2000, h: 3000, c: "#92897f" },
@@ -197,7 +197,6 @@ const RAW: Project[] = [
       { src: "/images/personal-gallery/FLAG%20NOR%20FAIL%20-%20DAY%201%20-%20EXPORT%203-4.JPG", w: 2000, h: 3000, c: "#afa298" },
       { src: "/images/personal-gallery/AT%20THE%20ROCK-110.jpg", w: 2000, h: 3000, c: "#898c89" },
       { src: "/images/personal-gallery/sickest%20shit%20ever-1.JPG", w: 2001, h: 3000, c: "#635a55" },
-      { src: "/images/personal-gallery/PERSONAL%20HOMEPAGE%20copy.jpg", w: 3000, h: 2000, c: "#839098" },
     ],
   },
 ];
@@ -227,7 +226,8 @@ export function videoEntries(): VideoEntry[] {
       if (isVideoCategory(c))
         out.push({ name: `${p.client === "Montana Knife Co." ? "MKC" : p.name} ${c.name.replace(/ videos?$/i, "s")}`, href: `/work/${p.slug}/${c.slug}`, items: c.items, desc: c.desc });
   }
-  return out;
+  // full edits first, clip grids after
+  return [...out.filter((e) => e.youtube), ...out.filter((e) => !e.youtube)];
 }
 export function getCategory(slug: string, category: string) {
   return getProject(slug)?.categories?.find((c) => c.slug === category);
@@ -298,7 +298,6 @@ const FAVORITES: [string, string][] = [
   ["mkc", "culinary/002-02-25.jpg"],
   ["rough-country", "AT%20THE%20ROCK-105.jpg"],
   ["personal", "winnebago%20hero.JPG"],
-  ["personal", "FLAG%20NOR%20FAIL%20-%20DAY%201%20-%20EXPORT4-34.JPG"],
   ["badfish", "lunchcounterreverse.emh%20(46%20of%2061).jpg"],
   ["personal", "IMG_5092.JPG"],
 ];
