@@ -5,17 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { projects, EMAIL, INSTAGRAM } from "@/lib/projects";
 
-function LocalTime() {
-  const [t, setT] = useState("");
-  useEffect(() => {
-    const fmt = new Intl.DateTimeFormat("en-US", { timeZone: "America/Denver", hour: "numeric", minute: "2-digit" });
-    const tick = () => setT(fmt.format(new Date()));
-    tick();
-    const id = setInterval(tick, 30_000);
-    return () => clearInterval(id);
-  }, []);
-  return <span className="side-time">{t ? `${t} here` : " "}</span>;
-}
 
 export default function Sidebar() {
   const path = usePathname();
@@ -37,81 +26,85 @@ export default function Sidebar() {
       </div>
 
       <div className="side-body">
-        <p className="side-role">
-          Photo &amp; video
-          <br />
-          Missoula, Montana
-          <br />
-          <LocalTime />
-        </p>
+        <p className="side-role">photographer, videographer, follower of dirt roads</p>
 
         <nav aria-label="Main">
-          <ul className="work">
-            <li>
-              <Link href="/" className={`w w-home${here("/")}`}>
-                Selected work
-              </Link>
-            </li>
-            {[...commercial, projects.find((p) => p.slug === "personal")!].map((p) => {
-              const base = `/work/${p.slug}`;
-              const inside = path === base || path.startsWith(base + "/");
-              return (
-                <li key={p.slug} className={p.slug === "personal" ? "w-gap" : undefined}>
-                  <Link href={base} className={`w${here(base) || (inside ? " is-open" : "")}`}>
-                    {p.slug === "personal" ? "Personal" : p.name}
-                  </Link>
-                  {inside && p.categories && (
-                    <ul className="work-sub">
-                      {p.categories.map((c) => {
-                        const cat = `${base}/${c.slug}`;
-                        const inCat = path === cat || path.startsWith(cat + "/");
-                        return (
-                          <li key={c.slug}>
-                            <Link href={cat} className={`w${here(cat) || (inCat ? " is-open" : "")}`}>
-                              {c.name}
-                            </Link>
-                            {inCat && c.shoots.length > 0 && (
-                              <ul className="work-sub">
-                                {c.shoots.map((sh) => (
-                                  <li key={sh.slug}>
-                                    <Link href={`${cat}/${sh.slug}`} className={`w${here(`${cat}/${sh.slug}`)}`}>
-                                      {sh.name}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+          <section className="nav-sec">
+            <Link href="/" className={`nav-h${here("/")}`}>
+              Work
+            </Link>
+            <ul className="nav-list">
+              {commercial.map((p) => {
+                const base = `/work/${p.slug}`;
+                const inside = path === base || path.startsWith(base + "/");
+                return (
+                  <li key={p.slug}>
+                    <Link href={base} className={`w${here(base) || (inside ? " is-open" : "")}`}>
+                      {p.name}
+                    </Link>
+                    {inside && p.categories && (
+                      <ul className="work-sub">
+                        {p.categories.map((c) => {
+                          const cat = `${base}/${c.slug}`;
+                          const inCat = path === cat || path.startsWith(cat + "/");
+                          return (
+                            <li key={c.slug}>
+                              <Link href={cat} className={`w${here(cat) || (inCat ? " is-open" : "")}`}>
+                                {c.name}
+                              </Link>
+                              {inCat && c.shoots.length > 0 && (
+                                <ul className="work-sub">
+                                  {c.shoots.map((sh) => (
+                                    <li key={sh.slug}>
+                                      <Link href={`${cat}/${sh.slug}`} className={`w${here(`${cat}/${sh.slug}`)}`}>
+                                        {sh.name}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
 
-          <ul className="side-list side-info">
-            <li>
-              <Link href="/about" className={`side-row${here("/about")}`}>
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className={`side-row${here("/contact")}`}>
-                Contact
-              </Link>
-            </li>
-          </ul>
+          <section className="nav-sec">
+            <Link href="/work/personal" className={`nav-h${here("/work/personal")}`}>
+              Personal
+            </Link>
+          </section>
 
-          <p className="side-reach">
-            <a href={`https://instagram.com/${INSTAGRAM}`} target="_blank" rel="noopener noreferrer">
-              @{INSTAGRAM}
-            </a>
-            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-          </p>
+          <section className="nav-sec">
+            <Link href="/about" className={`nav-h${here("/about")}`}>
+              About
+            </Link>
+            <ul className="nav-list">
+              <li>
+                <Link href="/contact" className={`w${here("/contact")}`}>
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <a className="w" href={`https://instagram.com/${INSTAGRAM}`} target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a className="w" href={`mailto:${EMAIL}`}>
+                  Email
+                </a>
+              </li>
+            </ul>
+          </section>
+
           <p className="side-legal">
-            © {new Date().getFullYear()} Aiden Urbine. All rights reserved.
+            © {new Date().getFullYear()} Aiden Urbine
             <br />
             <Link href="/privacy">Privacy</Link>
           </p>
