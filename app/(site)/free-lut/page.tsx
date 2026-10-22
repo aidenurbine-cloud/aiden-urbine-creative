@@ -1,5 +1,6 @@
+import { notFound } from "next/navigation";
 import FreePage from "@/components/shop/FreePage";
-import { FIELD_GRADES_1 as p, afterSrc } from "@/lib/shop";
+import { FIELD_GRADES_1 as p, afterSrc, hasFree } from "@/lib/shop";
 
 export const metadata = {
   title: "Free LUT",
@@ -9,5 +10,7 @@ export const metadata = {
 };
 
 export default function FreeLut() {
+  // stays a 404 until the free product's gumroad link is set
+  if (!hasFree(p)) notFound();
   return <FreePage p={p} />;
 }
