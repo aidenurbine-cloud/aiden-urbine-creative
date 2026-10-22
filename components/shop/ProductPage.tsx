@@ -70,7 +70,8 @@ export default function ProductPage({ p }: { p: Product }) {
       <section className="shop-sec">
         <h2 className="shop-h">What&apos;s included</h2>
         <ul className="shop-list">
-          <li>All {inWords(p.looks.length)} looks as .cube LUTs (33-point) and .drx DaVinci Resolve Power Grades</li>
+          <li>All {inWords(p.looks.length)} looks as .cube LUTs (33-point)</li>
+          <li>A .drx Power Grade for DaVinci Resolve: my base node tree. Swap any of the looks into its LUT node.</li>
           <li>
             An install guide (<a href={p.installGuideUrl}>PDF</a>)
           </li>
@@ -91,7 +92,7 @@ export default function ProductPage({ p }: { p: Product }) {
           for S-Log3. On other cameras, expect to adjust exposure and intensity.
         </p>
         <p>
-          The .cube files load in Resolve, Premiere and most other editors. The .drx files are Resolve-only.
+          The .cube files load in Resolve, Premiere and most other editors. The .drx Power Grade is Resolve-only.
         </p>
         <p>
           They&apos;re made for correctly exposed footage. If a shot is two stops under, no LUT saves it. White balance
@@ -115,7 +116,7 @@ export default function ProductPage({ p }: { p: Product }) {
         <details>
           <summary>What software do I need?</summary>
           <p>
-            For the .drx Power Grades, DaVinci Resolve. The free version is fine. The .cube LUTs load in Premiere and
+            For the .drx Power Grade, DaVinci Resolve. The free version is fine. The .cube LUTs load in Premiere and
             any other editor that takes .cube files.
           </p>
         </details>
