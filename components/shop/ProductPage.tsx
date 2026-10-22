@@ -13,17 +13,11 @@ const hasStills = (slug: string) => exists(beforeSrc(slug)) && exists(afterSrc(s
 export default function ProductPage({ p }: { p: Product }) {
   const count = inWords(p.looks.length);
   return (
-    // .fg switches the whole page to the pack's dark palette (see globals.css)
     <article className="shop fg">
       <GumroadScript />
       {/* TODO analytics: fire "presets_page_view" here once the site has analytics */}
 
       <h1 className="sr-only">{p.name}</h1>
-      {exists(p.art.banner) && (
-        <div className="fg-hero">
-          <Image src={p.art.banner} alt={`${p.name} cover art`} fill priority sizes="(min-width: 900px) 70vw, 100vw" />
-        </div>
-      )}
 
       <div className="fg-intro">
         <p className="fg-title">{p.title}</p>

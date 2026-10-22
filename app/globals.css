@@ -253,20 +253,11 @@ a:hover { color: var(--rust); }
 .buy:hover { background: var(--rust); border-color: var(--rust); color: var(--paper); }
 .buy.is-placeholder { opacity: 0.55; cursor: not-allowed; }
 
-/* field grades: the presets page takes on the pack's dark palette, sidebar included */
-:root:has(.fg) {
-  --paper: #15120e;
-  --paper-2: #221d17;
-  --ink: #efe6d6;
-  --muted: #a3988a;
-  --rule: rgba(239, 230, 214, 0.16);
-  --rust: #d47a45;
-}
+/* field grades */
 .fg { max-width: 960px; }
 .fg .shop-h { border-bottom-color: var(--rule); }
-.fg-hero { position: relative; aspect-ratio: 16 / 9; background: var(--paper-2); }
-.fg-hero img { object-fit: cover; }
-.fg-intro { max-width: 36em; margin: 22px 0 64px; }
+.fg-intro { max-width: 36em; margin: 0 0 64px; }
+.banner-art img { object-fit: cover; }
 .fg-title { margin: 0 0 8px; font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.15; }
 .fg-buyline { display: flex; align-items: center; gap: 16px; margin: 20px 0 0; }
 .fg-buyline span { color: var(--muted); }
@@ -383,7 +374,7 @@ a:hover { color: var(--rust); }
   .shop .ba { margin: 0 -8px; }
     .look { grid-template-columns: 1fr; gap: 12px; }
   .fg-box { grid-template-columns: 1fr; gap: 20px; }
-  .fg .fg-hero { margin: 0 -8px; }
+  .banner.banner-art { height: auto; aspect-ratio: 16 / 9; }
   .fg-buyline { flex-wrap: wrap; }
   .shop-free { flex-direction: column; align-items: flex-start; }
   .banner { height: min(82svh, 177.78vw); }
