@@ -52,7 +52,7 @@ export const FIELD_GRADES_1: Product = {
   name: "Field Grades, Volume 1",
   title: "The grades I shoot Montana with.",
   sub: "The exact LUTs from my commercial and personal work. Built in DaVinci Resolve for Sony S-Log3. One click on flat LOG footage.",
-  price: 35,
+  price: 40,
   singlePrice: 20,
   packUrl: GUMROAD_PACK_URL,
   freeUrl: GUMROAD_FREE_URL,
