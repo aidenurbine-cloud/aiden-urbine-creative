@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { projects, photoCategories, videoGroups, EMAIL, INSTAGRAM } from "@/lib/projects";
+import { FIELD_GRADES_1, hasFree } from "@/lib/shop";
 
 
 export default function Sidebar() {
@@ -140,8 +141,12 @@ export default function Sidebar() {
           <p className="side-legal">
             © {new Date().getFullYear()} Aiden Urbine
             <br />
-            <Link href="/free-lut">Free LUT</Link>
-            <br />
+            {hasFree(FIELD_GRADES_1) && (
+              <>
+                <Link href="/free-lut">Free LUT</Link>
+                <br />
+              </>
+            )}
             <Link href="/privacy">Privacy</Link>
           </p>
         </nav>

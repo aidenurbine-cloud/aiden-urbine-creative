@@ -2,10 +2,11 @@ import Link from "next/link";
 import BeforeAfter from "@/components/BeforeAfter";
 import YouTube from "@/components/YouTube";
 import { BuyButton, GumroadScript } from "@/components/Gumroad";
-import { type Product, beforeSrc, afterSrc, lookOf, inWords } from "@/lib/shop";
+import { type Product, beforeSrc, afterSrc, lookOf, inWords, hasSingles, hasFree, isLive } from "@/lib/shop";
 
 export default function ProductPage({ p }: { p: Product }) {
   const hero = lookOf(p, p.heroLook);
+  const singles = hasSingles(p);
   return (
     <article className="shop">
       <GumroadScript />
@@ -19,7 +20,7 @@ export default function ProductPage({ p }: { p: Product }) {
 
       <BeforeAfter before={beforeSrc(hero.slug)} after={afterSrc(hero.slug)} alt={hero.name} priority />
 
-      <section className="shop-buy">
+      <section className={`shop-buy${singles ? "" : " is-single"}`}>
         <div className="shop-price">
           <p className="shop-price-name">The full pack</p>
           <p className="shop-price-num">${p.price}</p>
@@ -28,11 +29,13 @@ export default function ProductPage({ p }: { p: Product }) {
             Buy the pack, ${p.price}
           </BuyButton>
         </div>
-        <div className="shop-price is-quiet">
-          <p className="shop-price-name">One look</p>
-          <p className="shop-price-num">${p.singlePrice}</p>
-          <p className="shop-price-note">Any single look. Pick it below.</p>
-        </div>
+        {singles && (
+          <div className="shop-price is-quiet">
+            <p className="shop-price-name">One look</p>
+            <p className="shop-price-num">${p.singlePrice}</p>
+            <p className="shop-price-note">Any single look. Pick it below.</p>
+          </div>
+        )}
       </section>
 
       <section className="shop-looks" aria-labelledby="looks-h">
@@ -45,14 +48,24 @@ export default function ProductPage({ p }: { p: Product }) {
               <p className="look-line">{l.line}</p>
               <p className="look-buy">
                 <span className="look-incl">Included in the pack</span>
-                <BuyButton href={l.singleUrl} event="buy_click" variant="line">
-                  Buy just this one, ${p.singlePrice}
-                </BuyButton>
+                {isLive(l.singleUrl) && (
+                  <BuyButton href={l.singleUrl} event="buy_click" variant="line">
+                    Buy just this one, ${p.singlePrice}
+                  </BuyButton>
+                )}
               </p>
             </div>
           </div>
         ))}
       </section>
+
+      {!singles && (
+        <p className="shop-again">
+          <BuyButton href={p.packUrl} event="buy_click">
+            Get all {inWords(p.looks.length)}, ${p.price}
+          </BuyButton>
+        </p>
+      )}
 
       <section className="shop-sec">
         <h2 className="shop-h">What&apos;s included</h2>
@@ -127,12 +140,14 @@ export default function ProductPage({ p }: { p: Product }) {
         Questions or a file misbehaving: <a href="mailto:aiden@aidenurbine.com">aiden@aidenurbine.com</a>
       </p>
 
-      <section className="shop-free">
-        <p>Not sure yet? Start with the free one.</p>
-        <Link href="/free-lut" className="buy buy-line">
-          Get the free LUT
-        </Link>
-      </section>
+      {hasFree(p) && (
+        <section className="shop-free">
+          <p>Not sure yet? Start with the free one.</p>
+          <Link href="/free-lut" className="buy buy-line">
+            Get the free LUT
+          </Link>
+        </section>
+      )}
     </article>
   );
 }

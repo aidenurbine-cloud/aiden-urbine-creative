@@ -4,6 +4,7 @@ import Script from "next/script";
 import { isLive } from "@/lib/shop";
 
 // gumroad.js turns links to gumroad product URLs into the on-page checkout overlay.
+// don't add data-gumroad-overlay-checkout: in the current script that skips the overlay and goes full page.
 // only rendered on the preset pages, never site-wide.
 export function GumroadScript() {
   return <Script src="https://gumroad.com/js/gumroad.js" strategy="lazyOnload" />;
@@ -25,7 +26,6 @@ export function BuyButton({
     <a
       href={live ? href : "#"}
       className={`buy buy-${variant}${live ? "" : " is-placeholder"}`}
-      data-gumroad-overlay-checkout="true"
       onClick={(e) => {
         // TODO analytics: no analytics on the site yet. fire `event` here once there is one.
         void event;

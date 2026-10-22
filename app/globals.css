@@ -220,6 +220,8 @@ a:hover { color: var(--rust); }
 .shop-fine { margin: 10px 0 0; font-size: 0.78rem; color: var(--muted); }
 .shop-h { margin: 0 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--ink); font-size: 1.15rem; font-weight: 600; }
 .shop-buy { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin: 28px 0 56px; }
+.shop-buy.is-single { grid-template-columns: minmax(0, 420px); }
+.shop-again { margin: -20px 0 56px; }
 .shop-price { padding: 20px; border: 1px solid var(--ink); }
 .shop-price.is-quiet { border-color: var(--rule); }
 .shop-price p { margin: 0; }

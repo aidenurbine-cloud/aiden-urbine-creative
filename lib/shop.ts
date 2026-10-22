@@ -36,7 +36,7 @@ export type Product = {
 };
 
 // gumroad links: paste real URLs here
-const GUMROAD_PACK_URL = "#";
+const GUMROAD_PACK_URL = "https://urbine.gumroad.com/l/fieldgrades";
 const GUMROAD_FREE_URL = "#";
 const GUMROAD_SINGLE_URLS: Record<string, string> = {
   bitterroot: "#",
@@ -81,3 +81,7 @@ export const isLive = (url: string) => url !== "#" && url.trim() !== "";
 
 const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 export const inWords = (n: number) => WORDS[n] ?? String(n);
+
+// singles and the free page only show up once their gumroad links are set
+export const hasSingles = (p: Product) => p.looks.some((l) => isLive(l.singleUrl));
+export const hasFree = (p: Product) => isLive(p.freeUrl);

@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
 import { projects, videoGroups } from "@/lib/projects";
+import { FIELD_GRADES_1, hasFree } from "@/lib/shop";
 
 const BASE = "https://aidenurbine.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = ["/", "/video", "/presets", "/free-lut", "/about", "/contact", "/privacy"];
+  const paths = ["/", "/video", "/presets", "/about", "/contact", "/privacy"];
+  if (hasFree(FIELD_GRADES_1)) paths.push("/free-lut");
   for (const p of projects) {
     paths.push(`/work/${p.slug}`);
     for (const c of p.categories ?? []) {
