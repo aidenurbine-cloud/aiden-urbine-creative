@@ -1,66 +1,79 @@
 import fs from "fs";
 import path from "path";
+import Image from "next/image";
 import Link from "next/link";
 import BeforeAfter from "@/components/BeforeAfter";
 import { BuyButton, GumroadScript } from "@/components/Gumroad";
-import { type Product, beforeSrc, afterSrc, lookOf, inWords, hasFree, isLive } from "@/lib/shop";
+import { type Product, beforeSrc, afterSrc, inWords, hasFree, isLive } from "@/lib/shop";
 
 // a look only gets a slider once both of its stills are in public/field-grades
-const hasStills = (slug: string) =>
-  [beforeSrc(slug), afterSrc(slug)].every((src) => fs.existsSync(path.join(process.cwd(), "public", src)));
+const exists = (src: string) => fs.existsSync(path.join(process.cwd(), "public", src));
+const hasStills = (slug: string) => exists(beforeSrc(slug)) && exists(afterSrc(slug));
 
 export default function ProductPage({ p }: { p: Product }) {
-  const hero = lookOf(p, p.heroLook);
   const count = inWords(p.looks.length);
   return (
-    <article className="shop">
+    // .fg switches the whole page to the pack's dark palette (see globals.css)
+    <article className="shop fg">
       <GumroadScript />
       {/* TODO analytics: fire "presets_page_view" here once the site has analytics */}
 
-      <header className="shop-head">
-        <p className="caps shop-eyebrow">{p.eyebrow}</p>
-        <h1 className="page-title">{p.title}</h1>
-        <p className="page-desc">{p.sub}</p>
-      </header>
-
-      {hasStills(hero.slug) && (
-        <BeforeAfter before={beforeSrc(hero.slug)} after={afterSrc(hero.slug)} alt={hero.name} priority />
+      <h1 className="sr-only">{p.name}</h1>
+      {exists(p.art.banner) && (
+        <div className="fg-hero">
+          <Image src={p.art.banner} alt={`${p.name} cover art`} fill priority sizes="(min-width: 900px) 70vw, 100vw" />
+        </div>
       )}
 
-      <p className="shop-line">
-        <span>
-          {count[0].toUpperCase() + count.slice(1)} looks, as .cube LUTs and a Resolve Power Grade. ${p.price}.
-        </span>
-        <BuyButton href={p.packUrl} event="buy_click" variant="line">
-          Buy, ${p.price}
-        </BuyButton>
-      </p>
+      <div className="fg-intro">
+        <p className="fg-title">{p.title}</p>
+        <p className="page-desc">{p.sub}</p>
+        <p className="fg-buyline">
+          <span>
+            {count[0].toUpperCase() + count.slice(1)} looks. ${p.price}.
+          </span>
+          <BuyButton href={p.packUrl} event="buy_click" variant="line">
+            Buy, ${p.price}
+          </BuyButton>
+        </p>
+      </div>
 
-      <section className="shop-looks" aria-label="The looks">
+      <section className="fg-looks" aria-label="The looks">
         {p.looks.map((l) => (
-          <div key={l.slug} className={`look${hasStills(l.slug) ? "" : " is-text"}`} id={l.slug}>
-            {hasStills(l.slug) && <BeforeAfter before={beforeSrc(l.slug)} after={afterSrc(l.slug)} alt={l.name} />}
-            <div className="look-text">
-              <h2 className="look-name">{l.name}</h2>
-              <p className="look-line">{l.line}</p>
-              {isLive(l.singleUrl) && (
-                <BuyButton href={l.singleUrl} event="buy_click" variant="line">
-                  Just this one, ${p.singlePrice}
-                </BuyButton>
-              )}
+          <div key={l.slug} className="fg-look" id={l.slug}>
+            <div className="fg-look-head">
+              <h2 className="fg-look-name">{l.name}</h2>
+              <p className="fg-look-line">{l.line}</p>
             </div>
+            {hasStills(l.slug) && <BeforeAfter before={beforeSrc(l.slug)} after={afterSrc(l.slug)} alt={l.name} />}
+            {isLive(l.singleUrl) && (
+              <BuyButton href={l.singleUrl} event="buy_click" variant="line">
+                Just this one, ${p.singlePrice}
+              </BuyButton>
+            )}
           </div>
         ))}
       </section>
 
-      <section className="shop-sec">
-        <h2 className="shop-h">What&apos;s included</h2>
-        <ul className="shop-list">
-          <li>All {count} looks as .cube LUTs (33-point). They load in Resolve, Premiere and most editors.</li>
-          <li>A .drx Power Grade for DaVinci Resolve: my base node tree. Swap any of the looks into its LUT node.</li>
-          <li>An install guide (PDF)</li>
-          <li>Free updates to Volume 1</li>
-        </ul>
+      <section className="fg-box">
+        {exists(p.art.cover) && (
+          <div className="fg-box-art">
+            <Image src={p.art.cover} alt={`${p.name} cover`} fill sizes="(min-width: 900px) 32vw, 100vw" />
+          </div>
+        )}
+        <div className="fg-box-text">
+          <p className="fg-vol">- Volume 1 -</p>
+          <h2 className="shop-h">What&apos;s in the pack</h2>
+          <ul className="shop-list">
+            <li>All {count} looks as .cube LUTs (33-point). They load in Resolve, Premiere and most editors.</li>
+            <li>A .drx Power Grade for DaVinci Resolve: my base node tree. Swap any of the looks into its LUT node.</li>
+            <li>An install guide (PDF)</li>
+            <li>Free updates to Volume 1</li>
+          </ul>
+          <BuyButton href={p.packUrl} event="buy_click">
+            Buy Field Grades, ${p.price}
+          </BuyButton>
+        </div>
       </section>
 
       <section className="shop-sec">
@@ -95,13 +108,8 @@ export default function ProductPage({ p }: { p: Product }) {
         </details>
       </section>
 
-      <p className="shop-line is-end">
-        <span>
-          Questions or a file misbehaving: <a href="mailto:aiden@aidenurbine.com">aiden@aidenurbine.com</a>
-        </span>
-        <BuyButton href={p.packUrl} event="buy_click" variant="line">
-          Buy, ${p.price}
-        </BuyButton>
+      <p className="fg-contact">
+        Questions or a file misbehaving: <a href="mailto:aiden@aidenurbine.com">aiden@aidenurbine.com</a>
       </p>
 
       {hasFree(p) && (

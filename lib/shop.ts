@@ -30,6 +30,8 @@ export type Product = {
   /** Which look leads the page. */
   heroLook: string;
   looks: Look[];
+  /** pack artwork in public/field-grades/ */
+  art: { banner: string; cover: string };
   installGuideUrl: string;
   howToVideo: string; // YouTube id, empty until the video exists
   refundPolicy: string;
@@ -65,6 +67,7 @@ export const FIELD_GRADES_1: Product = {
     { slug: "blackfoot", name: "Blackfoot", line: "My go-to for any lighting. I normally start here.", singleUrl: GUMROAD_SINGLE_URLS.blackfoot },
     { slug: "trapper", name: "Trapper", line: "Moody and blue. Built for the cloudy days.", singleUrl: GUMROAD_SINGLE_URLS.trapper },
   ],
+  art: { banner: "/field-grades/art-banner.jpg", cover: "/field-grades/art-cover.jpg" },
   installGuideUrl: "#", // PLACEHOLDER: install guide PDF, e.g. "/field-grades/install-guide.pdf"
   howToVideo: "", // PLACEHOLDER: YouTube id of the how-to-apply-and-expose video
   refundPolicy: "PLACEHOLDER: refund policy coming.",

@@ -253,6 +253,37 @@ a:hover { color: var(--rust); }
 .buy:hover { background: var(--rust); border-color: var(--rust); color: var(--paper); }
 .buy.is-placeholder { opacity: 0.55; cursor: not-allowed; }
 
+/* field grades: the presets page takes on the pack's dark palette, sidebar included */
+:root:has(.fg) {
+  --paper: #15120e;
+  --paper-2: #221d17;
+  --ink: #efe6d6;
+  --muted: #a3988a;
+  --rule: rgba(239, 230, 214, 0.16);
+  --rust: #d47a45;
+}
+.fg { max-width: 960px; }
+.fg .shop-h { border-bottom-color: var(--rule); }
+.fg-hero { position: relative; aspect-ratio: 16 / 9; background: var(--paper-2); }
+.fg-hero img { object-fit: cover; }
+.fg-intro { max-width: 36em; margin: 22px 0 64px; }
+.fg-title { margin: 0 0 8px; font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.15; }
+.fg-buyline { display: flex; align-items: center; gap: 16px; margin: 20px 0 0; }
+.fg-buyline span { color: var(--muted); }
+.fg-looks { margin-bottom: 72px; }
+.fg-look { margin-bottom: 56px; }
+.fg-look-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin-bottom: 12px; }
+.fg-look-name { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 3.4vw, 2.8rem); line-height: 1; letter-spacing: 0.01em; }
+.fg-look-line { margin: 0; color: var(--muted); }
+.fg-look .buy { margin-top: 12px; }
+.fg-box { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 32px; align-items: center; margin-bottom: 64px; }
+.fg-box-art { position: relative; aspect-ratio: 1; background: var(--paper-2); }
+.fg-box-art img { object-fit: cover; }
+.fg-vol { margin: 0 0 14px; font-family: var(--display); font-size: 1.15rem; color: var(--muted); }
+.fg-box .shop-list { margin-bottom: 22px; }
+.fg-contact { margin: 0 0 24px; color: var(--muted); font-size: 0.9rem; }
+.fg-contact a { color: var(--ink); border-bottom: 1px solid var(--rule); }
+
 /* collection covers */
 .collections {
   list-style: none; margin: 0; padding: 0;
@@ -351,6 +382,9 @@ a:hover { color: var(--rust); }
   .shop { padding: 0 8px; }
   .shop .ba { margin: 0 -8px; }
     .look { grid-template-columns: 1fr; gap: 12px; }
+  .fg-box { grid-template-columns: 1fr; gap: 20px; }
+  .fg .fg-hero { margin: 0 -8px; }
+  .fg-buyline { flex-wrap: wrap; }
   .shop-free { flex-direction: column; align-items: flex-start; }
   .banner { height: min(82svh, 177.78vw); }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
