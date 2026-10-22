@@ -242,7 +242,9 @@ a:hover { color: var(--rust); }
 .shop summary { cursor: pointer; font-weight: 500; }
 .shop details p { margin: 8px 0 0; }
 .is-placeholder-text { color: var(--rust); }
-.shop-free { margin: 56px 0 24px; padding-top: 24px; border-top: 1px solid var(--ink); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.shop-contact { margin: 0 0 8px; font-size: 0.9rem; }
+.shop-contact a { border-bottom: 1px solid var(--rule); }
+.shop-free { margin: 40px 0 24px; padding-top: 24px; border-top: 1px solid var(--ink); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
 .shop-free p { margin: 0; font-size: 1.1rem; }
 
 .buy {

@@ -74,11 +74,19 @@ export default function ProductPage({ p }: { p: Product }) {
       <section className="shop-sec">
         <h2 className="shop-h">Compatibility</h2>
         <p>
-          Built and tested on Sony S-Log3. The .cube files load on any LOG footage, but expect to adjust exposure and
-          intensity on other camera systems.
+          Built and tested on Sony S-Log3 / S-Gamut3.Cine. The .cube files load on any LOG footage, but they&apos;re tuned
+          for S-Log3. On other cameras, expect to adjust exposure and intensity.
         </p>
         <p>
-          The .cube files also load in Premiere and other editors. The .drx files are Resolve-only.
+          The .cube files load in Resolve, Premiere and most other editors. The .drx files are Resolve-only.
+        </p>
+        <p>
+          They&apos;re made for correctly exposed footage. If a shot is two stops under, no LUT saves it. White balance
+          your camera before shooting.
+        </p>
+        <p>
+          Too strong? Put the look on its own node and pull the Key Output Gain down to taste. That&apos;s how I use
+          them.
         </p>
       </section>
 
@@ -100,7 +108,7 @@ export default function ProductPage({ p }: { p: Product }) {
         </details>
         <details>
           <summary>How does delivery work?</summary>
-          <p>Instant download right after checkout. You&apos;ll also get the files by email.</p>
+          <p>Instant download after checkout. The files are emailed to you too.</p>
         </details>
         <details>
           <summary>Refunds?</summary>
@@ -109,11 +117,15 @@ export default function ProductPage({ p }: { p: Product }) {
         <details>
           <summary>Is this a client product?</summary>
           <p>
-            No. Field Grades is my own product. The grades come from my paid work, but no client or brand I&apos;ve
-            worked with is involved in it or endorses it.
+            No. This is my personal product. The grades come from my paid work, but it&apos;s not affiliated with or
+            endorsed by any of the brands I film for.
           </p>
         </details>
       </section>
+
+      <p className="shop-contact">
+        Questions or a file misbehaving: <a href="mailto:aiden@aidenurbine.com">aiden@aidenurbine.com</a>
+      </p>
 
       <section className="shop-free">
         <p>Not sure yet? Start with the free one.</p>
