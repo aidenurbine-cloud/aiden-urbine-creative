@@ -190,6 +190,72 @@ a:hover { color: var(--rust); }
 .video-cat + .video-cat { margin-top: 36px; }
 .video-sub { margin: 0 0 10px; font-size: 0.95rem; font-weight: 500; color: var(--muted); }
 
+/* before / after slider */
+.ba { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--paper-2); touch-action: pan-y; cursor: ew-resize; user-select: none; }
+.ba img { object-fit: cover; pointer-events: none; }
+.ba-before { position: absolute; inset: 0; }
+.ba-label {
+  position: absolute; top: 10px; padding: 3px 7px;
+  background: rgba(30, 26, 21, 0.55); color: #f3ecdf;
+  font-size: 0.65rem; letter-spacing: 0.16em; pointer-events: none;
+}
+.ba-l { left: 10px; }
+.ba-r { right: 10px; }
+.ba-handle {
+  position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px;
+  background: #f3ecdf; box-shadow: 0 0 0 1px rgba(30, 26, 21, 0.2);
+}
+.ba-handle::after {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%;
+  background: #f3ecdf; border: 1px solid rgba(30, 26, 21, 0.25);
+}
+.ba-handle:focus-visible::after { outline: 2px solid var(--rust); outline-offset: 2px; }
+
+/* shop pages */
+.shop { max-width: 920px; }
+.shop-head { margin-bottom: 26px; max-width: 34em; }
+.shop-eyebrow { margin: 0 0 10px; color: var(--muted); }
+.shop-head .buy { margin-top: 18px; }
+.shop-fine { margin: 10px 0 0; font-size: 0.78rem; color: var(--muted); }
+.shop-h { margin: 0 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--ink); font-size: 1.15rem; font-weight: 600; }
+.shop-buy { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin: 28px 0 56px; }
+.shop-price { padding: 20px; border: 1px solid var(--ink); }
+.shop-price.is-quiet { border-color: var(--rule); }
+.shop-price p { margin: 0; }
+.shop-price-name { font-weight: 600; }
+.shop-price-num { margin: 6px 0 2px !important; font-size: 2rem; font-weight: 500; letter-spacing: -0.02em; }
+.shop-price-note { color: var(--muted); font-size: 0.9rem; margin-bottom: 16px !important; }
+.shop-looks { margin-bottom: 56px; }
+.look { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; align-items: center; margin-bottom: 28px; }
+.look-name { margin: 0 0 6px; font-size: 1.1rem; font-weight: 600; }
+.look-line { margin: 0 0 14px; line-height: 1.5; }
+.look-buy { margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.look-incl { font-size: 0.8rem; color: var(--muted); }
+.shop-sec { margin-bottom: 48px; line-height: 1.6; }
+.shop-sec p { margin: 0 0 10px; max-width: 38em; }
+.shop-list { margin: 0 0 18px; padding-left: 1.1em; }
+.shop-list li { margin-bottom: 4px; }
+.shop-list a, .shop-sec a { border-bottom: 1px solid var(--rule); }
+.shop-video-ph { aspect-ratio: 16 / 9; display: grid; place-items: center; background: var(--paper-2); color: var(--muted); font-size: 0.85rem; }
+.shop details { border-bottom: 1px solid var(--rule); padding: 12px 0; }
+.shop summary { cursor: pointer; font-weight: 500; }
+.shop details p { margin: 8px 0 0; }
+.is-placeholder-text { color: var(--rust); }
+.shop-free { margin: 56px 0 24px; padding-top: 24px; border-top: 1px solid var(--ink); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.shop-free p { margin: 0; font-size: 1.1rem; }
+
+.buy {
+  display: inline-block; padding: 12px 20px;
+  border: 1px solid var(--ink);
+  font-size: 0.95rem; font-weight: 500; line-height: 1.2;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.buy-solid { background: var(--ink); color: var(--paper); }
+.buy-line { background: transparent; color: var(--ink); padding: 9px 16px; font-size: 0.88rem; }
+.buy:hover { background: var(--rust); border-color: var(--rust); color: var(--paper); }
+.buy.is-placeholder { opacity: 0.55; cursor: not-allowed; }
+
 /* collection covers */
 .collections {
   list-style: none; margin: 0; padding: 0;
@@ -285,6 +351,11 @@ a:hover { color: var(--rust); }
   .side.is-open .work-sub .w { font-size: 1.05rem; }
   .filters { padding: 0 8px; gap: 4px 14px; }
   .grid { --g: 5px; }
+  .shop { padding: 0 8px; }
+  .shop .ba { margin: 0 -8px; }
+  .shop-buy { grid-template-columns: 1fr; }
+  .look { grid-template-columns: 1fr; gap: 12px; }
+  .shop-free { flex-direction: column; align-items: flex-start; }
   .banner { height: min(82svh, 177.78vw); }
   .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 5px; }
   .collection-name { padding: 0 4px; font-size: 0.9rem; }

@@ -4,7 +4,7 @@ import { projects, videoGroups } from "@/lib/projects";
 const BASE = "https://aidenurbine.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = ["/", "/video", "/about", "/contact", "/privacy"];
+  const paths = ["/", "/video", "/presets", "/free-lut", "/about", "/contact", "/privacy"];
   for (const p of projects) {
     paths.push(`/work/${p.slug}`);
     for (const c of p.categories ?? []) {

@@ -15,7 +15,7 @@ export default function Privacy() {
 
       <p>
         This is my portfolio site. I don&apos;t run ads, I don&apos;t set cookies, and I don&apos;t use analytics or
-        tracking tools of any kind.
+        tracking tools of any kind. The only outside services are the ones described below.
       </p>
 
       <h2>What gets collected</h2>
@@ -35,6 +35,19 @@ export default function Privacy() {
         and nothing is saved until you hit send. When you email me, I get your name, email address and whatever you
         write. I only use that to reply to you and to work with you on a project. I don&apos;t sell it, share it, or add
         you to a mailing list.
+      </p>
+
+      <h2>Presets and checkout</h2>
+      <p>
+        Field Grades and the free LUT are sold and delivered through Gumroad. On the Presets and Free LUT pages,
+        Gumroad&apos;s checkout opens on top of this site, and Gumroad&apos;s script and cookies load there. Anything
+        you type into that checkout, like your email or payment details, goes to Gumroad, not to me or this site. I get
+        your email and order details from Gumroad so I can deliver what you bought and help if something goes wrong.
+        Gumroad&apos;s privacy policy is at{" "}
+        <a href="https://gumroad.com/privacy" target="_blank" rel="noopener noreferrer">
+          gumroad.com/privacy
+        </a>
+        .
       </p>
 
       <h2>Video</h2>

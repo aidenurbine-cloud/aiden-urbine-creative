@@ -109,6 +109,12 @@ export default function Sidebar() {
           </section>
 
           <section className="nav-sec">
+            <Link href="/presets" className={`nav-h${here("/presets")}`}>
+              Presets
+            </Link>
+          </section>
+
+          <section className="nav-sec">
             <Link href="/about" className={`nav-h${here("/about")}`}>
               About
             </Link>
@@ -133,6 +139,8 @@ export default function Sidebar() {
 
           <p className="side-legal">
             © {new Date().getFullYear()} Aiden Urbine
+            <br />
+            <Link href="/free-lut">Free LUT</Link>
             <br />
             <Link href="/privacy">Privacy</Link>
           </p>
