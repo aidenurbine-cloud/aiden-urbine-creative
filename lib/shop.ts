@@ -42,9 +42,8 @@ const GUMROAD_SINGLE_URLS: Record<string, string> = {
   bitterroot: "#",
   "high-desert": "#",
   selway: "#",
-  "big-sky": "#",
-  "look-5": "#",
-  "look-6": "#",
+  blackfoot: "#",
+  trapper: "#",
 };
 
 export const FIELD_GRADES_1: Product = {
@@ -57,15 +56,14 @@ export const FIELD_GRADES_1: Product = {
   singlePrice: 20,
   packUrl: GUMROAD_PACK_URL,
   freeUrl: GUMROAD_FREE_URL,
-  freeLook: "bitterroot", // PLACEHOLDER: set to the look that ends up free
-  heroLook: "bitterroot",
+  freeLook: "trapper", // PLACEHOLDER: set to the look that ends up free
+  heroLook: "blackfoot", // PLACEHOLDER: the look that leads /presets
   looks: [
     { slug: "bitterroot", name: "Bitterroot", line: "Warm and golden. Late light, dust, skin tones that stay honest.", singleUrl: GUMROAD_SINGLE_URLS.bitterroot },
     { slug: "high-desert", name: "High Desert", line: "Bleached and dry. Built for harsh midday sun when the light won't cooperate.", singleUrl: GUMROAD_SINGLE_URLS["high-desert"] },
     { slug: "selway", name: "Selway", line: "Cool, deep greens. Forest, rivers, wet country.", singleUrl: GUMROAD_SINGLE_URLS.selway },
-    { slug: "big-sky", name: "Big Sky", line: "Clean and wide open. Blue sky, snow, big country.", singleUrl: GUMROAD_SINGLE_URLS["big-sky"] },
-    { slug: "look-5", name: "Look 5 (TBD)", line: "PLACEHOLDER: name and one-liner coming.", singleUrl: GUMROAD_SINGLE_URLS["look-5"], placeholder: true },
-    { slug: "look-6", name: "Look 6 (TBD)", line: "PLACEHOLDER: name and one-liner coming.", singleUrl: GUMROAD_SINGLE_URLS["look-6"], placeholder: true },
+    { slug: "blackfoot", name: "Blackfoot", line: "PLACEHOLDER: one-liner coming.", singleUrl: GUMROAD_SINGLE_URLS.blackfoot, placeholder: true },
+    { slug: "trapper", name: "Trapper", line: "PLACEHOLDER: one-liner coming.", singleUrl: GUMROAD_SINGLE_URLS.trapper, placeholder: true },
   ],
   installGuideUrl: "#", // PLACEHOLDER: install guide PDF, e.g. "/field-grades/install-guide.pdf"
   howToVideo: "", // PLACEHOLDER: YouTube id of the how-to-apply-and-expose video
