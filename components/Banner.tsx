@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 // bump when the banner file changes so browsers grab the new one
-const V = "3";
+const V = "4";
 
 export default function Banner() {
   const path = usePathname();
@@ -18,6 +18,9 @@ export default function Banner() {
     if (window.matchMedia("(max-width: 699px)").matches) {
       v.poster = `/video/banner-mobile.jpg?v=${V}`;
       v.src = `/video/banner-mobile.mp4?v=${V}`;
+    } else if (window.innerWidth * window.devicePixelRatio > 2200) {
+      // sharper cut for big and retina screens
+      v.src = `/video/banner-2560.mp4?v=${V}`;
     }
     v.play().catch(() => {});
   }, [path]);
