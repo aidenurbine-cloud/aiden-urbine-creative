@@ -11,6 +11,8 @@ export type Look = {
   /** Gumroad URL for this look on its own. */
   singleUrl: string;
   placeholder?: boolean;
+  /** false hides the before/after slider (e.g. while the stills aren't ready) */
+  stills?: boolean;
 };
 
 export type Product = {

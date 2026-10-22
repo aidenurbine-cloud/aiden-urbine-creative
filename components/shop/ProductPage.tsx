@@ -1,14 +1,11 @@
-import fs from "fs";
-import path from "path";
 import Image from "next/image";
 import Link from "next/link";
 import BeforeAfter from "@/components/BeforeAfter";
 import { BuyButton, GumroadScript } from "@/components/Gumroad";
 import { type Product, beforeSrc, afterSrc, inWords, hasFree, isLive } from "@/lib/shop";
 
-// a look only gets a slider once both of its stills are in public/field-grades
-const exists = (src: string) => fs.existsSync(path.join(process.cwd(), "public", src));
-const hasStills = (slug: string) => exists(beforeSrc(slug)) && exists(afterSrc(slug));
+// set stills: false on a look in lib/shop.ts to hide its slider until the images exist
+const hasStills = (l: { stills?: boolean }) => l.stills !== false;
 
 export default function ProductPage({ p }: { p: Product }) {
   const count = inWords(p.looks.length);
@@ -39,7 +36,7 @@ export default function ProductPage({ p }: { p: Product }) {
               <h2 className="fg-look-name">{l.name}</h2>
               <p className="fg-look-line">{l.line}</p>
             </div>
-            {hasStills(l.slug) && <BeforeAfter before={beforeSrc(l.slug)} after={afterSrc(l.slug)} alt={l.name} />}
+            {hasStills(l) && <BeforeAfter before={beforeSrc(l.slug)} after={afterSrc(l.slug)} alt={l.name} />}
             {isLive(l.singleUrl) && (
               <BuyButton href={l.singleUrl} event="buy_click" variant="line">
                 Just this one, ${p.singlePrice}
@@ -50,7 +47,7 @@ export default function ProductPage({ p }: { p: Product }) {
       </section>
 
       <section className="fg-box">
-        {exists(p.art.cover) && (
+        {p.art.cover && (
           <div className="fg-box-art">
             <Image src={p.art.cover} alt={`${p.name} cover`} fill sizes="(min-width: 900px) 32vw, 100vw" />
           </div>
