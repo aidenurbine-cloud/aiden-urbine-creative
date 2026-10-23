@@ -393,3 +393,20 @@ a:hover { color: var(--rust); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
+
+/* ---------- /links (link in bio) ---------- */
+.lt { max-width: 480px; margin: 0 auto; padding: 56px 16px 40px; min-height: 100svh; display: flex; flex-direction: column; }
+.lt-head { text-align: center; margin-bottom: 28px; }
+.lt-name { font-family: var(--display); font-size: 2.6rem; line-height: 0.95; }
+.lt-role { margin: 10px auto 0; color: var(--muted); font-size: 1rem; max-width: 18em; }
+.lt-feature { display: block; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: var(--paper-2); color: var(--ink); transition: transform 0.2s; }
+.lt-feature img { display: block; width: 100%; height: auto; }
+.lt-feature-text { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; }
+.lt-feature-text strong { font-family: var(--display); font-weight: 400; font-size: 1.35rem; line-height: 1; }
+.lt-feature-text span { color: var(--muted); }
+.lt-feature:hover { color: var(--ink); transform: translateY(-2px); }
+.lt-feature:hover .lt-feature-text strong { color: var(--rust); }
+.lt-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lt-link { display: block; text-align: center; padding: 16px; border-radius: 14px; background: var(--paper-2); font-weight: 500; font-size: 1.05rem; transition: background 0.15s, color 0.15s; }
+.lt-link:hover { background: var(--ink); color: var(--paper); }
+.lt-foot { margin-top: auto; padding-top: 40px; text-align: center; color: var(--muted); font-size: 0.85rem; }
