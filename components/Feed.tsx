@@ -12,7 +12,8 @@ export type FeedItem = Media & { alt: string; caption?: string; href?: string };
 const ratio = (p: PhotoType) => p.w / p.h;
 
 // justified rows: fill a row until the aspect ratios add up to the target
-const DESKTOP = [2.3, 3.1, 2.0, 2.7];
+const DESKTOP = [1.8, 2.4, 1.6, 2.1];
+const MAX = 4; // never more than four photos in a row
 const PHONE = [1.3];
 
 function rows(items: FeedItem[], targets: number[]) {
@@ -22,7 +23,7 @@ function rows(items: FeedItem[], targets: number[]) {
   items.forEach((it, i) => {
     row.push(i);
     sum += ratio(it);
-    if (sum >= targets[out.length % targets.length]) {
+    if (sum >= targets[out.length % targets.length] || row.length >= MAX) {
       out.push(row);
       row = [];
       sum = 0;
@@ -37,7 +38,7 @@ function rows(items: FeedItem[], targets: number[]) {
       const both = [...out.pop()!, ...row];
       const r = both.map((i) => ratio(items[i]));
       const total = r.reduce((a, b) => a + b, 0);
-      if (total <= prevTarget * 1.3) out.push(both);
+      if (total <= prevTarget * 1.3 && both.length <= MAX) out.push(both);
       else {
         let best = 1;
         let bestDiff = Infinity;

@@ -23,8 +23,8 @@ export default function ProductPage({ p }: { p: Product }) {
           <span>
             {count[0].toUpperCase() + count.slice(1)} looks. ${p.price}.
           </span>
-          <BuyButton href={p.packUrl} event="buy_click" variant="line">
-            Buy, ${p.price}
+          <BuyButton href={p.packUrl} event="buy_click">
+            Buy Field Grades, ${p.price}
           </BuyButton>
         </p>
       </div>
