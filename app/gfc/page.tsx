@@ -13,8 +13,10 @@ export const metadata: Metadata = {
 // every number on the page. update here.
 const STATS = {
   // reelLength: fill in once you check it, e.g. "62 sec". empty just says "average watch".
-  coldStart: { views: "126K", reached: "81K", comments: "619", avgWatch: "39.6s", reelLength: "", nonFollowers: "98.5%" },
+  coldStart: { views: "130K", reached: "81K", comments: "619", avgWatch: "39.6s", reelLength: "", nonFollowers: "98.5%" },
   series: { episodes: 5, views: "188K", since: "Oct 22" },
+  // average of the recent reels: 130K, 25K, 27K, 30K
+  avgReel: "53K",
   followers: "6.5K",
   gainedThisYear: "+5,700",
 };
@@ -103,8 +105,8 @@ export default function GFC() {
           </p>
           <div className="gx-quick glass">
             <div>
-              <b>{s.coldStart.views}</b>
-              <span>views on one reel</span>
+              <b>{s.avgReel}</b>
+              <span>avg reel views</span>
             </div>
             <div>
               <b>{s.coldStart.nonFollowers}</b>
