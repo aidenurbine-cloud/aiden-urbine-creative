@@ -58,7 +58,7 @@ export default function GFC() {
         photosMid: [ph("at-the-rock-104", "#aca69c"), ph("aiden-urbine-truck-4", "#4b463c")],
         ask: {
           heading: "The truck needs a real camper, and I want it to be a GFC.",
-          body: "Put one on and it's the star of the next chapter. Short episodes living in it, a long-form install, and photo sets of the whole setup out where it belongs.",
+          body: "Let's put one on and make it the star of the next chapter. Short episodes living in it, a long-form install, and photo sets of the whole setup out where it belongs.",
         },
         ideas: { rows: EPISODES, shown: 4 },
         photos: [
