@@ -30,10 +30,10 @@ export default function ReelRow({ reels }: { reels: { url: string; label: string
   };
 
   return (
-    <div className="gx-row">
-      <div className="gx-row-top">
-        <p className="gx-row-hint">{at === 0 ? `Swipe for more` : reels[at].label}</p>
-        <div className="gx-row-btns">
+    <div className="pc-row">
+      <div className="pc-row-top">
+        <p className="pc-row-hint">{at === 0 ? "Swipe for more" : reels[at].label}</p>
+        <div className="pc-row-btns">
           <button type="button" aria-label="Previous reel" disabled={at === 0} onClick={() => go(at - 1)}>
             &larr;
           </button>
@@ -43,18 +43,18 @@ export default function ReelRow({ reels }: { reels: { url: string; label: string
         </div>
       </div>
 
-      <div className="gx-reels" ref={row} onScroll={onScroll}>
+      <div className="pc-reels" ref={row} onScroll={onScroll}>
         {reels.map((r) => (
-          <figure key={r.label} className="gx-reel-card">
+          <figure key={r.label} className="pc-reel-card">
             <figcaption>{r.label}</figcaption>
-            <div className="gx-reel">
+            <div className="pc-reel">
               <iframe src={embedUrl(r.url)} title={r.label} loading="lazy" allowFullScreen />
             </div>
           </figure>
         ))}
       </div>
 
-      <div className="gx-dots" aria-hidden>
+      <div className="pc-dots" aria-hidden>
         {reels.map((r, i) => (
           <button key={r.label} type="button" tabIndex={-1} className={i === at ? "is-on" : ""} onClick={() => go(i)} />
         ))}
