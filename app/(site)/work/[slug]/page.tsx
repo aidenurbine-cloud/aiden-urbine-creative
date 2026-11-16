@@ -40,16 +40,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {p.tag}, {p.location}
         </p>
       </header>
-      {p.youtube ? (
-        <YouTube id={p.youtube} title={p.desc || p.name} />
-      ) : p.categories ? (
+      {p.youtube && <YouTube id={p.youtube} title={p.desc || p.name} />}
+      {p.categories ? (
         <>
           <CategoryNav p={p} />
           <Covers entries={coversFor(p)} />
         </>
-      ) : (
+      ) : items.length ? (
         <Feed items={items} />
-      )}
+      ) : null}
       <nav className="next" aria-label="Next project">
         <Link href={`/work/${next.slug}`} className="next-link">
           {next.name} →
