@@ -13,9 +13,10 @@ export default function Sidebar() {
   useEffect(() => setOpen(false), [path]);
 
   const here = (href: string) => (path === href ? " is-here" : "");
-  // personal goes last in the photo list; youtube-only projects live under video
+  // personal goes last in the photo list. a project with a gallery shows under photo even
+  // if it also has a video (Immersion Research); projects with only a video live under video.
   const photo = [
-    ...projects.filter((p) => p.slug !== "personal" && p.images.length && !p.youtube),
+    ...projects.filter((p) => p.slug !== "personal" && p.images.length),
     projects.find((p) => p.slug === "personal")!,
   ];
   const videos = videoGroups();
