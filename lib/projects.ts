@@ -154,8 +154,6 @@ const RAW: Project[] = [
       { src: "/images/immersion-research/ALU-IR%20OLD%20MAN%20HAT-CAMO-31.jpg", w: 2000, h: 3000, c: "#949792" },
       { src: "/images/immersion-research/ALU-IR%20OLD%20MAN%20HAT-CAMO-48.jpg", w: 2000, h: 3000, c: "#b3afa0" },
       { src: "/images/immersion-research/ALU-IR%20OLD%20MAN%20HAT-CAMO-54.jpg", w: 3000, h: 2000, c: "#7a7565" },
-      { src: "/images/immersion-research/ALU-IR%20OLD%20MAN%20HAT-CAMO-55.jpg", w: 2000, h: 3000, c: "#787256" },
-      { src: "/images/immersion-research/ALU-IR%20OLD%20MAN%20HAT-CAMO-72.jpg", w: 2000, h: 3000, c: "#7e826d" },
     ],
   },
   {
