@@ -2,7 +2,7 @@
 // update here and every pitch picks it up.
 
 export const STATS = {
-  followers: "14,066",
+  followers: "15K",
   gained30: "+5,500", // new followers in the last 30 days
   nonFollowers: "98%",
   coldStart: { views: "215K", comments: "878" },
